@@ -4,7 +4,7 @@
     "start_url": "./index.html",
     "scope": "./",
     "display": "standalone",
-    "orientation": "landscape",
+    "orientation": "any",
     "background_color": "#000000",
     "theme_color": "#000000",
     "description": "叙事 + 小游戏的网页游戏，可添加到主屏，离线基础可用。",

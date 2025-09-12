@@ -7,6 +7,8 @@
   <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="stylesheet" href="css/base-responsive.css" />
   <title>组外人 · 登录</title>
   <link rel="stylesheet" href="css/start-login.css" />
@@ -40,6 +42,9 @@
           <button type="button" id="btn-login" class="btn">登录</button>
           <button type="reset" class="btn alt">重置</button>
         </div>
+        <div class="actions-row">
+          <button type="button" id="btn-install" class="btn alt" style="display:none;">安装到主屏幕</button>
+        </div>
       </form>
       <p class="footer-hint" style="margin-top:-10px;">THE GROUP OUTSIDER · ALPHA UI BUILD</p>
     </section>
@@ -52,6 +57,44 @@
         navigator.serviceWorker.register('sw.js').catch(() => { });
       });
     }
+  </script>
+  <script>
+    // 显式安装入口：捕获 beforeinstallprompt 事件并展示按钮
+    (function () {
+      let deferredPrompt = null;
+      const installBtn = document.getElementById('btn-install');
+
+      // 若已安装或在独立模式下，隐藏按钮
+      const isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+      const isIOSStandalone = window.navigator.standalone === true; // iOS Safari
+      if (isStandalone || isIOSStandalone) { if (installBtn) installBtn.style.display = 'none'; }
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // 阻止默认迷你信息条，改为我们自己的按钮
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installBtn) installBtn.style.display = 'inline-block';
+      });
+
+      installBtn && installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+          // iOS 或未满足安装条件时的兜底提示
+          alert('如果未出现安装提示，请在浏览器菜单中选择“安装应用”或在 iOS Safari 使用“分享 → 添加到主屏幕”。');
+          return;
+        }
+        deferredPrompt.prompt();
+        try {
+          const { outcome } = await deferredPrompt.userChoice;
+          // 用户选择后重置
+          deferredPrompt = null;
+          if (installBtn) installBtn.style.display = 'none';
+        } catch { /* ignore */ }
+      });
+
+      window.addEventListener('appinstalled', () => {
+        if (installBtn) installBtn.style.display = 'none';
+      });
+    })();
   </script>
   <script src="js/index-inline.js"></script>
 </body>
