@@ -1,0 +1,287 @@
+@charset "utf-8";
+html {font-size: clamp(14px, 1.1vw + 10px, 18px);} /* 根字体随视口缩放 */
+
+
+/* ========== 全局重置与基础样式 ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 推荐加入，让padding和border不撑大盒子宽度 */
+}
+
+body, html {
+    height: 100%; /* 确保body和html高度为100% */
+}
+
+.in {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 使用min-height确保内容溢出时页面可以滚动 */
+    padding: 20px; /* 为小屏幕增加一些边距 */
+    background: url("../assets/images/scenes/开始界面.png") center/cover no-repeat;
+}
+/* Removed @charset for optimization */
+/* ========== 全局变量 (合并一次定义) ========== */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    --accent: #c961de;
+    --accent-hover: #280f2d;
+    --transition: .4s ease;
+}
+
+/* ========== 登录框主体 (默认样式 - 桌面端) ========== */
+.box {
+    position: relative;
+    width: 90%; /* 使用百分比宽度，更灵活 */
+    max-width: 400px; /* 限制最大宽度，防止在大屏幕上过宽 */
+    height: auto;
+    min-height: 320px;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.box:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, .35);
+}
+
+.LOGIN {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #e42a2a;
+    text-shadow: 0 0 8px var(--accent);
+    letter-spacing: 2px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 100px;
+    width: 90%; /* 关键改动：让其宽度相对于父容器.box */
+    max-width: 300px; /* 同样限制最大宽度 */
+}
+
+.input-box label {
+    font-size: 50px;
+    color: #e42a2a;
+    margin-bottom: 6px;
+    display: block;
+    transition: color .3s;
+}
+
+.input-box input {
+    width: 100%; /* 关键改动：宽度占满.input-box */
+    height: 42px;
+    padding: 0 15px 0 40px;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .15);
+    color: #e42a2a;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.input-box input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent)33, 0 0 12px var(--accent);
+    outline: none;
+}
+
+.input-box label:focus-within {
+    color: var(--accent);
+}
+
+/* 输入框图标 (SVG background-image, 无需修改) */
+.input-box:nth-of-type(1) input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+}
+.input-box:nth-of-type(2) input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+}
+
+.btn-box {
+    width: 90%; /* 关键改动：让其宽度相对于父容器.box */
+    max-width: 300px; /* 同样限制最大宽度 */
+    margin-top: 10px;
+}
+
+.btn-box > div {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-box button {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    height: 60px;
+    font-weight: 600;
+    font-size: 40px;
+    letter-spacing: 10px;
+    cursor: pointer;
+    color: #e42a2a;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    box-shadow: 0 4px 15px rgba(201, 97, 222, .4);
+    transition: transform .3s, box-shadow .3s, background .3s;
+    border: none; /* 最好明确移除按钮的默认边框 */
+    border-radius: 8px; /* 建议与输入框保持一致的圆角 */
+}
+
+/* 波纹伪元素 */
+.btn-box button::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .4);
+    transform: translate(-50%, -50%);
+    transition: width .6s, height .6s;
+}
+
+.btn-box button:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 97, 222, .6);
+}
+
+.btn-box button:active {
+    transform: translateY(0);
+}
+
+/* ========== 开始菜单纵向按钮组 ========== */
+.start-menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 320px;
+    margin: 10px auto 0;
+}
+
+.start-menu-actions .menu-btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #c961de 0%, #642c74 55%, #280f2d 100%);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 14px;
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    box-shadow: 0 4px 14px -2px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08) inset;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background .5s, transform .25s, box-shadow .35s, letter-spacing .35s;
+}
+
+.start-menu-actions .menu-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.35), transparent 60%);
+    opacity: .18;
+    transition: opacity .5s;
+    pointer-events: none;
+}
+
+.start-menu-actions .menu-btn:hover {
+    transform: translateY(-4px);
+    letter-spacing: 3px;
+    box-shadow: 0 10px 30px -6px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,0.15) inset;
+}
+.start-menu-actions .menu-btn:hover::before {opacity:.32;}
+
+.start-menu-actions .menu-btn:active {
+    transform: translateY(-1px) scale(.97);
+}
+
+.start-menu-actions .menu-btn:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .start-menu-actions {gap:14px;max-width: 100%;}
+  .start-menu-actions .menu-btn {font-size:18px;padding:13px 18px;}
+}
+
+@media (min-width: 1400px) {
+  .start-menu-actions {max-width:420px;gap:22px;}
+  .start-menu-actions .menu-btn {font-size:22px;padding:16px 26px;}
+}
+
+
+/* ========== 媒体查询 (关键改动：放在文件末尾！) ========== */
+/* 当屏幕宽度小于等于500px时，应用以下样式 */
+@media (max-width: 600px) {
+    .box {
+        padding: 20px 0; /* 减小上下内边距 */
+    }
+
+    .LOGIN {
+        font-size: 28px; /* 适当减小标题字号 */
+        margin-bottom: 25px;
+    }
+
+    .input-box {
+        margin-bottom: 20px;
+    }
+
+    .btn-box button {
+        height: 52px;
+        font-size: 28px;
+        letter-spacing: 6px;
+    }
+}
+
+@media (min-width: 1400px) {
+    /* 大屏适配：保持居中但不要过宽过高 */
+    .box {
+        max-width: 720px;      /* 合理阅读宽度 */
+        min-height: 560px;     /* 略增高度保证视觉比例 */
+        padding: 48px 0;       /* 适度内边距 */
+    }
+
+    .LOGIN {
+        font-size: 52px;       /* 介于基础 32px 与旧 70px 之间 */
+        letter-spacing: 4px;
+        margin-bottom: 36px;
+    }
+
+    .input-box,
+    .btn-box { max-width: 520px; }
+
+    .input-box label { font-size: 26px; }
+
+    .btn-box button {
+        height: 54px;
+        font-size: 24px;
+        letter-spacing: 4px;
+    }
+}

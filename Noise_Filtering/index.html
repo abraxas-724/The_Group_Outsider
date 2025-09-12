@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>噪音过滤</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>噪音过滤</h1>
+    
+    <div class="game-container">
+        <div class="drop-zone task-list" id="taskList">
+            <img src="assets/task_list.png" alt="任务列表">
+            <p>任务列表</p>
+        </div>
+
+    <div class="drop-zone trash" id="trash">
+        <img id="trashImage" src="assets/trash.png" alt="回收站">
+        <p>回收站</p>
+    </div>
+
+        <div class="word-board" id="wordBoard"></div>
+
+        <div class="game-stats">
+            <p>分数: <span id="score">0</span></p>
+            <p>时间: <span id="time">60</span>s</p>
+        </div> 
+
+        <div id="overlay" class="overlay">
+            <div class="overlay-content">
+                <h2 id="overlayTitle">游戏开始</h2>
+                <p id="overlayMessage">将技术词汇拖到左侧，感性词汇拖到右侧。</p>
+                <button id="startButton">开始</button>
+                <button id="returnButton" class="hidden">返回剧情</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

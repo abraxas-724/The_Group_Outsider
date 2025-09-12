@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>泰拉瑞亚风格闯关（已修复下一关按键失灵）</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* 粒子背景样式 */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+}
+
+/* 确保游戏画布在粒子背景之上 */
+#gameCanvas {
+    position: relative;
+    z-index: 1;
+}
+</style>
+</head>
+<body>
+<!-- 粒子背景画布 -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- 游戏画布 -->
+<canvas id="gameCanvas"></canvas>
+
+<div id="ui">
+  <div>坐标: <span id="coordinates">X: 0, Y: 0</span></div>
+  <div>关卡: <span id="level">0 / 0</span></div>
+</div>
+
+<div id="fileArea">
+  选择多张 CSV/Excel 地图（按顺序）：
+  <input type="file" id="file" multiple accept=".csv,.xlsx"/>
+</div>
+
+<div id="overlay">
+  <div id="overlayText"></div>
+  <button id="btnRestart">继续</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js "></script>
+
+<!-- 粒子系统脚本 -->
+<script>
+// 粒子背景系统
+const particlesCanvas = document.getElementById('particles-canvas');
+const particlesCtx = particlesCanvas.getContext('2d');
+
+// 设置画布大小
+function resizeParticlesCanvas() {
+    particlesCanvas.width = window.innerWidth;
+    particlesCanvas.height = window.innerHeight;
+}
+resizeParticlesCanvas();
+window.addEventListener('resize', resizeParticlesCanvas);
+
+// 粒子类
+class Particle {
+    constructor() {
+        this.x = Math.random() * particlesCanvas.width;
+        this.y = Math.random() * particlesCanvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 1 - 1;
+        this.speedY = Math.random() * 1 - 1;
+        this.color = `hsl(${Math.random() * 60 + 180}, 70%, 50%)`;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // 边界检测
+        if (this.x > particlesCanvas.width) this.x = 0;
+        if (this.x < 0) this.x = particlesCanvas.width;
+        if (this.y > particlesCanvas.height) this.y = 0;
+        if (this.y < 0) this.y = particlesCanvas.height;
+    }
+
+    draw() {
+        particlesCtx.fillStyle = this.color;
+        particlesCtx.beginPath();
+        particlesCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        particlesCtx.fill();
+    }
+}
+
+// 创建粒子数组
+const particlesArray = [];
+const numberOfParticles = 100;
+for (let i = 0; i < numberOfParticles; i++) {
+    particlesArray.push(new Particle());
+}
+
+// 连接临近粒子
+function connectParticles() {
+    let opacityValue = 1;
+    for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a; b < particlesArray.length; b++) {
+            let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) 
+                         + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+            
+            if (distance < (particlesCanvas.width / 15) * (particlesCanvas.height / 15)) {
+                opacityValue = 1 - (distance / 10000);
+                particlesCtx.strokeStyle = `rgba(100, 200, 255, ${opacityValue})`;
+                particlesCtx.lineWidth = 0.5;
+                particlesCtx.beginPath();
+                particlesCtx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                particlesCtx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                particlesCtx.stroke();
+            }
+        }
+    }
+}
+
+// 动画循环
+function animateParticles() {
+    particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+    
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+    }
+    
+    connectParticles();
+    requestAnimationFrame(animateParticles);
+}
+
+// 启动粒子动画
+animateParticles();
+</script>
+
+<script src="js/main.js"></script>
+</body>
+</html>

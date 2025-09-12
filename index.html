@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="stylesheet" href="css/base-responsive.css" />
+  <title>组外人 · 登录</title>
+  <link rel="stylesheet" href="css/start-login.css" />
+</head>
+
+<body class="page-login">
+  <div class="bg-gradient"></div>
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-noise"></div>
+
+  <div class="ui-shell">
+    <h1 class="site-title fade-in-up">THE GROUP OUTSIDER</h1>
+    <section class="glass-panel fade-in-up fade-delay-1" aria-labelledby="login-title">
+      <form class="login-form" id="login-form" autocomplete="off">
+        <h2 id="login-title"
+          style="margin:0;font-size:1.1rem;letter-spacing:.25em;font-weight:600;color:var(--clr-text-mid);text-transform:uppercase;">
+          LOGIN / SIGN IN</h2>
+        <div class="field">
+          <label for="login-user">账号</label>
+          <input id="login-user" name="user" type="text" required maxlength="24" placeholder="用户名" />
+        </div>
+        <div class="field">
+          <label for="login-pass">密码</label>
+          <input id="login-pass" name="pass" type="password" required minlength="4" maxlength="32" placeholder="••••" />
+        </div>
+        <div class="helper-row">
+          <span id="login-msg">输入账号与密码继续</span>
+          <a href="register.html" class="register-link">注册 →</a>
+        </div>
+        <div class="actions-row">
+          <button type="button" id="btn-login" class="btn">登录</button>
+          <button type="reset" class="btn alt">重置</button>
+        </div>
+      </form>
+      <p class="footer-hint" style="margin-top:-10px;">THE GROUP OUTSIDER · ALPHA UI BUILD</p>
+    </section>
+  </div>
+
+  <script>
+    // 注册 Service Worker（PWA 离线/安装支持）
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => { });
+      });
+    }
+  </script>
+  <script src="js/index-inline.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+{
+  "levels": [
+    {
+      "name": "level1",
+      "file": "maps/map2.csv"
+    },
+    {
+      "name": "level2",
+      "file": "maps/map1.csv"
+    },
+    {
+      "name": "level3",
+      "file": "maps/map3.csv"
+    },
+    {
+      "name": "level4",
+      "file": "maps/map4.csv"
+    },
+    {
+      "name": "level5",
+      "file": "maps/1.csv"
+    },
+    {
+      "name": "level6",
+      "file": "maps/map6.csv"
+    },
+    
+    {
+      "name": "level7",
+      "file": "maps/map7.csv"
+    },
+    {
+      "name": "level8",
+      "file": "maps/map8.csv"
+    },
+    {
+      "name": "level9",
+      "file": "maps/map5.csv"
+    }
+    
+
+  ]
+}

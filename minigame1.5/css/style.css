@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 全局禁用文字选择，避免分数/倒计时/提示被选中 */
+html,
+body,
+* {
+    -webkit-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+/* 兼容保留：UI 容器也禁用选择（被上面全局规则覆盖） */
+#ui {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    background: #1a1a2e;
+}
+
+canvas {
+    display: block;
+}
+
+#ui {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: white;
+    z-index: 100;
+}
+
+#coordinates {
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px black;
+}
+
+#level {
+    font-weight: bold;
+    color: #ff7f50;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+    color: white;
+    text-align: center;
+}
+
+#overlayText {
+    font-size: 3em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#btnRestart {
+    padding: 15px 40px;
+    font-size: 1.2em;
+    background: #ff7f50;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#btnRestart:hover {
+    background: #ff9065;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+#btnRestart:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.particle {
+    position: absolute;
+    background: #C0C9C9;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99;
+}
+
+.track-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: #ff0033;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <link rel="stylesheet" href="css/base-responsive.css" />
+  <title>组外人 · 设置</title>
+  <link rel="stylesheet" href="css/start-login.css" />
+  <link rel="stylesheet" href="css/settings-inline.css" />
+</head>
+
+<body class="page-settings">
+  <div class="bg-gradient"></div>
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-noise"></div>
+  <div class="ui-shell">
+    <h1 class="site-title fade-in-up">SETTINGS</h1>
+    <section class="glass-panel fade-in-up fade-delay-1" style="max-width:1080px;" aria-labelledby="settings-title">
+      <h2 id="settings-title"
+        style="margin:0;font-size:1.05rem;letter-spacing:.25em;font-weight:600;color:var(--clr-text-mid);text-transform:uppercase;">
+        CONFIGURATION</h2>
+      <div class="settings-grid fade-in-up fade-delay-2">
+        <div class="setting-card cascading-enter delay-1">
+          <h3>音量</h3>
+          <p>调节主音量与环境音。</p>
+          <div class="range-row"><span style="font-size:.6rem;width:38px;">主音</span><input id="vol-master" type="range"
+              min="0" max="100" value="80" /></div>
+          <div class="range-row"><span style="font-size:.6rem;width:38px;">环境</span><input id="vol-amb" type="range"
+              min="0" max="100" value="60" /></div>
+        </div>
+        <div class="setting-card cascading-enter delay-2">
+          <h3>文本速度</h3>
+          <p>影响打字机单字符延时。</p>
+          <div class="range-row"><span style="font-size:.6rem;width:38px;">速度</span><input id="text-speed" type="range"
+              min="10" max="120" value="35" /></div>
+          <p style="font-size:.6rem;">当前: <span id="text-speed-val">35</span> ms/字符</p>
+        </div>
+        <div class="setting-card cascading-enter delay-3">
+          <h3>主题</h3>
+          <p>切换界面主色调。</p>
+          <select id="theme-select" class="select">
+            <option value="default">默认 蓝/紫</option>
+            <option value="amber">琥珀 Amber</option>
+            <option value="emerald">翠绿 Emerald</option>
+            <option value="crimson">深红 Crimson</option>
+          </select>
+        </div>
+        <div class="setting-card cascading-enter delay-4">
+          <h3>跳过模式</h3>
+          <p>加速已读文本显示。</p>
+          <label class="toggle"><input id="skip-read" type="checkbox" /><span class="dot"></span>启用已读瞬显</label>
+        </div>
+        <div class="setting-card cascading-enter delay-5">
+          <h3>自动播放</h3>
+          <p>无需点击自动推进。</p>
+          <label class="toggle"><input id="auto-mode" type="checkbox" /><span class="dot"></span>开启自动播放</label>
+          <div class="range-row"><span style="font-size:.6rem;width:38px;">间隔</span><input id="auto-interval"
+              type="range" min="800" max="4000" step="100" value="1800" /></div>
+          <p style="font-size:.6rem;">当前: <span id="auto-interval-val">1800</span> ms</p>
+        </div>
+        <div class="setting-card cascading-enter delay-6">
+          <h3>数据</h3>
+          <p>清除登录/进度等本地存储。</p>
+          <button id="btn-clear-data" class="btn alt" style="height:44px;font-size:.7rem;">清除本地数据</button>
+        </div>
+      </div>
+      <div class="actions-bottom">
+        <button id="btn-back" class="btn alt" style="flex:0 0 auto;width:160px;">返回</button>
+        <button id="btn-save" class="btn" style="flex:0 0 auto;width:180px;">保存设置</button>
+      </div>
+      <p class="footer-hint" style="margin-top:12px;">THE GROUP OUTSIDER · SETTINGS</p>
+    </section>
+  </div>
+  <script src="js/settings-inline.js"></script>
+</body>
+
+</html>

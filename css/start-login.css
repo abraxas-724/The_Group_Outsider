@@ -1,0 +1,132 @@
+/* ===================== THE GROUP OUTSIDER START & LOGIN UI =====================
+   主题: 赛博存在主义 / 代码与虚无  (Code x Existentialism)
+   特性: 变量化主题色, 可扩展暗色霓虹风, 响应式, 动态背景, 玻璃拟态 + 微妙噪声
+=============================================================================== */
+:root {
+  /* 颜色设计 */
+  --clr-bg-base: #111827; /* 深空灰 */
+  --clr-bg-grad-a: #0d1118;
+  --clr-bg-grad-b: #111d2e;
+  --clr-accent: #2563eb;       /* 代码蓝 */
+  --clr-accent-alt: #9333ea;   /* 代码紫 */
+  --particle-link-rgb: 59,130,246;
+  --particle-node-color: rgba(201,97,222,.75);
+  --clr-danger: #DC2626;       /* 错误红 */
+  --clr-text-hi: #E5E7EB;      /* 亮灰 */
+  --clr-text-mid: #94a3b8;
+  --clr-panel: rgba(17,24,39,0.85);      /* 毛玻璃黑 */
+  --clr-panel-border: #4B5563;           /* 界面灰 */
+  --clr-panel-glow: 0 0 0 1px rgba(255,255,255,0.05) inset, 0 8px 24px -8px rgba(0,0,0,.6);
+  --blur-strength: 18px;
+  --radius-lg: 28px;
+  --radius-sm: 10px;
+  --transition: .45s cubic-bezier(.83,.02,.17,1);
+  /* 字体设计 */
+  --font-ui: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-code: "Fira Code", "JetBrains Mono", ui-monospace, Menlo, Consolas, "Courier New", monospace;
+}
+
+html,body {height:100%;margin:0;padding:0;font-family:var(--font-ui);background:#000;color:var(--clr-text-hi);} 
+body {overflow:hidden;}
+.hidden {display:none !important;}
+
+
+/* 背景层 */
+#bg-canvas {position:fixed;inset:0;z-index:-1;filter:blur(.3px) brightness(.9);} 
+.bg-gradient {position:fixed;inset:0;background:
+  radial-gradient(circle at 25% 25%,rgba(29,41,64,.85) 0%,transparent 55%),
+  radial-gradient(circle at 85% 70%,rgba(53,26,70,.8) 0%,transparent 60%),
+  linear-gradient(135deg,rgba(13,17,24,.72),rgba(17,29,46,.72));
+  z-index:-4;}
+.bg-noise {position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.08;mix-blend-mode:overlay;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2NkYGD4z0AEYBxVSFUwCkb9T0A0DNMgDTBqGgQAa3QFCW7MQJwAAAAASUVORK5CYII=");}
+
+/* 统一容器 */
+.ui-shell {position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;padding:clamp(20px,4vh,80px) clamp(18px,4vw,120px);}
+
+/* LOGO / Title */
+.site-title {font-size:clamp(40px,5vw,96px);font-weight:700;letter-spacing:.05em;line-height:1.05;margin:0 0 34px;position:relative;display:inline-block;background:linear-gradient(90deg,var(--clr-accent),var(--clr-accent-alt));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 6px rgba(59,130,246,.35));}
+.site-title::after {content:"";position:absolute;inset:0;mix-blend-mode:color-dodge;background:repeating-linear-gradient(90deg,rgba(255,255,255,.15) 0 2px,transparent 2px 4px);opacity:.25;animation:scan 6s linear infinite;}
+@keyframes scan {to {transform:translateX(60%);} }
+
+/* 面板基类 */
+.glass-panel {position:relative;width:100%;max-width:480px;padding:42px clamp(30px,5vw,54px) 52px;background:var(--clr-panel);border:1px solid var(--clr-panel-border);backdrop-filter:blur(var(--blur-strength)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur-strength)) saturate(180%);border-radius:var(--radius-lg);box-shadow:var(--clr-panel-glow);display:flex;flex-direction:column;gap:40px;overflow:hidden;color:var(--clr-text-hi);} 
+.glass-panel::before,.glass-panel::after {content:"";position:absolute;pointer-events:none;}
+.glass-panel::before {inset:0;background:linear-gradient(120deg,rgba(255,255,255,.12),transparent 60%);mix-blend-mode:overlay;opacity:.5;}
+.glass-panel::after {width:220%;height:220%;left:-60%;top:-60%;background:conic-gradient(from 0deg,rgba(59,130,246,.0),rgba(59,130,246,.18),rgba(201,97,222,.0));animation:spin 10s linear infinite;opacity:.35;filter:blur(60px);}
+@keyframes spin {to {transform:rotate(360deg);} }
+
+/* 登录表单 */
+.login-form {display:flex;flex-direction:column;gap:26px;width:100%;}
+.field {display:flex;flex-direction:column;gap:8px;}
+.field label {font-size:.85rem;letter-spacing:.15em;font-weight:600;text-transform:uppercase;color:var(--clr-text-mid);}
+.field input {height:52px;border:1px solid var(--clr-panel-border);background:rgba(255,255,255,.06);border-radius:var(--radius-sm);padding:0 16px;font-size:1rem;color:var(--clr-text-hi);font-family:var(--font-ui);outline:none;transition:border-color .25s,background .35s,box-shadow .35s;}
+.field input:hover {background:rgba(255,255,255,.09);} 
+.field input:focus {border-color:var(--clr-accent);box-shadow:0 0 0 3px rgba(59,130,246,.35),0 0 0 1px var(--clr-accent) inset;background:rgba(59,130,246,.15);}
+
+.helper-row {display:flex;justify-content:space-between;align-items:center;font-size:.7rem;color:var(--clr-text-mid);}
+/* 登录页注册按钮（链接）放大与黑色 */
+.register-link {font-size:1rem;font-weight:600;color:#c9b5b5 !important;text-decoration:none;padding:4px 10px;border-radius:6px;transition:.25s;letter-spacing:.05em;}
+.register-link:hover {background:#fff;transform:translateY(-2px);} 
+.register-link:active {transform:translateY(0);} 
+
+.actions-row {display:flex;gap:14px;margin-top:4px;}
+.btn {--btn-bg:linear-gradient(135deg,var(--clr-accent) 0%,var(--clr-accent-alt) 100%);flex:1;position:relative;display:inline-flex;justify-content:center;align-items:center;height:54px;padding:0 22px;font-size:.95rem;font-weight:600;letter-spacing:.06em;background:var(--btn-bg);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:var(--radius-sm);cursor:pointer;overflow:hidden;transition:var(--transition);text-transform:uppercase;}
+.btn:before {content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.35),transparent 70%);opacity:.0;transition:opacity .6s;}
+.btn:hover:before {opacity:.55;} 
+.btn:hover {transform:translateY(-3px);box-shadow:0 10px 28px -8px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.15) inset;}
+.btn:active {transform:translateY(-1px) scale(.97);} 
+.btn.alt {--btn-bg:linear-gradient(135deg,#1e293b,#0f172a);color:var(--clr-text-mid);} 
+.btn.alt:hover {color:var(--clr-text-hi);} 
+
+/* Start Menu 扩展 */
+.menu-stack {display:flex;flex-direction:column;gap:18px;width:100%;}
+.menu-btn-neo {--h:58px;position:relative;height:var(--h);border:1px solid rgba(255,255,255,.22);border-radius:var(--radius-sm);background:linear-gradient(120deg,rgba(255,255,255,.08),rgba(255,255,255,.02));backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);display:flex;align-items:center;justify-content:center;color:var(--clr-text-hi);font-weight:600;letter-spacing:.12em;font-size:.9rem;cursor:pointer;overflow:hidden;transition:var(--transition);}
+.menu-btn-neo::before {content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(59,130,246,.0),rgba(59,130,246,.5),rgba(59,130,246,.0));transform:translateX(-120%);animation:shine 6s ease-in-out infinite;opacity:.4;}
+.menu-btn-neo::after {content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.07);mix-blend-mode:overlay;}
+@keyframes shine {50%{transform:translateX(120%);} }
+.menu-btn-neo:hover {border-color:var(--clr-accent);box-shadow:0 6px 30px -10px rgba(59,130,246,.55);transform:translateY(-4px);} 
+.menu-btn-neo:active {transform:translateY(-1px) scale(.985);} 
+
+/* 分组装饰线 */
+.section-sep {height:1px;width:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);opacity:.5;}
+
+/* 辅助提示 */
+.footer-hint {margin-top:28px;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--clr-text-mid);text-align:center;opacity:.65;}
+
+/* 自适应 */
+@media (max-width:640px){
+  .glass-panel {padding:34px 28px 44px;border-radius:22px;gap:34px;}
+  .site-title {font-size:clamp(34px,10vw,72px);}
+  .btn, .menu-btn-neo {height:52px;font-size:.78rem;}
+  .login-form {gap:20px;}
+  .field input {height:50px;}
+}
+
+/* 进入动画 */
+.fade-in-up {opacity:0;transform:translateY(40px) scale(.98);animation:enter .9s cubic-bezier(.65,.02,.19,1) forwards;} 
+.fade-delay-1 {animation-delay:.1s;} .fade-delay-2 {animation-delay:.2s;} .fade-delay-3 {animation-delay:.3s;} .fade-delay-4 {animation-delay:.4s;} .fade-delay-5 {animation-delay:.5s;}
+@keyframes enter {to {opacity:1;transform:translateY(0) scale(1);} }
+
+/* 点击淡出过渡复用 */
+body.page-exit {animation:pageLeave .6s ease forwards;} 
+@keyframes pageLeave {to {opacity:0;filter:blur(4px);} }
+
+/* 可选滚动条美化 */
+::-webkit-scrollbar {width:10px;}::-webkit-scrollbar-track{background:rgba(255,255,255,.04);}::-webkit-scrollbar-thumb{background:linear-gradient(var(--clr-accent),var(--clr-accent-alt));border-radius:20px;}
+
+body.page-login{background:url('../assets/images/scenes/start.png') center/cover no-repeat;}
+body.page-start{background:url('../assets/images/scenes/start.png') center/cover no-repeat;}
+body.page-register{background:url('../assets/images/scenes/start.png') center/cover no-repeat;}
+body.page-settings{background:url('../assets/images/scenes/start.png') center/cover no-repeat;}
+
+/* 主题变体 (通过 body[data-theme] 应用) */
+body[data-theme="amber"] {--clr-accent:#f59e0b;--clr-accent-alt:#fbbf24;}
+body[data-theme="emerald"] {--clr-accent:#10b981;--clr-accent-alt:#34d399;}
+body[data-theme="crimson"] {--clr-accent:#dc2626;--clr-accent-alt:#f87171;}
+
+/* 下拉 select 全局可见性修复 */
+select, .select {color:var(--clr-text-hi);background:rgba(255,255,255,0.08);}
+select:focus, .select:focus {background:rgba(255,255,255,0.15);}
+
+/* 为原生下拉菜单在深色模式下提供前景 (部分浏览器) */
+select option {background:#0f172a;color:#e2e8f0;}

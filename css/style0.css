@@ -1,0 +1,306 @@
+/* 响应式与安全区变量 */
+:root {
+    --safe-top: env(safe-area-inset-top);
+    --safe-right: env(safe-area-inset-right);
+    --safe-bottom: env(safe-area-inset-bottom);
+    --safe-left: env(safe-area-inset-left);
+}
+
+/* --- 基础与全局布局 (Base & Global Layout) --- */
+body {
+    background-color: #000;
+    color: #E5E7EB;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* 修正移动端地址栏导致的 100vh 偏差（支持动态视口单位时） */
+@supports (height: 100dvh) {
+    body {
+        height: 100dvh;
+    }
+}
+
+#game-container {
+    position: relative;
+    /* 以 16:9 为设计基准，在视口内等比缩放，不溢出 */
+    width: min(100vw, calc(100vh * (16 / 9)));
+    height: min(100vh, calc(100vw * (9 / 16)));
+    max-width: 100vw;
+    max-height: 100vh;
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background-color: #111;
+    overflow: hidden;
+    /* 为带刘海设备预留安全边距 */
+    padding: max(0px, var(--safe-top)) max(0px, var(--safe-right)) max(0px, var(--safe-bottom)) max(0px, var(--safe-left));
+}
+
+/* 使用动态视口单位，在支持的浏览器上避免地址栏导致的 100vh 偏差 */
+@supports (height: 100dvh) {
+    #game-container {
+        width: min(100dvw, calc(100dvh * (16 / 9)));
+        height: min(100dvh, calc(100dvw * (9 / 16)));
+        max-width: 100dvw;
+        max-height: 100dvh;
+    }
+}
+
+/* --- 游戏图层 (Game Layers) --- */
+#scene-background,
+#character-layer,
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#scene-background {
+    object-fit: cover;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 1;
+}
+
+#character-layer {
+    z-index: 2;
+}
+
+#ui-layer {
+    z-index: 3;
+    pointer-events: auto;
+}
+
+/* --- 角色样式 (Character Styles) --- */
+.character {
+    position: absolute;
+    height: clamp(46%, 58vw, 60%);
+    bottom: 0;
+    transform: translateX(-50%);
+    transition: all 0.4s ease-in-out, filter 0.3s ease-in-out;
+}
+
+.pos-left {
+    left: 25%;
+}
+
+.pos-center {
+    left: 50%;
+}
+
+.pos-right {
+    left: 80%;
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(50px);
+}
+
+.inactive {
+    filter: brightness(0.6);
+}
+
+/* --- UI - 对话框 (UI - Dialogue Box) --- */
+#dialogue-box {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(94%, 1400px);
+    height: clamp(22%, 24vh, 28%);
+    padding: clamp(14px, 2.2vh, 30px) clamp(14px, 2.2vh, 30px) clamp(60px, 8vh, 90px);
+    box-sizing: border-box;
+    background-color: rgba(17, 24, 39, 0.85);
+    border: 2px solid #4B5563;
+    border-radius: 10px;
+    color: #E5E7EB;
+    font-family: "PingFang SC", Arial, sans-serif;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+#dialogue-box.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 防止快速点击时选中文本/出现系统呼出与点击高亮 —— 扩大到整页（仅 game.html 引入本文件） */
+body,
+body * {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 仍允许在表单/可编辑区域选择文本 */
+input,
+textarea,
+[contenteditable="true"],
+input *,
+textarea *,
+[contenteditable="true"] * {
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+}
+
+/* 如需在某处允许选中文本，可为容器添加 .allow-select */
+.allow-select,
+.allow-select * {
+    -webkit-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+}
+
+#speaker-name {
+    font-family: "PingFang SC", Arial, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 2vw + 0.8rem, 2.2rem);
+    color: #2563eb;
+    margin: 0 0 0.6em 0;
+}
+
+#dialogue-text {
+    font-family: "PingFang SC", Arial, sans-serif;
+    margin: 0;
+    font-size: clamp(0.95rem, 2.2vw + 0.5rem, 1.6rem);
+    line-height: 1.65;
+    color: #E5E7EB;
+}
+
+/* 横屏且高度较小的设备：整体 UI 缩放以避免过大 */
+@media (orientation: landscape) and (max-height: 480px) {
+    #dialogue-box {
+        height: clamp(16%, 20vh, 22%);
+        padding: 10px 12px clamp(38px, 6vh, 60px);
+        border-width: 1px;
+    }
+
+    #speaker-name {
+        font-size: clamp(0.95rem, 1.2rem, 1.4rem);
+    }
+
+    #dialogue-text {
+        font-size: clamp(0.9rem, 1.05rem, 1.2rem);
+        line-height: 1.5;
+    }
+}
+
+#choices-container {
+    position: relative;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#centered-choices {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4vh 6vw;
+    gap: 38px;
+    background: rgba(17, 24, 39, 0.60);
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    z-index: 220;
+    opacity: 1;
+    transition: opacity .3s ease;
+}
+
+#centered-choices.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.choice-button {
+    width: min(880px, 92vw);
+    padding: 18px 28px;
+    background: linear-gradient(145deg, #1f2937, #111827);
+    border: 2px solid #4B5563;
+    border-radius: 14px;
+    color: #e5e7eb;
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 1.45;
+    font-family: "PingFang SC", Arial, sans-serif;
+    font-weight: 400;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: background .25s, border-color .25s, transform .18s, color .25s, box-shadow .3s;
+    position: relative;
+}
+
+.choice-button:hover,
+.choice-button:focus {
+    background: linear-gradient(145deg, #2563eb, #9333ea);
+    border-color: #2563eb;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px -10px rgba(59, 130, 246, .55), 0 0 0 1px rgba(255, 255, 255, .06) inset;
+    outline: none;
+}
+
+.choice-button:active {
+    transform: translateY(-1px) scale(.985);
+}
+
+.choice-button.choice-faded {
+    opacity: .35;
+    filter: grayscale(.4) brightness(.8);
+}
+
+@media (max-width:680px) {
+    .choice-button {
+        font-size: 1.05rem;
+        padding: 14px 18px;
+        border-radius: 11px;
+    }
+
+    #centered-choices {
+        gap: 26px;
+        padding: 4vh 4vw;
+    }
+}
+
+/* 横屏且高度较小时，压缩选项按钮与间距，避免遮挡 */
+@media (orientation: landscape) and (max-height: 480px) {
+    #centered-choices {
+        gap: 18px;
+        padding: 3vh 3vw;
+    }
+
+    .choice-button {
+        font-size: 0.95rem;
+        padding: 10px 14px;
+        border-width: 1px;
+        border-radius: 10px;
+    }
+}
+
+/* 选中或禁用时的样式，防止再次触发 */
+.choice-button:disabled {
+    opacity: 0.55;
+    cursor: default;
+    background-color: #303841;
+}
+
+.choice-faded {
+    opacity: 0.35;
+}

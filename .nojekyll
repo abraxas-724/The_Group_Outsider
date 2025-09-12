@@ -1,0 +1,2 @@
+# Disable Jekyll on GitHub Pages
+# Ensures files and folders beginning with underscores and other assets are served as-is.

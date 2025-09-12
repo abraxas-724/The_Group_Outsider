@@ -1,0 +1,383 @@
+/* 统一存/读档面板样式 (从 game.html 提取) */
+/* 通用隐藏工具类：任何加了 sl-hidden 的面板都会被隐藏（供开始页/游戏内通用） */
+.sl-hidden {
+	display: none !important;
+	opacity: 0 !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
+#save-load-overlay,
+#inline-save-load,
+#settings-overlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4vh 5vw;
+	background: rgba(17, 24, 39, 0.0);
+	backdrop-filter: blur(14px) saturate(140%);
+	z-index: 250;
+	transition: background .55s ease, opacity .4s ease, visibility .4s ease;
+	pointer-events: auto;
+	opacity: 1;
+	font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+#save-load-overlay:not(.hidden),
+#inline-save-load:not(.sl-hidden),
+#settings-overlay:not(.sl-hidden) {
+	background: rgba(17, 24, 39, 0.68);
+}
+
+#save-load-overlay.hidden,
+#inline-save-load.sl-hidden,
+#settings-overlay.sl-hidden {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.sl-panel {
+	width: clamp(320px, 70vw, 920px);
+	max-height: 82vh;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	background: rgba(17, 24, 39, 0.85);
+	border: 1px solid #4B5563;
+	border-radius: 18px;
+	padding: 18px 20px 20px;
+	box-shadow: 0 18px 55px -12px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .06) inset;
+	color: #E5E7EB;
+	font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+	transform: translateY(24px) scale(.94);
+	opacity: 0;
+	animation: slPanelIn .55s cubic-bezier(.55, .1, .25, 1) forwards;
+	will-change: transform, opacity;
+}
+
+#save-load-overlay.hidden .sl-panel,
+#inline-save-load.sl-hidden .sl-panel {
+	animation: none;
+	opacity: 0;
+	transform: translateY(24px) scale(.94);
+}
+
+@keyframes slPanelIn {
+	0% {
+		opacity: 0;
+		transform: translateY(34px) scale(.9);
+	}
+
+	60% {
+		opacity: 1;
+		transform: translateY(-4px) scale(1);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+.sl-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.sl-header h2 {
+	margin: 0;
+	font-size: 2rem;
+	letter-spacing: .5px;
+	font-weight: 700;
+	color: #2563eb;
+}
+
+/* 存档菜单标题：2em，强调色 */
+.sl-header-actions {
+	display: flex;
+	gap: 8px;
+}
+
+.sl-hint {
+	font-size: .70rem;
+	color: #94a3b8;
+	line-height: 1.4;
+	margin-top: -6px;
+}
+
+.sl-slots {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 14px;
+	overflow: auto;
+	padding-right: 2px;
+}
+
+.sl-slot {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 10px 12px 10px;
+	background: #1f262d;
+	border: 1px solid #4B5563;
+	border-radius: 14px;
+	cursor: pointer;
+	transition: background .25s, transform .25s, border-color .25s, box-shadow .35s;
+	overflow: hidden;
+}
+
+.sl-thumb {
+	width: 100%;
+	aspect-ratio: 16/9;
+	background: #111 center/cover no-repeat;
+	border-radius: 10px;
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, .05) inset, 0 4px 18px -6px rgba(0, 0, 0, .55);
+	position: relative;
+	overflow: hidden;
+}
+
+.sl-thumb::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to bottom, rgba(0, 0, 0, .0), rgba(0, 0, 0, .55));
+	opacity: .85;
+}
+
+.sl-slot:hover {
+	background: #252e37;
+	transform: translateY(-3px);
+}
+
+.sl-slot[data-empty="true"] {
+	opacity: .6;
+	border-style: dashed;
+}
+
+.sl-slot h3 {
+	margin: 0;
+	font-size: .78rem;
+	font-weight: 600;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.sl-slot .sl-time {
+	font-size: .62rem;
+	color: #64748b;
+}
+
+.sl-slot .sl-node {
+	font-size: .63rem;
+	line-height: 1.25;
+	color: #a5b4c3;
+	word-break: break-all;
+}
+
+.sl-actions {
+	margin-top: auto;
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+.sl-mode-load .sl-slot[data-empty="true"] {
+	opacity: .45;
+}
+
+.sl-btn {
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 1.2em;
+	letter-spacing: .5px;
+	padding: 8px 14px;
+	border-radius: 8px;
+	background: #2563eb;
+	color: #fff;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	transition: background .25s, transform .25s;
+}
+
+.sl-btn:hover {
+	background: #1d4ed8;
+}
+
+.sl-btn:active {
+	transform: translateY(1px);
+}
+
+.sl-btn.delete {
+	background: #DC2626;
+}
+
+.sl-btn.delete:hover {
+	background: #b91c1c;
+}
+
+.sl-btn.sl-ghost {
+	background: #334155;
+}
+
+.sl-btn.sl-ghost:hover {
+	background: #475569;
+}
+
+.sl-footer {
+	margin-top: 4px;
+	font-size: .58rem;
+	text-align: right;
+	color: #64748b;
+}
+
+.sl-mode-load .sl-panel {
+	border-color: #4B5563;
+	background: rgba(17, 24, 39, 0.85);
+}
+
+.sl-mode-load .sl-btn {
+	background: #2563eb;
+}
+
+.sl-mode-load .sl-btn:hover {
+	background: #1d4ed8;
+}
+
+.sl-mode-load .sl-btn.delete {
+	background: #dc2626;
+}
+
+.sl-btn.sl-return {
+	background: #dc2626;
+}
+
+.sl-btn.sl-return:hover {
+	background: #b91c1c;
+}
+
+/* Mobile 优化：覆盖内联宽度、缩小内边距、保证可滚动 */
+@media (max-width:720px) {
+
+	/* 覆盖开始页/游戏内设置面板的内联宽度 */
+	#settings-overlay .sl-panel {
+		width: 94vw !important;
+		max-height: 86vh !important;
+		padding: 14px 14px 16px !important;
+		border-radius: 14px !important;
+	}
+
+	/* 存/读档面板统一窄屏宽度 */
+	#save-load-overlay .sl-panel,
+	#inline-save-load .sl-panel {
+		width: 94vw !important;
+		max-height: 86vh !important;
+		padding: 14px 14px 16px !important;
+		border-radius: 14px;
+	}
+
+	.sl-header h2 {
+		font-size: 1.25rem;
+	}
+
+	.sl-hint {
+		font-size: .62rem;
+	}
+
+	.sl-slots {
+		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	}
+
+	.sl-btn {
+		padding: 6px 12px;
+		font-size: .75rem;
+	}
+}
+
+@media (max-width:640px) {
+	.sl-slots {
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	}
+
+	.sl-btn {
+		padding: 5px 10px;
+		font-size: .65rem;
+	}
+
+	.sl-panel {
+		padding: 16px 16px 18px;
+	}
+
+	.sl-thumb {
+		display: none;
+	}
+}
+
+.sl-slots::-webkit-scrollbar {
+	width: 6px;
+}
+
+.sl-slots::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.sl-slots::-webkit-scrollbar-thumb {
+	background: #334155;
+	border-radius: 20px;
+}
+
+.sl-slots::-webkit-scrollbar-thumb:hover {
+	background: #475569;
+}
+
+/* ===== Settings three column layout ===== */
+#settings-overlay .settings-grid-inline.three-cols {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 18px;
+	align-items: stretch;
+	grid-auto-rows: 1fr;
+}
+
+#settings-overlay .settings-grid-inline.three-cols .setting-card-inline {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+@media (max-width:1100px) {
+	#settings-overlay .settings-grid-inline.three-cols {
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	}
+}
+
+@media (max-width:600px) {
+	#settings-overlay .settings-grid-inline.three-cols {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* 成就（行为记录）面板在移动端的适配 */
+@media (max-width:720px) {
+	#ach-overlay #ach-panel {
+		width: 94vw !important;
+		max-height: 86vh !important;
+		padding: 14px 14px 16px !important;
+	}
+
+	#ach-overlay #ach-panel h3 {
+		font-size: 1rem !important;
+	}
+
+	#ach-overlay #ach-list {
+		grid-template-columns: 1fr !important;
+	}
+}

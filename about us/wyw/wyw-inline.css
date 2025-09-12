@@ -1,0 +1,23 @@
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Helvetica Neue', Arial, 'Microsoft YaHei', sans-serif;}
+body{background:linear-gradient(135deg,#f9f7ff 0%, #f0edf5 100%); color:#333; line-height:1.6; min-height:100vh; display:flex; justify-content:center; align-items:center; padding:20px;}
+.container{max-width:900px; width:100%; background:white; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,.08); overflow:hidden;}
+header{text-align:center; padding:40px 20px; background:linear-gradient(120deg,#8A2BE2,#9370DB); color:white;}
+.profile-container{display:flex; flex-direction:column; align-items:center; gap:20px;}
+.avatar{width:180px;height:180px;border-radius:50%;object-fit:cover;border:5px solid rgba(255,255,255,.3); box-shadow:0 5px 15px rgba(0,0,0,.2); transition:transform .3s ease;}
+.avatar:hover{transform:scale(1.03);} 
+h1{font-size:2.5rem;margin-bottom:10px; letter-spacing:1px; text-shadow:1px 1px 3px rgba(0,0,0,.2);} 
+.title{font-size:1.3rem; opacity:.95; margin-bottom:5px;}
+.content{padding:40px;}
+.intro{text-align:center; margin-bottom:30px; padding-bottom:20px; border-bottom:1px solid #eee;}
+.intro p{font-size:1.1rem; line-height:1.8; color:#555; max-width:700px; margin:0 auto;}
+.details{display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:25px; margin-top:30px;}
+.card{background:#f9f9ff; padding:25px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,.05); transition:transform .3s ease, box-shadow .3s ease;}
+.card:hover{transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,.1);} 
+h2{color:#8A2BE2; margin-bottom:15px; padding-bottom:10px; border-bottom:2px solid #f0f0f0; font-size:1.5rem;}
+.info-item{display:flex; align-items:center; margin-bottom:12px;}
+.info-item i{width:25px; color:#8A2BE2; font-size:1.1rem; margin-right:10px;}
+footer{text-align:center; padding:20px; background:#f5f3ff; color:#666; font-size:.95rem;}
+@media (max-width:768px){ h1{font-size:2rem;} .content{padding:25px;} .details{grid-template-columns:1fr;} }
+/* 图标样式（使用 Font Awesome 5） */
+.icon::before{ display:inline-block; font-style:normal; font-variant:normal; text-rendering:auto; -webkit-font-smoothing:antialiased; font-family:"Font Awesome 5 Free"; font-weight:900; margin-right:10px; width:20px; text-align:center;}
+.school::before{content:"\f19d";} .location::before{content:"\f3c5";} .email::before{content:"\f0e0";} .hobby::before{content:"\f005";}

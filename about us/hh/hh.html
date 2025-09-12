@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 让手机浏览器默认按 1:1 缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+
+    <!-- 引入 Google 思源宋体（可选） -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- ==================  样 式 表  ================== -->
+    <link rel="stylesheet" href="hh-inline.css">
+</head>
+
+<body>
+    <!-- ==================  顶 部 导 航  ================== -->
+    <header>
+        <nav>
+            <div class="logo">我的主页</div>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#works">爱好</a></li>
+                <li><a href="#contact">联系方式</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ==================  首 屏  ================== -->
+    <section class="hero" id="home">
+        <div>
+            <br><br><br><br><h1>你好，我是 <span class="highlight">黄昊</span></h1>
+            <img class="profile-img" src="image/music.jpg" alt="我的头像">
+            <p>计科大二在读 / 组内程序员 / CIO</p>
+            <button id="btn-about" data-target="about">了解更多</button>
+        </div>
+    </section>
+
+    <!-- ==================  关 于 我  ================== -->
+    <section id="about">
+        <h2>关于我</h2>
+        <p>
+            我热爱游戏，也喜欢看动漫，听音乐。<br>
+            相比起大佬们的码龄十年，我打游戏也有了十几年，小时候玩4399小游戏，然后小学、初中、高中分别开始玩手游、独游、3A大作；<br>
+            现在看来没有什么特别的游戏偏好，肉鸽，卡牌，共斗，魂类……<br>
+            看动漫也是从小学就被带入坑的，最早看的是死神，火影，龙珠，空闲时间少了之后，很少追番，只是补了一些同学安利的神作，<s>（包括石头门大一才看）</s>。<br>
+            音乐也是不知道什么时候就喜欢上了，现在喜欢听各种风格的音乐，头像就是我很喜欢的一张专辑。
+        </p>
+    </section>
+
+    <!-- ==================  作 品 展 示  ================== -->
+    <section id="works">
+        <h2>爱好</h2>
+        <div class="cards">
+            <div class="card">
+                <img src="image/game.jpg" alt="game">
+                <h3>游戏</h3>
+                <p></p>
+            </div>
+            <div class="card">
+                <img src="image/anime.jpg" alt="anime">
+                <h3>动漫</h3>
+                <p></p>
+            </div>
+            <div class="card">
+                <img src="image/music.jpg" alt="music">
+                <h3>音乐</h3>
+                <p></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================  联 系 方 式  ================== -->
+    <section id="contact">
+        <h2>联系方式</h2>
+        <p>邮箱：3371548275@qq.com</p>
+        <p>QQ：3371548275</p>
+        <p>Steam：<a href="https://steamcommunity.com/profiles/76561199071776350/" target="_blank">huangh</a></p>
+    </section>
+
+    <!-- ==================  页 脚  ================== -->
+    <footer>
+        &copy; 2025 世界线重组 · All Rights Reserved
+    </footer>
+
+    <!-- ==================  简 易 JS  ================== -->
+    <script src="hh-inline.js"></script>
+</body>
+</html>

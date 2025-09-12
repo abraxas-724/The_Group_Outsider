@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>成就系统</title>
+  <link rel="stylesheet" href="css/base-responsive.css" />
+  <link rel="stylesheet" href="css/achie.css" />
+  <link rel="stylesheet" href="css/achievements-inline.css" />
+</head>
+
+<body>
+  <button id="back-btn" type="button" aria-label="返回上一页" title="返回">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <span>返回</span>
+  </button>
+  <!-- 复用旋转卡片展示作为成就陈列，可根据完成状态添加样式 -->
+  <div class="container">
+    <div class="carousel" id="achievement-carousel">
+      <!-- 动态注入卡片 -->
+    </div>
+  </div>
+  <div class="controls">
+    <button id="prev">‹</button>
+    <button id="next">›</button>
+  </div>
+  <script type="module" src="js/achievements-inline.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/systems/achie.js"></script>
+</body>
+
+</html>

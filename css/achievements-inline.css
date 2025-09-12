@@ -1,0 +1,6 @@
+/* 统一返回按钮样式（成就页专用微调） */
+#back-btn{position:fixed;top:16px;left:20px;z-index:210;display:inline-flex;align-items:center;gap:6px;padding:10px 16px;font-size:14px;font-weight:600;letter-spacing:.5px;color:#e2e8f0;background:rgba(15,17,21,.55);border:1px solid rgba(255,255,255,.18);border-radius:14px;backdrop-filter:blur(10px) saturate(140%);cursor:pointer;line-height:1;transition:background .3s,transform .3s,box-shadow .3s;text-decoration:none;}
+#back-btn:hover{background:rgba(35,39,46,.72);transform:translateY(-3px);} 
+#back-btn:active{transform:translateY(-1px);} 
+#back-btn svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;}
+@media (max-width:640px){#back-btn{padding:8px 12px;font-size:13px;top:12px;left:12px;}}

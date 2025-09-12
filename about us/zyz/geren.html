@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>我的个人主页</title>
+  <link rel="stylesheet" href="zyz.css"/>
+
+
+  <!-- 轮播图样式 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+</head>
+<body>
+
+  
+  <header id="navbar">
+    <nav>
+      <div class="brand">MySite</div>
+      <ul>
+        <li><a href="#home">首页</a></li>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="#projects">项目</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home">
+    <img class="avatar" src="2.png" alt="头像"/>
+    <h1>翟一舟</h1>
+    <p>技术总监 / 程序员/ </p>
+    <p>联系方式：QQ-2133394191</p>
+    <p >CS院 PASSION是一切的源动力 </p>
+
+
+    <!-- 首页背景粒子 -->
+    <div id="particles-js"></div>
+  </section>
+
+  
+
+
+
+
+
+  <section id="skills">
+    
+    </video>
+    <h2>兴趣爱好与技能>>点击了解更多</h2>
+    <div class="skills-wrapper">
+      <div class="skill-card" onclick="toggleDetail(this)">
+        <div class="skill-title">乒乓球</div>
+        <div class="skill-detail">初中三年空白期，高中重拾，目前重度发烧友~</div>
+      </div>
+      <div class="skill-card" onclick="toggleDetail(this)">
+        <div class="skill-title">魔术</div>
+        <div class="skill-detail">主要对近景魔术感兴趣，偶像刘谦，会一些简单的表演~</div>
+      </div>
+      <div class="skill-card" onclick="toggleDetail(this)">
+        <div class="skill-title">葫芦丝</div>
+        <div class="skill-detail">我为民乐器举大旗！！！</div>
+      </div>
+      <div class="skill-card" onclick="toggleDetail(this)">
+        <div class="skill-title">c/python/julia</div>
+        <div class="skill-detail">经历了包括但不仅限于公选课、比赛和项目组的磨练后略微掌握的语言呜呜呜</div>
+      </div>
+      <div class="skill-card" onclick="toggleDetail(this)">
+        <div class="skill-title">智能体开发、数学建模</div>
+        <div class="skill-detail">目前能简单执行的部分任务</div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  
+  <!-- （轮播图） -->
+  <section id="projects">
+    <h2>我的一些.......</h2>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="01.png" alt="一些经历"/>一些经历<p class="slide-caption"></p></div>
+        <div class="swiper-slide"><img src="03.jpg" alt="“我”"/>“我”<p class="slide-caption"></p></div>
+        <div class="swiper-slide"><img src="02.jpg" alt="最喜欢的演唱会！"/>最喜欢的演唱会！<p class="slide-caption"></p></div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
+
+ 
+
+
+
+
+
+  <section id="contact">
+    <h2>如果有兴趣欢迎联系我</h2>
+    <form onsubmit="alert('已发送！');return false">
+      <input type="text" placeholder="姓名" required/>
+      <input type="email" placeholder="邮箱" required/>
+      <textarea rows="5" placeholder="留言" required></textarea>
+      <button type="submit">发送消息</button>
+    </form>
+  </section>
+
+
+
+
+
+
+  <!-- 页脚 -->
+  <footer>
+    zyz - BIT Made with ❤️
+  </footer>
+
+
+
+
+
+ 
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="zyz.js"></script>
+</body>
+</html>

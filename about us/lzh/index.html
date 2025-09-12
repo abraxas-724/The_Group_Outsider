@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李子豪的个人主页</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>李子豪</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">首页</a></li>
+                <li><a href="#about" class="nav-link">关于我</a></li>
+                <li><a href="#hobby" class="nav-link">爱好</a></li>
+                <li><a href="#contact" class="nav-link">联系</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页部分 -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    你好，我是 <span class="highlight">李子豪</span>
+                </h1>
+                <p class="hero-subtitle" style="font-family: 楷体;font-weight: bolder;">热爱生活 • 多元探索 • 持续成长</p>
+                <p class="hero-description">
+                    享受生活的每一个瞬间，用爱好丰富人生的每一个角落
+                </p>
+                <div class="hero-buttons">
+                    <a href="#hobby" class="btn btn-primary">我的爱好</a>
+                    <a href="#about" class="btn btn-secondary">关于我</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="avatar-container">
+                    <img src="image.jpg" alt="个人头像" class="avatar">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我部分 -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        我是一个充满好奇心的人，喜欢探索不同的领域。无论是技术、艺术还是运动，
+                        我都愿意投入时间去学习和体验。生活对我而言，是一场精彩的冒险。
+                    </p>
+                    <p>
+                        通过多元化的爱好，我不仅丰富了自己的生活，也培养了创造力和解决问题的能力。
+                        每一个爱好都让我看到了世界的不同面貌。
+                    </p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h3>10+</h3>
+                            <p>兴趣爱好</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>∞</h3>
+                            <p>持续探索</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>∞</h3>
+                            <p>学习热情</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 爱好部分 -->
+    <section id="hobby" class="hobby">
+        <div class="container">
+            <h2 class="section-title">我的爱好</h2>
+            <div class="hobby-grid">
+                <div class="hobby-card">
+                    <i class="fas fa-code"></i>
+                    <h3>编程</h3>
+                    <p>代码初学者，享受解决问题带来的成就感</p>
+                </div>
+                <div class="hobby-card">
+                    <i class="fas fa-camera"></i>
+                    <h3>摄影</h3>
+                    <p>用镜头记录生活的美好瞬间，发现平凡中的不平凡</p>
+                </div>
+                <div class="hobby-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>阅读</h3>
+                    <p>在文字的海洋中遨游，与古今中外的智者对话</p>
+                </div>
+                <div class="hobby-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>游戏</h3>
+                    <p>各种游戏爱好者，又菜又爱玩</p>
+                </div>
+                <div class="hobby-card">
+                    <i class="fas fa-music"></i>
+                    <h3>音乐</h3>
+                    <p>让旋律治愈心灵，用音符表达无法言说的情感</p>
+                </div>
+                <div class="hobby-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>烹饪</h3>
+                    <p>用美食传递爱，享受创造美味的快乐过程</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 联系部分 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">一起交流爱好</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>分享你的爱好</h3>
+                    <p>有相同的兴趣爱好？或者想交流心得体会？让我们一起聊聊！</p>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>2737419989@qq.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>北京</span>
+                    </div>
+                </div>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="你的名字" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="你的邮箱" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="hobby" name="hobby" placeholder="分享你的爱好" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="4" placeholder="说说你的想法..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">发送消息</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 李子豪. <br /><span style="font-family: 楷体;font-weight: bolder;font-size:larger;">热爱生活，持续探索</span></p>
+            <div class="social-links">
+                <a href="soon.html"><i class="fab fa-github"></i></a>
+                <a href="soon.html"><i class="fab fa-instagram"></i></a>
+                <a href="soon.html"><i class="fab fa-bilibili"></i></a>
+                <a href="soon.html"><i class="fab fa-weibo"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

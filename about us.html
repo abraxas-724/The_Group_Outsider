@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <link rel="stylesheet" href="css/base-responsive.css" />
+  <link rel="stylesheet" href="css/style of we.css" />
+  <link rel="stylesheet" href="css/about-us-inline.css" />
+  <title>关于我们</title>
+</head>
+
+<body>
+  <button id="back-btn" type="button" aria-label="返回上一页" title="返回">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    <span>返回</span>
+  </button>
+  <div id="drag-hint"
+    style="position:fixed;top:18px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;padding:10px 22px;border-radius:40px;font-size:16px;letter-spacing:1px;backdrop-filter:blur(6px);box-shadow:0 4px 18px -4px rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;gap:10px;opacity:1;transition:opacity .8s ease, transform .8s ease;">
+    <span style="font-size:18px;">⇆</span> 左右拖动 / 滚轮 切换头像
+  </div>
+
+
+  <div class="container"></div>
+
+  <!-- 新增成员头像网格（如果你进入的是这个页面也能看到区别） -->
+  <div id="team-wrap"
+    style="max-width:940px;margin:60px auto 40px;padding:28px 32px;background:rgba(255,255,255,0.12);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.25);border-radius:26px;">
+    <h2 style="text-align:center;color:#fff;font-size:44px;letter-spacing:3px;margin:0 0 26px;">关于我们 · 成员</h2>
+    <div id="team-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:20px;"></div>
+
+  </div>
+
+  <script src="js/about-us-inline.js"></script>
+  <script src="js/systems/we.js"></script>
+</body>
+
+</html>

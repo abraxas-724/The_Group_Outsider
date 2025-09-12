@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("../assets/images/backgroundof we.png") center / cover no-repeat fixed;
+  overflow: auto;
+  /* 允许在小屏滚动 */
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, .12), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, .08), transparent 60%);
+  mix-blend-mode: overlay;
+  opacity: .55;
+  filter: blur(40px);
+  z-index: 0;
+}
+
+/* 容器(底)*/
+.container {
+  position: relative;
+  width: min(1200px, 92vw);
+  aspect-ratio: 16 / 9;
+  margin: 40px auto;
+}
+
+/* 轮播本体 */
+.carousel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 每一张card*/
+.carousel-item {
+  position: relative;
+  --items: 6;
+  /* JS 里写入 --active = index - activeCard */
+  --width: clamp(260px, 35vw, 460px);
+  --height: clamp(320px, 42vw, 580px);
+  width: var(--width);
+  height: var(--height);
+  top: 50%;
+  left: 50%;
+  margin: calc(var(--height)/-2) 0 0 calc(var(--width)/-2);
+  position: absolute;
+  border-radius: 12px;
+  transform-origin: 0% 100%;
+  background:
+    linear-gradient(150deg, hsla(var(--hue, 200), 65%, 62%, .28), hsla(var(--hue, 200), 70%, 18%, .18) 62%),
+    linear-gradient(25deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, 0) 55%);
+  box-shadow: 0 18px 60px -12px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  pointer-events: all;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: var(--zIndex);
+  /* 根据整数差值做位移：中心元素 active=0，其它以 240%/20% 扇形散开 */
+  transform: translate(calc(var(--active) * 200%), calc(var(--active) * 16%)) rotate(calc(var(--active) * 10deg));
+  opacity: calc(1 - (min(3, abs(var(--active))) * 0.18));
+  transition: transform .9s cubic-bezier(0, .15, 0, 1), opacity .9s, box-shadow .6s;
+}
+
+/* 背景炫光与玻璃高光 */
+.carousel-item::before,
+.carousel-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.carousel-item::before {
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, .04)),
+    repeating-linear-gradient(45deg, hsla(var(--hue, 200), 70%, 60%, .18) 0 6px, transparent 6px 12px);
+  mix-blend-mode: overlay;
+  opacity: .55;
+}
+
+.carousel-item::after {
+  background:
+    radial-gradient(circle at 70% 25%, rgba(255, 255, 255, .45), transparent 60%),
+    radial-gradient(circle at 30% 75%, rgba(255, 255, 255, .25), transparent 65%);
+  filter: blur(4px) saturate(140%);
+  opacity: .35;
+  transition: opacity .8s ease;
+}
+
+/* 当前激活卡片强化高亮与外环 */
+.carousel-item.active {
+  box-shadow: 0 25px 70px -18px rgba(0, 0, 0, .65), 0 0 0 2px hsla(var(--hue, 200), 75%, 72%, .55) inset, 0 0 0 6px hsla(var(--hue, 200), 75%, 72%, .18);
+  transform: translate(calc(var(--active) * 240%), calc(var(--active) * 18%)) rotate(calc(var(--active) * 12deg)) scale(1.04);
+  z-index: 99;
+  /* 进一步保证在顶层 */
+}
+
+.carousel-item.active::after {
+  opacity: .75;
+}
+
+.carousel-item.active::before {
+  opacity: .85;
+}
+
+/* 图片微动与圆形裁剪过渡（已在 JS 添加 active class）*/
+.carousel-item>.carousel-box>img {
+  transition: transform 2s cubic-bezier(0, .15, 0, 1), clip-path 2s cubic-bezier(0, .15, 0, 1), filter 1.4s;
+  filter: brightness(.92) contrast(1.05) saturate(1.12);
+}
+
+.carousel-item.active>.carousel-box>img {
+  filter: brightness(1.05) contrast(1.08) saturate(1.18);
+}
+
+/*底部成员介绍文本*/
+.bg-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  font-size: clamp(28px, 8vw, 80px);
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 4px #000;
+  z-index: 1;
+  /* 在图片下方 */
+}
+
+
+
+/* 图片容器盖住文字 */
+.carousel-box {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+}
+
+
+
+
+/* 图片向左滑动，露出div底景 */
+/* 当前卡片里的图片 */
+.carousel-item.active>.carousel-box>img {
+  transform: translateX(-22%) scale(0.86);
+  /* 左滑并略缩小 */
+  clip-path: circle(40%);
+  /* 变成圆形 */
+  transition: transform 2.2s cubic-bezier(0, .02, 0, 1),
+    clip-path 2.2s cubic-bezier(0, .02, 0, 1);
+}
+
+/* 非当前卡片（js里显示事件未触发）里的图片（还原） */
+.carousel-item:not(.active)>.carousel-box>img {
+  transform: translateX(0) scale(1);
+  clip-path: none;
+  transition: inherit;
+
+}
+
+
+
+/* 图片 */
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  pointer-events: none;
+}
+
+/* ========== Text Only 模式 ========== */
+
+/* 小屏设备进一步压缩间距与阴影，避免溢出 */
+@media (max-width: 720px) {
+  body {
+    align-items: flex-start;
+  }
+
+  #drag-hint {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    top: 12px !important;
+  }
+
+  .container {
+    width: 96vw;
+    margin: 60px auto 24px;
+  }
+
+  .carousel-item {
+    --width: 86vw;
+    --height: 120vw;
+  }
+
+  .carousel-item.active>.carousel-box>img {
+    clip-path: circle(45%);
+  }
+}
+
+@media (max-width: 420px) {
+  .carousel-item {
+    --width: 92vw;
+    --height: 130vw;
+  }
+}

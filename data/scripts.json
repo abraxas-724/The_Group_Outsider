@@ -1,0 +1,5280 @@
+{
+  "start_node": "ACT1_PRELOAD",
+  "characters": {
+    "SYS": "旁白",
+    "MO": "默",
+    "YANG": "阳",
+    "LIN": "琳",
+    "HUI": "绘",
+    "CHEN": "陈教授"
+  },
+  "nodes": [
+    {
+      "id": "ACT1_PRELOAD",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "设置初始背景",
+      "next": "ACT1_OPENING_01"
+    },
+    {
+      "id": "ACT1_OPENING_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "世界由0和1构成。是(True)或非(False)。",
+      "next": "ACT1_OPENING_02"
+    },
+    {
+      "id": "ACT1_OPENING_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "存在，或者不存在。",
+      "next": "ACT1_OPENING_03"
+    },
+    {
+      "id": "ACT1_OPENING_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "除此之外，皆为噪音。",
+      "next": "ACT1_SCENE1_SETUP_01"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_01",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/1.1项目讨论室.png",
+      "comment": "设置讨论室场景",
+      "next": "ACT1_SCENE1_SETUP_02",
+      "delay": 2000
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 一间典型的大学讨论室。",
+      "next": "ACT1_SCENE1_SETUP_03"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 日光灯发出低沉的嗡嗡声，光线惨白。",
+      "next": "ACT1_SCENE1_SETUP_04"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 墙上的白板被各色的马克笔涂满，思维导图、功能列表、角色草图……像一场混乱的爆炸。",
+      "next": "ACT1_SCENE1_SETUP_05"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 空气中弥漫着廉价咖啡和熬夜的味道。",
+      "next": "ACT1_SCENE1_SETUP_06"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "  阳、琳、绘围坐在一张桌子旁，情绪高昂。 ",
+      "next": "ACT1_SCENE1_SETUP_07"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "  你，默，坐在他们对面。 ",
+      "next": "ACT1_SCENE1_SETUP_08"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "  桌上只放着一台没有任何贴纸的黑色笔记本电脑。 ",
+      "next": "ACT1_SCENE1_SETUP_09"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 屏幕散出的蓝光晕染了你的视线。",
+      "next": "ACT1_SCENE1_SETUP_10"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_10",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 你的目光聚焦在天花板上那盏接触不良、闪烁的日光灯上。",
+      "next": "ACT1_SCENE1_SETUP_11"
+    },
+    {
+      "id": "ACT1_SCENE1_SETUP_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 1.2Hz。你心想。",
+      "next": "ACT1_SCENE1_YANG_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_YANG_APPEARS",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-left",
+      "next": "ACT1_SCENE1_LIN_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT1_SCENE1_HUI_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_HUI_APPEARS",
+      "type": "showCharacter",
+      "charId": "HUI",
+      "position": "pos-right",
+      "next": "ACT1_SCENE1_01"
+    },
+    {
+      "id": "ACT1_SCENE1_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（双手在空中挥舞，眼中放光）…所以！这不仅仅是一个平台跳跃游戏！",
+      "next": "ACT1_SCENE1_02"
+    },
+    {
+      "id": "ACT1_SCENE1_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "这是一个关于“救赎”的隐喻！",
+      "next": "ACT1_SCENE1_03"
+    },
+    {
+      "id": "ACT1_SCENE1_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "当主角的“希望值”积攒到100%，他会获得一次短暂的飞行能力，同时，整个游戏世界的色调会从黑白变成彩色！",
+      "next": "ACT1_SCENE1_04"
+    },
+    {
+      "id": "ACT1_SCENE1_04",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "那将是游戏的高潮！一个情感的爆发点！",
+      "next": "ACT1_SCENE1_05"
+    },
+    {
+      "id": "ACT1_SCENE1_05",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（兴奋地补充）对！我想象过那个画面！就像黑暗中突然绽放的烟花！",
+      "next": "ACT1_SCENE1_06"
+    },
+    {
+      "id": "ACT1_SCENE1_06",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "所有的美术资源都要为这一刻服务，所有的铺垫都是值得的！",
+      "next": "ACT1_SCENE1_07"
+    },
+    {
+      "id": "ACT1_SCENE1_07",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（冷静地敲击着笔记本）从技术上说，实现一个全局的Post-Processing（后期处理）滤镜来改变色调是可行的。",
+      "next": "ACT1_SCENE1_08"
+    },
+    {
+      "id": "ACT1_SCENE1_08",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "但频繁切换可能会对性能造成负担，特别是在低配设备上。",
+      "next": "ACT1_SCENE1_09"
+    },
+    {
+      "id": "ACT1_SCENE1_09",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（转向你，满怀期待）默，你觉得呢？你是我们组技术最强的。",
+      "next": "ACT1_SCENE1_10"
+    },
+    {
+      "id": "ACT1_SCENE1_10",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "这个核心机制，这个情感爆发点，实现起来有难度吗？",
+      "next": "ACT1_SCENE1_11"
+    },
+    {
+      "id": "ACT1_SCENE1_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他们的声音像是背景噪音…",
+      "next": "ACT1_SCENE1_12"
+    },
+    {
+      "id": "ACT1_SCENE1_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "在为这几个像素点的生灭赋予一种终极意义，仿佛完成了它，就能对抗存在的虚无。",
+      "next": "ACT1_SCENE1_13"
+    },
+    {
+      "id": "ACT1_SCENE1_13",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这便是“荒诞”的定义：",
+      "next": "ACT1_SCENE1_14"
+    },
+    {
+      "id": "ACT1_SCENE1_14",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "在沉默的宇宙面前，人类徒劳的呐喊。",
+      "next": "ACT1_SCENE1_CHOICE_01"
+    },
+    {
+      "id": "ACT1_SCENE1_CHOICE_01",
+      "type": "choice",
+      "options": [
+        {
+          "text": "可以实现",
+          "setFlag": "choice1_compliant",
+          "inc": "compliant",
+          "next": "ACT1_SCENE1_BRANCH_A_LIN_HIDES"
+        },
+        {
+          "text": "为什么要变色?",
+          "setFlag": "choice1_logical",
+          "inc": "logical",
+          "next": "ACT1_SCENE1_BRANCH_B_LIN_HIDES"
+        },
+        {
+          "text": "（保持沉默,继续观察那盏灯）",
+          "setFlag": "choice1_silent",
+          "inc": "logical",
+          "next": "ACT1_SCENE1_BRANCH_C_HUI_HIDES"
+        }
+      ]
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_A_MO_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-center",
+      "next": "ACT1_SCENE1_BRANCH_A_01"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "可以实现。",
+      "next": "ACT1_SCENE1_BRANCH_A_02"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你给出了一个基于事实的、最简洁的回答。 这是一个布尔值（Boolean）问题,答案是 True。",
+      "next": "ACT1_SCENE1_BRANCH_A_03"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（松了口气，高兴地拍了下桌子）太好了！我就知道你没问题！好，那这个核心机制就这么定了！",
+      "next": "ACT1_SCENE1_BRANCH_A_04"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_04",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（对你露出一个感激的微笑） 谢谢你，默！",
+      "next": "ACT1_SCENE1_BRANCH_A_YANG_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT1_SCENE1_BRANCH_A_LIN_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-left",
+      "next": "ACT1_SCENE1_BRANCH_A_05"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_05",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（看了你一眼，似乎想说什么，但最后只是点了点头） 嗯。那我会开始评估性能开销。",
+      "next": "ACT1_SCENE1_BRANCH_A_06"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你点了点头，对话结束。你的目光重新回到那盏灯上，它还在闪烁。",
+      "next": "ACT1_SCENE1_BRANCH_A_07"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "1.2Hz。一切正常。",
+      "next": "ACT1_SCENE1_BRANCH_A_FINAL_LIN_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_FINAL_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_A_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_FINAL_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "ACT1_SCENE1_BRANCH_A_FINAL_HUI_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_A_FINAL_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT1_SCENE1_MERGE_BEER_HUI_APPEARS",
+      "delay": 2000
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_B_MO_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-center",
+      "next": "ACT1_SCENE1_BRANCH_B_01"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "为什么要变色?",
+      "next": "ACT1_SCENE1_BRANCH_B_02"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你问出了一个最基本的问题。 一个行为，必须有一个逻辑上的起因。",
+      "next": "ACT1_SCENE1_BRANCH_B_03"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "'if (condition) { changeColor(); }' 你只是想知道 'condition' 是什么。",
+      "next": "ACT1_SCENE1_BRANCH_B_04"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_04",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（愣了一下，像是没料到这个问题）呃…为了表达情感啊！",
+      "next": "ACT1_SCENE1_BRANCH_B_05"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_05",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "这是高潮！是主角内心世界的…一种外放！",
+      "next": "ACT1_SCENE1_BRANCH_B_06"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_06",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "角色的内心状态，和世界的光物理属性，不存在逻辑关联。",
+      "next": "ACT1_SCENE1_BRANCH_B_07"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_07",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（有些着急）这是一种…艺术表现手法！是象征！你不觉得这样很酷吗？",
+      "next": "ACT1_SCENE1_BRANCH_B_08"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "酷。一个无法定义的属性，浓缩着强烈的主观色彩，你的处理器无法解析这个词。",
+      "next": "ACT1_SCENE1_BRANCH_B_MO_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "ACT1_SCENE1_BRANCH_B_LIN_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT1_SCENE1_BRANCH_B_09"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_09",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（出来打圆场）默的意思是，从设定的严谨性上，我们需要给这个变化一个说法。",
+      "next": "ACT1_SCENE1_BRANCH_B_10"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_10",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我们可以解释成，主角激活了某种能量，影响了周围的环境。这样就说得通了。",
+      "next": "ACT1_SCENE1_BRANCH_B_11"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_11",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "对！对！琳说的对！就是这样！默,现在你理解了吧？",
+      "next": "ACT1_SCENE1_CHOICE_B2"
+    },
+    {
+      "id": "ACT1_SCENE1_CHOICE_B2",
+      "type": "choice",
+      "options": [
+        {
+          "text": "理解了。可以实现。(结束争论)",
+          "next": "ACT1_SCENE1_BRANCH_A_LIN_HIDES"
+        },
+        {
+          "text": "能量的来源是什么？(继续追问)",
+          "inc": "logical",
+          "next": "ACT1_SCENE1_BRANCH_B2_DEEPER_LIN_HIDES"
+        }
+      ]
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_B2_DEEPER_MO_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-center",
+      "next": "ACT1_SCENE1_BRANCH_B2_DEEPER"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "能量的来源是什么？",
+      "next": "ACT1_SCENE1_BRANCH_B2_DEEPER_01"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（表情变得有些痛苦，他抓了抓头发）就是…希望的能量啊！",
+      "next": "ACT1_SCENE1_BRANCH_B2_DEEPER_02"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "我们不需要解释得那么清楚，玩家能感觉到就行了！",
+      "next": "ACT1_SCENE1_BRANCH_B2_DEEPER_03"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER_03",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "默，这只是个游戏设定，我们没必要像写科学论文一样……",
+      "next": "ACT1_SCENE1_BRANCH_B2_DEEPER_04"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他们似乎无法提供一个有效的逻辑闭环。这个问题无法得到令你满意的解答。",
+      "next": "ACT1_SCENE1_BRANCH_B2_DEEPER_05"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你决定终止这个无效的进程。",
+      "next": "ACT1_SCENE1_BRANCH_B2_DEEPER_06"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B2_DEEPER_06",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "明白了，可以实现。",
+      "next": "ACT1_SCENE1_BRANCH_B_FINAL_YANG_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_FINAL_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT1_SCENE1_BRANCH_B_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_FINAL_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "ACT1_SCENE1_BRANCH_B_FINAL_HUI_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_B_FINAL_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT1_SCENE1_MERGE_BEER_HUI_APPEARS",
+      "delay": 2000
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT1_SCENE1_BRANCH_C_MO_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-right",
+      "next": "ACT1_SCENE1_BRANCH_C_01"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你没有回答。这个问题不值得耗费CPU周期。",
+      "next": "ACT1_SCENE1_BRANCH_C_02"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你继续观察那盏灯。一亮，一灭。像一个完美循环的'while(true)' 语句。",
+      "next": "ACT1_SCENE1_BRANCH_C_03",
+      "delay": 3000
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "（场景沉默了三秒，气氛变得有些尴尬）",
+      "next": "ACT1_SCENE1_BRANCH_C_04"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_04",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（清了清嗓子，试图打破沉默）呃…默？你听到了吗？",
+      "next": "ACT1_SCENE1_BRANCH_C_05"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_05",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "默，阳在问你话。",
+      "next": "ACT1_SCENE1_BRANCH_C_06"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "外部中断。你被迫将注意力从那盏灯移开。",
+      "next": "ACT1_SCENE1_BRANCH_C_07"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_07",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "听到了，可以实现。",
+      "next": "ACT1_SCENE1_BRANCH_C_08"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_08",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（表情复杂，既有放松，也有一丝困惑）啊…好。那就好。",
+      "next": "ACT1_SCENE1_BRANCH_C_YANG_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT1_SCENE1_BRANCH_C_HUI_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_HUI_APPEARS",
+      "type": "showCharacter",
+      "charId": "HUI",
+      "position": "pos-left",
+      "next": "ACT1_SCENE1_BRANCH_C_09"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_09",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（小声对琳说）他是不是太累了？",
+      "next": "ACT1_SCENE1_BRANCH_C_10"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_10",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你并不累,你的思维很清晰。",
+      "next": "ACT1_SCENE1_BRANCH_C_11"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "只是他们讨论的东西，优先级很低。",
+      "next": "ACT1_SCENE1_BRANCH_C_FINAL_HUI_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_FINAL_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT1_SCENE1_BRANCH_C_FINAL_LIN_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_FINAL_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_C_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_C_FINAL_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "ACT1_SCENE1_MERGE_BEER_HUI_APPEARS",
+      "delay": 2000
+    },
+    {
+      "id": "ACT1_SCENE1_MERGE_BEER_HUI_APPEARS",
+      "type": "showCharacter",
+      "charId": "HUI",
+      "position": "pos-left",
+      "next": "ACT1_SCENE1_MERGE_BEER_YANG_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_MERGE_BEER_YANG_APPEARS",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-center",
+      "next": "ACT1_SCENE1_MERGE_BEER_LIN_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_MERGE_BEER_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-right",
+      "next": "ACT1_SCENE1_MERGE_BEER"
+    },
+    {
+      "id": "ACT1_SCENE1_MERGE_BEER",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（拿起笔，在白板上圈点）OK！既然核心玩法确定了，我们来分解一下任务。",
+      "next": "ACT1_SCENE1_CELEBRATE_01"
+    },
+    {
+      "id": "ACT1_SCENE1_CELEBRATE_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "琳，你负责UI和玩家控制部分。绘，未来一周，请给我主角的八方向行走图。默，最关键的渲染和底层架构就交给你了。",
+      "next": "ACT1_SCENE1_CELEBRATE_02"
+    },
+    {
+      "id": "ACT1_SCENE1_CELEBRATE_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "具体的任务列表，我今晚会发到Trello上。",
+      "next": "ACT1_SCENE1_CELEBRATE_03"
+    },
+    {
+      "id": "ACT1_SCENE1_CELEBRATE_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "会议似乎要结束了，你可以离开了。但你发现，他们并没有要走的意思。",
+      "next": "ACT1_SCENE1_CELEBRATE_04"
+    },
+    {
+      "id": "ACT1_SCENE1_CELEBRATE_04",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（从包里拿出几罐啤酒）来！兄弟们！庆祝我们伟大的项目正式启动！为我们的梦想干杯！",
+      "next": "ACT1_SCENE1_CELEBRATE_05"
+    },
+    {
+      "id": "ACT1_SCENE1_CELEBRATE_05",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "喔！好耶！",
+      "next": "ACT1_SCENE1_CELEBRATE_06"
+    },
+    {
+      "id": "ACT1_SCENE1_CELEBRATE_06",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（无奈地笑了笑，也拿起一罐）明天早上还有课呢，少喝点。",
+      "next": "ACT1_SCENE1_CELEBRATE_07"
+    },
+    {
+      "id": "ACT1_SCENE1_CELEBRATE_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "一种社交仪式，你需要对此做出反应。",
+      "next": "ACT1_SCENE1_CHOICE_02"
+    },
+    {
+      "id": "ACT1_SCENE1_CHOICE_02",
+      "type": "choice",
+      "options": [
+        {
+          "text": "（拿起啤酒，和他们碰杯）",
+          "setFlag": "choice2_cooperative",
+          "inc": "compliant",
+          "next": "ACT1_SCENE1_BRANCH_D_01"
+        },
+        {
+          "text": "（站起来）我还有事，先走了。",
+          "setFlag": "choice2_detached",
+          "inc": "logical",
+          "next": "ACT1_SCENE1_BRANCH_E_LIN_HIDES"
+        },
+        {
+          "text": "（看着啤酒罐）酒精会降低神经元活性，影响编码效率。",
+          "setFlag": "choice2_logical",
+          "inc": "logical",
+          "next": "ACT1_SCENE1_BRANCH_F_LIN_HIDES"
+        }
+      ]
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你执行了一个'social.interact()'函数。你拿起冰冷的罐子，模仿他们的动作，轻轻碰了一下。罐子发出“砰”的一声。",
+      "next": "ACT1_SCENE1_BRANCH_D_02"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（很高兴）哈哈！默也来劲了！我就说嘛，做游戏就是要一起燃起来！",
+      "next": "ACT1_SCENE1_BRANCH_D_03"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你没有“燃起来”，你只是在执行一个符合当前环境期望的动作。",
+      "next": "ACT1_SCENE1_BRANCH_D_04"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你打开拉环，喝了一口。苦涩的液体，碳酸刺激着口腔。一种劣质的体验。",
+      "next": "ACT1_SCENE1_BRANCH_D_05"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你看着他们继续高谈阔论，聊着未来的成功、梦想的实现。",
+      "next": "ACT1_SCENE1_BRANCH_D_06"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你喝完了剩下的啤酒，把它放进垃圾桶。",
+      "next": "ACT1_SCENE1_BRANCH_D_FINAL_HUI_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_FINAL_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT1_SCENE1_BRANCH_D_FINAL_YANG_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_FINAL_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT1_SCENE1_BRANCH_D_FINAL_LIN_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_D_FINAL_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_EXPLORE_01",
+      "delay": 2000
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_E_MO_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-right",
+      "next": "ACT1_SCENE1_BRANCH_E_01"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "我还有事，先走了。",
+      "next": "ACT1_SCENE1_BRANCH_E_02"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（举着啤酒的手停在半空）啊？这就走了？不一起庆祝一下吗？",
+      "next": "ACT1_SCENE1_BRANCH_E_03"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_03",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "是啊，默，稍微待一会儿嘛。",
+      "next": "ACT1_SCENE1_BRANCH_E_04"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_04",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "会议已经结束了。",
+      "next": "ACT1_SCENE1_BRANCH_E_05"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你说的是事实，会议议程已全部完成，停留在这里只是在浪费时间。",
+      "next": "ACT1_SCENE1_BRANCH_E_YANG_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT1_SCENE1_BRANCH_E_LIN_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT1_SCENE1_BRANCH_E_06"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_06",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（对阳和绘使了个眼色）没事，默可能真的有事。大家理解一下。",
+      "next": "ACT1_SCENE1_BRANCH_E_07"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_07",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（她转向你，轻声说）路上小心。",
+      "next": "ACT1_SCENE1_BRANCH_E_08"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你点了点头，转身离开。身后传来他们略显沉闷的碰杯声。",
+      "next": "ACT1_SCENE1_BRANCH_E_FINAL_HUI_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_FINAL_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT1_SCENE1_BRANCH_E_FINAL_LIN_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_FINAL_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_E_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_E_FINAL_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "ACT1_SCENE3_START",
+      "delay": 2000
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_F_MO_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-right",
+      "next": "ACT1_SCENE1_BRANCH_F_01"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "酒精会降低神经元活性，影响编码效率。",
+      "next": "ACT1_SCENE1_BRANCH_F_02"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你陈述了一个科学事实，这是你拒绝这个提议的根本原因。",
+      "next": "ACT1_SCENE1_BRANCH_F_03"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "（现场再次陷入了短暂的沉默）",
+      "next": "ACT1_SCENE1_BRANCH_F_04"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_04",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（噗嗤一声笑了出来，又赶紧捂住嘴）默，你说话好像机器人啊。",
+      "next": "ACT1_SCENE1_BRANCH_F_05"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_05",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（尴尬地挠挠头）哈哈…默真是严谨…",
+      "next": "ACT1_SCENE1_BRANCH_F_06"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_06",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "那行，我们喝，你随意，随意。",
+      "next": "ACT1_SCENE1_BRANCH_F_YANG_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT1_SCENE1_BRANCH_F_LIN_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT1_SCENE1_BRANCH_F_07"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_07",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（拿起一罐可乐递给你）那喝这个吧。补充糖分，也算补充能量。",
+      "next": "ACT1_SCENE1_BRANCH_F_08"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这是一个合理的替代方案。你接了过来。",
+      "next": "ACT1_SCENE1_BRANCH_F_FINAL_HUI_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_FINAL_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT1_SCENE1_BRANCH_F_FINAL_LIN_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_FINAL_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE1_BRANCH_F_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE1_BRANCH_F_FINAL_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "ACT1_SCENE1_EXPLORE_01"
+    },
+    {
+      "id": "ACT1_SCENE1_EXPLORE_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "无论你之前的选择是什么，庆祝活动最终都结束了。",
+      "next": "ACT1_SCENE1_EXPLORE_02"
+    },
+    {
+      "id": "ACT1_SCENE1_EXPLORE_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳和绘还在兴奋地讨论，琳在收拾东西。",
+      "next": "ACT1_SCENE1_EXPLORE_03"
+    },
+    {
+      "id": "ACT1_SCENE1_EXPLORE_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "现在，你可以自由点击场景，进行探索。",
+      "next": "ACT1_SCENE2_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_SCENE2_START_EXPLORE",
+      "type": "startExploration",
+      "comment": "此处游戏状态切换为探索模式，玩家可以点击交互点",
+      "coordsRef": "image",
+      "next": "ACT1_SCENE3_START",
+      "exitNext": "ACT1_SCENE3_START",
+      "hotspots": [
+        {
+          "x": 28,
+          "y": 34,
+          "w": 10,
+          "h": 18,
+          "label": "白板",
+          "tooltip": "杂乱无章",
+          "next": "ACT1_SCENE2_WHITEBOARD_01",
+          "once": false,
+          "setFlag": "seen_whiteboard"
+        },
+        {
+          "x": 30,
+          "y": 4,
+          "w": 10,
+          "h": 18,
+          "label": "日光灯",
+          "tooltip": "闪烁的日光灯",
+          "next": "ACT1_SCENE2_LAMP_01",
+          "once": false,
+          "setFlag": "seen_lamp"
+        },
+        {
+          "x": 38,
+          "y": 51,
+          "w": 18,
+          "h": 22,
+          "label": "琳的笔记本",
+          "tooltip": "检查琳的程序",
+          "next": "ACT1_SCENE2_LIN_LAPTOP_01",
+          "once": false,
+          "setFlag": "seen_lin_laptop"
+        }
+      ]
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "（看着整理好的任务列表，感到一种成就感。）",
+      "next": "ACT1_SCENE2_WHITEBOARD_02"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "感性的想法和理性的结构交织在一起，像一团缠绕的耳机线。",
+      "next": "ACT1_SCENE2_WHITEBOARD_03"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "无序，且低效。你想把它整理干净。",
+      "next": "ACT1_SCENE2_WHITEBOARD_04"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_04",
+      "type": "startMinigame",
+      "gameId": "noise_filtering",
+      "params": {
+        "description": "屏幕上出现白板的特写。所有词汇（“梦想”、“酷炫”、“爱”、“渲染管线”、“API”、“数据库”等）都动了起来。你需要点击并拖拽所有“技术性”词汇到屏幕左侧的“任务列表”中，同时要将“感性”词汇拖拽到右侧的“回收站”里。"
+      },
+      "next": "ACT1_SCENE2_WHITEBOARD_05"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你看着整理好的任务列表，感到一种满足。",
+      "next": "ACT1_SCENE2_WHITEBOARD_06"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "清晰，明确，可执行。",
+      "next": "ACT1_SCENE2_WHITEBOARD_07"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_07",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "哇，默，你都整理好了？厉害啊！",
+      "next": "ACT1_SCENE2_WHITEBOARD_08"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_08",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "！就是…呃…‘梦想’怎么在回收站里？",
+      "next": "ACT1_SCENE2_WHITEBOARD_09"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_09",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "这个词，没有对应的执行方案，无法量化，也就无法实现。",
+      "next": "ACT1_SCENE2_WHITEBOARD_10"
+    },
+    {
+      "id": "ACT1_SCENE2_WHITEBOARD_10",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（张了张嘴，最后笑了）行…行吧！你牛！",
+      "next": "ACT1_SCENE2_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_SCENE2_LAMP_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你再次看向那盏灯。",
+      "next": "ACT1_SCENE2_LAMP_02"
+    },
+    {
+      "id": "ACT1_SCENE2_LAMP_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "一亮，一灭。",
+      "next": "ACT1_SCENE2_LAMP_03"
+    },
+    {
+      "id": "ACT1_SCENE2_LAMP_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "Tick, Tock.",
+      "next": "ACT1_SCENE2_LAMP_04"
+    },
+    {
+      "id": "ACT1_SCENE2_LAMP_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "1, 0.",
+      "next": "ACT1_SCENE2_LAMP_05"
+    },
+    {
+      "id": "ACT1_SCENE2_LAMP_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你盯着它看了很久, 这个频率让你感到安心。",
+      "next": "ACT1_SCENE2_LAMP_06"
+    },
+    {
+      "id": "ACT1_SCENE2_LAMP_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "世界似乎又回到了它应有的、简单的二元状态。",
+      "next": "ACT1_SCENE2_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "琳正在关闭她的笔记本。屏幕上是她写的会议纪要，条理清晰，用不同颜色标记了优先级。",
+      "next": "ACT1_SCENE2_LIN_LAPTOP_02"
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "在你们小组中，她的逻辑清晰度仅次于你。",
+      "next": "ACT1_SCENE2.5_LIN_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE2.5_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT1_SCENE2_LIN_LAPTOP_03"
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "怎么了，默？我记录有什么问题吗？",
+      "next": "ACT1_SCENE2_LIN_LAPTOP_CHOICE"
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_CHOICE",
+      "type": "choice",
+      "options": [
+        {
+          "text": "没有问题。",
+          "inc": "compliant",
+          "next": "ACT1_SCENE2_LIN_LAPTOP_A"
+        },
+        {
+          "text": "渲染模块的优先级应该在玩家控制之上。",
+          "next": "ACT1_SCENE2_LIN_LAPTOP_B"
+        },
+        {
+          "text": "(摇头)",
+          "next": "ACT1_SCENE2_LIN_LAPTOP_C"
+        }
+      ]
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_A",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "那就好。",
+      "next": "ACT1_SCENE2_LAPTOP_LIN_A_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE2_LAPTOP_LIN_A_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE2_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_B",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "哦？你说渲染模块的优先级应该在玩家控制之上？",
+      "next": "ACT1_SCENE2_LIN_LAPTOP_B2"
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_B2",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "嗯…你说的有道理，底层架构确实应该先行。好，我调整一下。",
+      "next": "ACT1_SCENE2_LIN_LAPTOP_B3"
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_B3",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她看了你一眼，眼神里多了一丝认可。",
+      "next": "ACT1_SCENE2_LAPTOP_LIN_B_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE2_LAPTOP_LIN_B_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE2_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_SCENE2_LIN_LAPTOP_C",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "那就好。",
+      "next": "ACT1_SCENE2_LAPTOP_LIN_C_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE2_LAPTOP_LIN_C_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE2_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_SCENE3_START",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "next": "ACT1_SCENE3_LIN_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE3_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-right",
+      "next": "ACT1_SCENE3_MO_APPEARS"
+    },
+    {
+      "id": "ACT1_SCENE3_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-left",
+      "next": "ACT1_SCENE3_01"
+    },
+    {
+      "id": "ACT1_SCENE3_01",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "默，等一下。",
+      "next": "ACT1_SCENE3_02"
+    },
+    {
+      "id": "ACT1_SCENE3_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你停下脚步，转身。",
+      "next": "ACT1_SCENE3_03"
+    },
+    {
+      "id": "ACT1_SCENE3_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "走廊的声控灯应声亮起，光线再次变得惨白。",
+      "next": "ACT1_SCENE3_04"
+    },
+    {
+      "id": "ACT1_SCENE3_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "今天…谢谢你。我知道阳的很多想法比较…天马行空。",
+      "next": "ACT1_SCENE3_05"
+    },
+    {
+      "id": "ACT1_SCENE3_05",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "如果没有你来评估技术可行性，我们这个项目可能第一天就跑偏了。",
+      "next": "ACT1_SCENE3_06"
+    },
+    {
+      "id": "ACT1_SCENE3_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她似乎在表达一种名为“感谢”的情绪。",
+      "next": "ACT1_SCENE3_07"
+    },
+    {
+      "id": "ACT1_SCENE3_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这是一种社交润滑剂。通常需要一个礼貌性的回应。",
+      "next": "ACT1_SCENE3_CHOICE_01"
+    },
+    {
+      "id": "ACT1_SCENE3_CHOICE_01",
+      "type": "choice",
+      "options": [
+        {
+          "text": "我只是陈述事实。",
+          "setFlag": "choice3_truth",
+          "inc": "logical",
+          "next": "ACT1_SCENE3_BRANCH_A_01"
+        },
+        {
+          "text": "这是我的任务。",
+          "setFlag": "choice3_duty",
+          "inc": "logical",
+          "next": "ACT1_SCENE3_BRANCH_B_01"
+        },
+        {
+          "text": "（点头,不说话）",
+          "setFlag": "choice3_silent",
+          "inc": "logical",
+          "next": "ACT1_SCENE3_BRANCH_C_01"
+        }
+      ]
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "我只是陈述事实。",
+      "next": "ACT1_SCENE3_BRANCH_A_02"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_02",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（苦笑了一下）是啊，你总是这么客观。",
+      "next": "ACT1_SCENE3_BRANCH_A_03"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "但有时候，在团队里，事实还挺伤人的。",
+      "next": "ACT1_SCENE3_BRANCH_A_04"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（她顿了顿，似乎在斟酌词句。）阳和绘…他们是靠热情驱动的。",
+      "next": "ACT1_SCENE3_BRANCH_A_05"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_05",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "有时候，你需要让他们把热情先释放出来，然后再慢慢用事实去修正。",
+      "next": "ACT1_SCENE3_BRANCH_A_06"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_06",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "直接戳破，他们会“宕机”的。",
+      "next": "ACT1_SCENE3_BRANCH_A_07"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_07",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "这样的话，效率很低。",
+      "next": "ACT1_SCENE3_BRANCH_A_08"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_08",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（叹了口气）但人就是这样运作的。",
+      "next": "ACT1_SCENE3_BRANCH_A_09"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_09",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我们不是机器，默。",
+      "next": "ACT1_SCENE3_BRANCH_A_10"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_10",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "(她看着你，眼神复杂。）总之，加油吧。我很期待看到你搭的底层架构。",
+      "next": "ACT1_SCENE3_BRANCH_A_11"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_A_11",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（她向你挥挥手，走向了另一个方向。）",
+      "next": "ACT1_SCENE4_START"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "这是我的任务。",
+      "next": "ACT1_SCENE3_BRANCH_B_02"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_02",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（微微一笑）你总是把任务完成得很好。",
+      "next": "ACT1_SCENE3_BRANCH_B_03"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "(她走到你身边，与你并排。）不过，默，这不只是一个任务，对吧？我们是在做一个“游戏”。",
+      "next": "ACT1_SCENE3_BRANCH_B_04"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "你应该试着…享受一下这个过程。",
+      "next": "ACT1_SCENE3_BRANCH_B_05"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_05",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "过程的价值在于最终产出的质量。",
+      "next": "ACT1_SCENE3_BRANCH_B_06"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_06",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "享受与否，是无关变量。",
+      "next": "ACT1_SCENE3_BRANCH_B_07"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_07",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（被你的话噎了一下，然后无奈地摇头，笑了）跟你说话，有时候真像在跟编译器调试。",
+      "next": "ACT1_SCENE3_BRANCH_B_08"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_08",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "好吧，“无关变量”先生，早点休息。别忘了看Trello。",
+      "next": "ACT1_SCENE3_BRANCH_B_09"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_B_09",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（她拍了拍你的肩膀，转身离开。）",
+      "next": "ACT1_SCENE4_START"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你选择了最节能的应答方式。一个'ACK'（确认）信号。",
+      "next": "ACT1_SCENE3_BRANCH_C_02"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_02",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（似乎习惯了你的沉默）嗯。",
+      "next": "ACT1_SCENE3_BRANCH_C_03"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（她站在你面前，似乎还想说什么，但看着你毫无波动的脸，又把话咽了回去。）",
+      "next": "ACT1_SCENE3_BRANCH_C_04"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "……没什么了。早点休息吧。",
+      "next": "ACT1_SCENE3_BRANCH_C_05"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_05",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（她有些落寞地转身，消失在走廊尽头。）",
+      "next": "ACT1_SCENE3_FINAL_LIN_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE3_FINAL_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT1_SCENE3_BRANCH_C_06"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她试图用“人”这个“本质”来定义我。",
+      "next": "ACT1_SCENE3_BRANCH_C_07"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "但按照萨特的哲学，'存在先于本质'。",
+      "next": "ACT1_SCENE3_BRANCH_C_08"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "我的存在，由我执行的每一个操作、编写的每一行代码来定义，而非一个预设的“团队成员”身份。",
+      "next": "ACT1_SCENE3_BRANCH_C_09"
+    },
+    {
+      "id": "ACT1_SCENE3_BRANCH_C_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "但对话已经结束，你可以走了。",
+      "next": "ACT1_SCENE4_START"
+    },
+    {
+      "id": "ACT1_SCENE4_START",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/1.4默的宿舍.png",
+      "next": "ACT1_SCENE4_BACKGROUND_01",
+      "delay": 2000
+    },
+    {
+      "id": "ACT1_SCENE4_BACKGROUND_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的宿舍。 与讨论室的混乱形成鲜明对比，这里的一切都井然有序。",
+      "next": "ACT1_SCENE4_BACKGROUND_02"
+    },
+    {
+      "id": "ACT1_SCENE4_BACKGROUND_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "桌上的键盘、鼠标、显示器呈完美的直线,书架上的专业书籍按照首字母顺序排列。",
+      "next": "ACT1_SCENE4_BACKGROUND_03"
+    },
+    {
+      "id": "ACT1_SCENE4_BACKGROUND_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 这里没有噪音，没有干扰。 这是你的“圣殿”。",
+      "next": "ACT1_SCENE4_01"
+    },
+    {
+      "id": "ACT1_SCENE4_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你坐在电脑前，打开了阳发来的Trello任务面板。",
+      "next": "ACT1_SCENE4_02"
+    },
+    {
+      "id": "ACT1_SCENE4_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "【任务：搭建项目核心渲染管线】【DDL：三天后】",
+      "next": "ACT1_SCENE4_03"
+    },
+    {
+      "id": "ACT1_SCENE4_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "三天？",
+      "next": "ACT1_SCENE4_04"
+    },
+    {
+      "id": "ACT1_SCENE4_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你评估了一下工作量。三个小时就够了。",
+      "next": "ACT1_SCENE4_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_SCENE4_START_EXPLORE",
+      "type": "startExploration",
+      "comment": "场景1.4：默的宿舍 · 三个交互点",
+      "coordsRef": "image",
+      "next": "ACT1_SCENE4_05",
+      "exitNext": "ACT1_SCENE4_05",
+      "hotspots": [
+        {
+          "x": 36,
+          "y": 22,
+          "w": 18,
+          "h": 24,
+          "label": "冯·诺依曼结构图",
+          "tooltip": "高效的系统",
+          "next": "ACT1_PAGE_01",
+          "once": true,
+          "setFlag": "seen_page"
+        },
+        {
+          "x": 23,
+          "y": 2,
+          "w": 20,
+          "h": 18,
+          "label": "书架",
+          "tooltip": "一种秩序",
+          "next": "ACT1_BOOKSHELF_01",
+          "once": true,
+          "setFlag": "seen_shelf"
+        },
+        {
+          "x": 20,
+          "y": 27,
+          "w": 16,
+          "h": 22,
+          "label": "默的电脑",
+          "tooltip": "执行任务",
+          "next": "ACT1_MO_PC_01",
+          "once": true,
+          "setFlag": "seen_mo_pc"
+        }
+      ]
+    },
+    {
+      "id": "ACT1_PAGE_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 运算器、控制器、存储器、输入、输出。一个完美的、逻辑自洽的系统。",
+      "next": "ACT1_PAGE_02"
+    },
+    {
+      "id": "ACT1_PAGE_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 人类社会如果也能这样构建，该有多高效。",
+      "next": "ACT1_SCENE4_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_BOOKSHELF_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 你的书架。",
+      "next": "ACT1_BOOKSHELF_02"
+    },
+    {
+      "id": "ACT1_BOOKSHELF_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 《算法导论》、《C++ Primer》、《逻辑学》...它们安静地立在那里，像一排排忠诚的卫兵。",
+      "next": "ACT1_BOOKSHELF_03"
+    },
+    {
+      "id": "ACT1_BOOKSHELF_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 每一本书都代表着一个清晰、严谨、不存在模糊地带的世界。",
+      "next": "ACT1_BOOKSHELF_04"
+    },
+    {
+      "id": "ACT1_BOOKSHELF_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 你伸手拂去上面不存在的灰尘。",
+      "next": "ACT1_SCENE4_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_MO_PC_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 你打开了IDE。",
+      "next": "ACT1_MO_PC_02"
+    },
+    {
+      "id": "ACT1_MO_PC_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 深色的主题，代码高亮。光标在第一行静静地闪烁，等待着你的指令。",
+      "next": "ACT1_MO_PC_03"
+    },
+    {
+      "id": "ACT1_MO_PC_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "在开始执行“任务”之前，你决定先进行一项“仪式”。",
+      "next": "ACT1_MO_PC_04"
+    },
+    {
+      "id": "ACT1_MO_PC_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "看着屏幕上这段简洁、优雅、清晰的代码，你感到一种近乎生理上的愉悦。",
+      "next": "ACT1_MO_PC_05"
+    },
+    {
+      "id": "ACT1_MO_PC_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "混乱被抚平了。",
+      "next": "ACT1_MO_PC_06"
+    },
+    {
+      "id": "ACT1_MO_PC_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "秩序被重建了。",
+      "next": "ACT1_MO_PC_07"
+    },
+    {
+      "id": "ACT1_MO_PC_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 现在，你可以开始工作了。",
+      "next": "ACT1_SCENE4_START_EXPLORE"
+    },
+    {
+      "id": "ACT1_SCENE4_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你开始编写项目的底层架构。 ",
+      "next": "ACT1_SCENE4_06"
+    },
+    {
+      "id": "ACT1_SCENE4_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "键盘的敲击声在安静的房间里响起，清脆、规律，像一台精准的节拍器。",
+      "next": "ACT1_SCENE4_07"
+    },
+    {
+      "id": "ACT1_SCENE4_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "窗外的世界陷入沉睡。",
+      "next": "ACT1_SCENE4_08"
+    },
+    {
+      "id": "ACT1_SCENE4_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "但对你而言，真正的一天才刚刚开始。",
+      "next": "ACT1_SCENE4_09"
+    },
+    {
+      "id": "ACT1_SCENE4_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "……",
+      "next": "ACT2_SCENE1_SETUP_01"
+    },
+    {
+      "id": "ACT2_SCENE1_SETUP_01",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/2.1深夜实验室.png",
+      "comment": "设置实验室场景",
+      "next": "ACT2_SCENE1_SETUP_02",
+      "delay": 2000
+    },
+    {
+      "id": "ACT2_SCENE1_SETUP_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "时间：一周后。Alpha版提交的前一晚，23:47。",
+      "next": "ACT2_SCENE1_SETUP_03"
+    },
+    {
+      "id": "ACT2_SCENE1_SETUP_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "实验室的灯光比之前更加惨白。空气中混杂着速溶咖啡、外卖油脂和机器散热的焦糊味。",
+      "next": "ACT2_SCENE1_SETUP_04"
+    },
+    {
+      "id": "ACT2_SCENE1_SETUP_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "桌上堆满了东倒西歪的能量饮料罐，像一座座小小的墓碑。",
+      "next": "ACT2_SCENE1_SETUP_05"
+    },
+    {
+      "id": "ACT2_SCENE1_SETUP_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "电线在桌子底下随意地缠绕着，如同神经末梢。",
+      "next": "ACT2_SCENE1_SETUP_06"
+    },
+    {
+      "id": "ACT2_SCENE1_SETUP_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "背景音是多种噪音的混合：几台电脑风扇高负载的嗡鸣，绘有些不耐烦的数位板摩擦声,",
+      "next": "ACT2_SCENE1_SETUP_07"
+    },
+    {
+      "id": "ACT2_SCENE1_SETUP_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "以及阳压低了声音但依旧充满火药味的争论声。",
+      "next": "ACT2_SCENE1_01"
+    },
+    {
+      "id": "ACT2_SCENE1_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "熵增。",
+      "next": "ACT2_SCENE1_02"
+    },
+    {
+      "id": "ACT2_SCENE1_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "热力学第二定律正在这个房间里完美地展现，一切都在从有序走向无序。",
+      "next": "ACT2_SCENE1_03"
+    },
+    {
+      "id": "ACT2_SCENE1_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你坐在自己的工位前，屏幕上是你早已完成、完美注释的模块。",
+      "next": "ACT2_SCENE1_04"
+    },
+    {
+      "id": "ACT2_SCENE1_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你没有看它，你在听。",
+      "next": "ACT2_SCENE1_YANG_APPEARS"
+    },
+    {
+      "id": "ACT2_SCENE1_YANG_APPEARS",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-left",
+      "next": "ACT2_SCENE1_LIN_APPEARS"
+    },
+    {
+      "id": "ACT2_SCENE1_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT2_SCENE1_HUI_APPEARS"
+    },
+    {
+      "id": "ACT2_SCENE1_HUI_APPEARS",
+      "type": "showCharacter",
+      "charId": "HUI",
+      "position": "pos-right",
+      "next": "ACT2_SCENE1_05"
+    },
+    {
+      "id": "ACT2_SCENE1_05",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（指着绘的屏幕，声音压抑但激动）这个爆炸粒子再华丽一点！",
+      "next": "ACT2_SCENE1_06"
+    },
+    {
+      "id": "ACT2_SCENE1_06",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "我要那种…“砰”一下，能震撼玩家心灵的感觉！",
+      "next": "ACT2_SCENE1_07"
+    },
+    {
+      "id": "ACT2_SCENE1_07",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（疲惫不堪）阳，这已经是今晚第五版了！",
+      "next": "ACT2_SCENE1_08"
+    },
+    {
+      "id": "ACT2_SCENE1_08",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "再加粒子，渲染开销就要超标了。琳的UI模块已经开始卡顿了！",
+      "next": "ACT2_SCENE1_09"
+    },
+    {
+      "id": "ACT2_SCENE1_09",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "卡顿可以优化！但“感觉”不能妥协！",
+      "next": "ACT2_SCENE1_10"
+    },
+    {
+      "id": "ACT2_SCENE1_10",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "这是我们游戏的核心！",
+      "next": "ACT2_SCENE1_11"
+    },
+    {
+      "id": "ACT2_SCENE1_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "一场关于25毫秒粒子特效生命周期的争论。",
+      "next": "ACT2_SCENE1_12"
+    },
+    {
+      "id": "ACT2_SCENE1_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "在项目提交的Deadline面前，这场争论的效率等同于用勺子挖隧道。",
+      "next": "ACT2_SCENE1_13"
+    },
+    {
+      "id": "ACT2_SCENE1_13",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的目光扫过他们，最终落在独自一人、眉头紧锁的琳身上。",
+      "next": "ACT2_SCENE1_HUI_HIDES"
+    },
+    {
+      "id": "ACT2_SCENE1_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT2_SCENE1_YANG_HIDES"
+    },
+    {
+      "id": "ACT2_SCENE1_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT2_SCENE1_LIN_HIDES"
+    },
+    {
+      "id": "ACT2_SCENE1_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT2_SCENE1_START_EXPLORE"
+    },
+    {
+      "id": "ACT2_SCENE1_START_EXPLORE",
+      "type": "startExploration",
+      "comment": "场景2.1：深夜实验室 · 三个交互点",
+      "coordsRef": "image",
+      "noBlankExit": true,
+      "next": "ACT2_SCENE1_06",
+      "exitNext": "ACT2_SCENE1_06",
+      "hotspots": [
+        {
+          "x": 40,
+          "y": 20,
+          "w": 18,
+          "h": 24,
+          "label": "争吵中的阳与绘",
+          "tooltip": "他们在吵什么？",
+          "next": "ACT2_ARGUE_INTRO_01",
+          "once": true,
+          "setFlag": "seen_argue"
+        },
+        {
+          "x": 15,
+          "y": 65,
+          "w": 20,
+          "h": 18,
+          "label": "能量饮料罐",
+          "tooltip": "桌上一片狼藉",
+          "next": "ACT2_CANS_01",
+          "once": true,
+          "setFlag": "seen_cans"
+        },
+        {
+          "x": 5,
+          "y": 37,
+          "w": 16,
+          "h": 22,
+          "label": "琳的电脑",
+          "tooltip": "她遇到了问题",
+          "next": "ACT2_LIN_PC_INTRO",
+          "once": false,
+          "setFlag": "seen_lin_pc"
+        }
+      ]
+    },
+    {
+      "id": "ACT2_ARGUE_INTRO_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "两个碳基生物正在进行低效的音频信息交换。",
+      "next": "ACT2_ARGUE_INTRO_02"
+    },
+    {
+      "id": "ACT2_ARGUE_INTRO_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他们的论点充满了无法量化的描述词，缺乏逻辑基石。",
+      "next": "ACT2_ARGUE_INTRO_03"
+    },
+    {
+      "id": "ACT2_ARGUE_INTRO_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你可以选择介入，或者忽略。",
+      "next": "ACT2_ARGUE_CHOICE"
+    },
+    {
+      "id": "ACT2_ARGUE_CHOICE",
+      "type": "choice",
+      "options": [
+        {
+          "text": "（走过去）粒子的生存周期和数量应设为可配置参数，而不是固定值。",
+          "next": "ACT2_ARGUE_BRANCH_PARAM_01"
+        },
+        {
+          "text": "（忽略他们，看向琳）",
+          "next": "ACT2_ARGUE_BRANCH_IGNORE_01"
+        }
+      ]
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳和绘同时愣住，看向你。",
+      "next": "ACT2_ARGUE_BRANCH_PARAM_02"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "参数？什么意思？",
+      "next": "ACT2_ARGUE_BRANCH_PARAM_03"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_03",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "创建一个配置文件，让你们可以在外部调整这些值。",
+      "next": "ACT2_ARGUE_BRANCH_PARAM_04"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_04",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "直到找到性能和效果的平衡点。不要在代码里写死。",
+      "next": "ACT2_ARGUE_BRANCH_PARAM_05"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_05",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "……听起来可行。",
+      "next": "ACT2_ARGUE_BRANCH_PARAM_06"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_06",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "……好，那……就这么办。",
+      "next": "ACT2_ARGUE_BRANCH_PARAM_07"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "一场持续了17分钟的争论被你用30秒解决了。他们看你的眼神像是看一个外星生物。",
+      "next": "ACT2_SCENE1_START_EXPLORE"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_IGNORE_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你选择忽略,这些噪音与你的核心任务无关。",
+      "next": "ACT2_SCENE1_START_EXPLORE"
+    },
+    {
+      "id": "ACT2_CANS_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "23个空罐子,7种不同品牌。",
+      "next": "ACT2_CANS_02"
+    },
+    {
+      "id": "ACT2_CANS_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "含糖量平均每100毫升12.4克,咖啡因含量平均每100毫升32毫克。",
+      "next": "ACT2_CANS_03"
+    },
+    {
+      "id": "ACT2_CANS_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这些是团队成员试图用化学物质对抗物理定律的一个，无效的尝试的证明。",
+      "next": "ACT2_SCENE1_START_EXPLORE"
+    },
+    {
+      "id": "ACT2_LIN_PC_INTRO",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "琳的表情很痛苦。她不断地运行、关闭、修改代码，嘴里念念有词。",
+      "next": "ACT2_LIN_PC_SHOW"
+    },
+    {
+      "id": "ACT2_LIN_PC_SHOW",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT2_LIN_PC_01"
+    },
+    {
+      "id": "ACT2_LIN_PC_01",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（自言自语）不可能啊…为什么这个状态同步就是会出错？逻辑上明明没有问题…",
+      "next": "ACT2_LIN_PC_02"
+    },
+    {
+      "id": "ACT2_LIN_PC_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她的屏幕上，UI界面在某个特定操作下总是会发生闪烁和错位。",
+      "next": "ACT2_LIN_PC_03"
+    },
+    {
+      "id": "ACT2_LIN_PC_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "一个典型的状态机异步问题。",
+      "next": "ACT2_LIN_PC_04"
+    },
+    {
+      "id": "ACT2_LIN_PC_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你看了一眼她的代码。只需要0.7秒，你就在大脑中定位了那个错误的逻辑分支。",
+      "next": "ACT2_LIN_PC_05"
+    },
+    {
+      "id": "ACT2_LIN_PC_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "它像一个音阶错误的音符，刺耳且不和谐。",
+      "next": "ACT2_LIN_PC_HIDE"
+    },
+    {
+      "id": "ACT2_LIN_PC_HIDE",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT2_LIN_MINIGAME"
+    },
+    {
+      "id": "ACT2_LIN_MINIGAME",
+      "type": "startMinigame",
+      "gameId": "logic_mending",
+      "params": {
+        "description": "闯关游戏，你需要操控“代码块”躲避红色的错误代码，抵达绿色方块才能修正节点。"
+      },
+      "next": "ACT2_LIN_PC_RESOLVE_01"
+    },
+    {
+      "id": "ACT2_LIN_PC_RESOLVE_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "随着节点的修正，红色的错误方块消失了。",
+      "next": "ACT2_LIN_PC_RESOLVE_02"
+    },
+    {
+      "id": "ACT2_LIN_PC_RESOLVE_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "整个流程图变得通畅、和谐。你感到一种秩序被恢复的舒适感。",
+      "next": "ACT2_LIN_PC_RESOLVE_03"
+    },
+    {
+      "id": "ACT2_LIN_PC_RESOLVE_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你没有对琳说什么。",
+      "next": "ACT2_LIN_PC_RESOLVE_04"
+    },
+    {
+      "id": "ACT2_LIN_PC_RESOLVE_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你只是打开自己的终端，将修正后的代码片段'commit'，然后直接'push'到了共享仓库。",
+      "next": "ACT2_LIN_PC_RESOLVE_05"
+    },
+    {
+      "id": "ACT2_LIN_PC_RESOLVE_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "提交信息：'fix: Corrected state synchronization logic in UI module.'",
+      "next": "ACT2_SCENE1_14"
+    },
+    {
+      "id": "ACT2_SCENE1_14",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "几分钟后。",
+      "next": "ACT2_SCENE1_LIN_PC_SHOW"
+    },
+    {
+      "id": "ACT2_SCENE1_LIN_PC_SHOW",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT2_SCENE1_15"
+    },
+    {
+      "id": "ACT2_SCENE1_15",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（绝望地最后一次点击“运行”）算了，先这样吧，明天……",
+      "next": "ACT2_SCENE1_16"
+    },
+    {
+      "id": "ACT2_SCENE1_16",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "她的话突然停住了。屏幕上，那个顽固的Bug消失了。UI界面流畅得如同丝绸。）",
+      "next": "ACT2_SCENE1_17"
+    },
+    {
+      "id": "ACT2_SCENE1_17",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（不敢相信）……咦？好了？",
+      "next": "ACT2_SCENE1_18"
+    },
+    {
+      "id": "ACT2_SCENE1_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她又试了几次，每次都完美无缺。",
+      "next": "ACT2_SCENE1_19"
+    },
+    {
+      "id": "ACT2_SCENE1_19",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "怎么回事？我明明什么都没改……",
+      "next": "ACT2_SCENE1_20"
+    },
+    {
+      "id": "ACT2_SCENE1_20",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她下意识地打开了'gitlog'。最新的一条提交记录赫然在列。",
+      "next": "ACT2_SCENE1_21"
+    },
+    {
+      "id": "ACT2_SCENE1_21",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "'Author: Mo.'琳的目光缓缓从屏幕移开，落在了你的身上。",
+      "next": "ACT2_SCENE1_22"
+    },
+    {
+      "id": "ACT2_SCENE1_22",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她的眼神非常复杂，混杂着震惊、感激，还有一丝……畏惧。",
+      "next": "ACT2_SCENE1_23"
+    },
+    {
+      "id": "ACT2_SCENE1_23",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（声音很轻）默……是你修的？",
+      "next": "ACT2_SCENE1_CHOICE_01"
+    },
+    {
+      "id": "ACT2_SCENE1_CHOICE_01",
+      "type": "choice",
+      "options": [
+        {
+          "text": "嗯。",
+          "next": "ACT2_SCENE1_BRANCH_A_MO_APPEARS"
+        },
+        {
+          "text": "那里的逻辑判断有误。",
+          "next": "ACT2_SCENE1_BRANCH_B_MO_APPEARS"
+        },
+        {
+          "text": "（点头，继续看自己的屏幕）",
+          "next": "ACT2_SCENE1_BRANCH_A_MO_APPEARS"
+        }
+      ]
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-left",
+      "next": "ACT2_SCENE1_BRANCH_A_01"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_01",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（深深地吸了一口气，然后露出了一个极其疲惫但真诚的微笑）",
+      "next": "ACT2_SCENE1_BRANCH_A_02"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_02",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "……谢谢。真的。你救了我……不，你救了我们整个项目。（",
+      "next": "ACT2_SCENE1_BRANCH_A_03"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（她似乎还想说什么，但你只是平静地看着她，没有任何回应。）",
+      "next": "ACT2_SCENE1_BRANCH_A_04"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "你……是怎么做到的？我查了两个小时。",
+      "next": "ACT2_SCENE1_BRANCH_A_05"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_05",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "它就在那里。",
+      "next": "ACT2_SCENE1_BRANCH_A_06"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你陈述了一个事实。那个错误是客观存在的。",
+      "next": "ACT2_SCENE1_BRANCH_A_07"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "找到它，是必然的。",
+      "next": "ACT2_SCENE1_BRANCH_A_08"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_08",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（咀嚼着你的话，最后无奈地摇了摇头）",
+      "next": "ACT2_SCENE1_BRANCH_A_09"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_09",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "好吧，“它就在那里”。",
+      "next": "ACT2_SCENE1_BRANCH_A_10"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_10",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "总之，谢谢你，“神”。",
+      "next": "ACT2_SCENE1_BRANCH_A_11"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她说完，带着一丝自嘲的语气，转过头继续工作了。",
+      "next": "ACT2_SCENE1_BRANCH_A_12"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "但你能感觉到，她工作的节奏变得轻快了许多。",
+      "next": "ACT2_SCENE1_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-left",
+      "next": "ACT2_SCENE1_BRANCH_B_01"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "那里的逻辑判断有误。状态切换时，临界值没有被正确包含。",
+      "next": "ACT2_SCENE1_BRANCH_B_02"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你给出了一个技术性的、精确的解释。",
+      "next": "ACT2_SCENE1_BRANCH_B_03"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（愣愣地听着，然后快速翻看代码，找到了你修改的地方）",
+      "next": "ACT2_SCENE1_BRANCH_B_04"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "……原来是“大于”和“大于等于”的区别……天哪……（她用手捂住了脸。）",
+      "next": "ACT2_SCENE1_BRANCH_B_05"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_05",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "这么简单的错误…我居然查了两个小时……脑子已经是一坨浆糊了。",
+      "next": "ACT2_SCENE1_BRANCH_B_06"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她放下手，看着你，眼神里充满了钦佩。",
+      "next": "ACT2_SCENE1_BRANCH_B_07"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_07",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "你的大脑是怎么长的？在这种环境下还能保持这么清晰的逻辑。",
+      "next": "ACT2_SCENE1_BRANCH_B_08"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_08",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "谢谢你，默。",
+      "next": "ACT2_SCENE1_BRANCH_B_09"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_09",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "我关闭了不必要的进程。",
+      "next": "ACT2_SCENE1_BRANCH_B_10"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_10",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（猛地笑了，身体弓到了桌子上）比如听阳和绘吵架的进程吗？",
+      "next": "ACT2_SCENE1_BRANCH_B_11"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_11",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "真羡慕你，我也想有这个功能。",
+      "next": "ACT2_SCENE1_BRANCH_B_12"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她眨了眨眼，气氛似乎轻松了一些。",
+      "next": "ACT2_SCENE1_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT2_SCENE1_FINAL_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "ACT2_SCENE1_FINAL_LIN_HIDES"
+    },
+    {
+      "id": "ACT2_SCENE1_FINAL_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT2_SCENE2_01"
+    },
+    {
+      "id": "ACT2_SCENE2_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "时间快速流逝。",
+      "next": "ACT2_SCENE2_02"
+    },
+    {
+      "id": "ACT2_SCENE2_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "屏幕上，时钟从00:00跳到01:00，再到02:00。",
+      "next": "ACT2_SCENE2_03"
+    },
+    {
+      "id": "ACT2_SCENE2_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳布满血丝的眼睛、绘不断颤抖的手、琳桌上一排空的咖啡杯。",
+      "next": "ACT2_SCENE2_04"
+    },
+    {
+      "id": "ACT2_SCENE2_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "窗外的夜色浓稠如墨。你自己的屏幕上，代码在飞速滚动。",
+      "next": "ACT2_SCENE2_05"
+    },
+    {
+      "id": "ACT2_SCENE2_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "屏幕开始变得越来越亮，越来越刺眼，仿佛显示器过载了一般，你体味着熬夜带来的生理不适感。",
+      "next": "ACT2_SCENE2_06"
+    },
+    {
+      "id": "ACT2_SCENE2_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "实验室的背景噪音被放大、扭曲。",
+      "next": "ACT2_SCENE2_07"
+    },
+    {
+      "id": "ACT2_SCENE2_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "风扇声变成了刺耳的轰鸣，键盘声杂乱无章，阳和绘的争论变成了无法分辨的嗡嗡声。",
+      "next": "ACT2_SCENE2_08"
+    },
+    {
+      "id": "ACT2_SCENE2_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这些声音混合在一起，形成了一堵压迫性的音墙。",
+      "next": "ACT2_SCENE2_09"
+    },
+    {
+      "id": "ACT2_SCENE2_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "热。不是温度。是信息过载，是无序的噪音，是混乱本身。",
+      "next": "ACT2_SCENE2_10"
+    },
+    {
+      "id": "ACT2_SCENE2_10",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "它们像灼热的太阳，炙烤着你的逻辑核心。",
+      "next": "ACT2_SCENE2_11"
+    },
+    {
+      "id": "ACT2_SCENE2_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你需要秩序。你需要专注。你需要一个……节拍器。",
+      "next": "ACT2_SCENE2_12"
+    },
+    {
+      "id": "ACT2_SCENE2_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "时间定格在03:14。",
+      "next": "ACT2_SCENE2_13"
+    },
+    {
+      "id": "ACT2_SCENE2_13",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳和绘已经趴在桌上睡着了。琳也靠在椅子上，闭着眼睛，精疲力尽。",
+      "next": "ACT2_SCENE2_14"
+    },
+    {
+      "id": "ACT2_SCENE2_14",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "实验室里只剩下机器的嗡鸣，和你。",
+      "next": "ACT2_SCENE2_15"
+    },
+    {
+      "id": "ACT2_SCENE2_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你完成了今天的全部任务。但你没有感到平静。",
+      "next": "ACT2_SCENE2_16"
+    },
+    {
+      "id": "ACT2_SCENE2_16",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "因为你知道，这个项目最核心的混乱源头，还没有被清理。",
+      "next": "ACT2_SCENE3_START_01"
+    },
+    {
+      "id": "ACT2_SCENE3_START_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你打开了项目的根目录。",
+      "next": "ACT2_SCENE3_START_02"
+    },
+    {
+      "id": "ACT2_SCENE3_START_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你决定，在最后的时间里，对这个世界进行一次彻底的巡礼。",
+      "next": "ACT2_SCENE3_START_03"
+    },
+    {
+      "id": "ACT2_SCENE3_START_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "当你的手指敲下某个指令后，你的意识仿佛被抽离，进入了一个由代码构成的虚拟空间。",
+      "next": "ACT2_SCENE3_SETUP"
+    },
+    {
+      "id": "ACT2_SCENE3_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/2.3代码库的深渊.jpeg",
+      "comment": "设置代码库的深渊场景",
+      "next": "ACT2_SCENE3_01",
+      "delay": 3000
+    },
+    {
+      "id": "ACT2_SCENE3_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "不洁。冗余。错误。",
+      "next": "ACT2_SCENE3_02"
+    },
+    {
+      "id": "ACT2_SCENE3_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "一个被污染的系统。它在你的眼前“尖叫”，用它混乱的结构，恳求着被净化。",
+      "next": "ACT2_SCENE3_03"
+    },
+    {
+      "id": "ACT2_SCENE3_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这不是一个选择,这是一种责任。一种将错误修正为正确的、不可动摇的物理定律。",
+      "next": "ACT2_SCENE3_04"
+    },
+    {
+      "id": "ACT2_SCENE3_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "当最后一个黑色节点被修正，整个世界安静了。",
+      "next": "ACT2_SCENE3_05"
+    },
+    {
+      "id": "ACT2_SCENE3_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "所有的黑色藤蔓、肿瘤、血管，在一瞬间化为尘埃，灰飞烟灭。",
+      "next": "ACT2_SCENE3_06"
+    },
+    {
+      "id": "ACT2_SCENE3_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "空间中只剩下纯白的、由几何体构成的宏伟建筑。",
+      "next": "ACT2_SCENE3_07"
+    },
+    {
+      "id": "ACT2_SCENE3_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "它们彼此以完美的角度连接，对称、简洁、优雅。",
+      "next": "ACT2_SCENE3_08"
+    },
+    {
+      "id": "ACT2_SCENE3_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "像一座寂静的、沐浴在月光下的教堂。背景音是悠远而宁静的圣歌。秩序。和谐。纯粹。",
+      "next": "ACT2_SCENE3_09"
+    },
+    {
+      "id": "ACT2_SCENE3_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这，才是世界应有的样子。你感到一种前所未有的平静。",
+      "next": "ACT2_SCENE3_BACK"
+    },
+    {
+      "id": "ACT2_SCENE3_BACK",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/2.1深夜实验室.png",
+      "comment": "设置实验室场景",
+      "next": "ACT2_SCENE3_10",
+      "delay": 3000
+    },
+    {
+      "id": "ACT2_SCENE3_10",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的意识回到现实，你依然坐在电脑前。",
+      "next": "ACT2_SCENE3_11"
+    },
+    {
+      "id": "ACT2_SCENE3_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "实验室安静得只能听到你自己的心跳。",
+      "next": "ACT2_SCENE3_12"
+    },
+    {
+      "id": "ACT2_SCENE3_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "屏幕上，是黑色的命令行终端。",
+      "next": "ACT2_SCENE3_13"
+    },
+    {
+      "id": "ACT2_SCENE3_13",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "光标在静静地闪烁，等待着最后的指令...",
+      "next": "ACT2_SCENE3_14"
+    },
+    {
+      "id": "ACT2_SCENE3_14",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你知道该做什么。你抬起手，手指在键盘上敲击。",
+      "next": "ACT2_SCENE3_15"
+    },
+    {
+      "id": "ACT2_SCENE3_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "每一次敲击，都清脆、坚定，像法官落下法槌。",
+      "next": "ACT2_SCENE3_16"
+    },
+    {
+      "id": "ACT2_SCENE3_16",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "'git commit-m' Refactor: Purify the core logic（按下回车，日志滚动）",
+      "next": "ACT2_SCENE3_17"
+    },
+    {
+      "id": "ACT2_SCENE3_17",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "'git push–force'（按下回车）",
+      "next": "ACT2_SCENE3_18"
+    },
+    {
+      "id": "ACT2_SCENE3_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "屏幕上，上传的进度条在无声地前进。",
+      "next": "ACT2_SCENE3_19"
+    },
+    {
+      "id": "ACT2_SCENE3_19",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "10%… 35%… 78%… 100%",
+      "next": "ACT2_SCENE3_20"
+    },
+    {
+      "id": "ACT2_SCENE3_20",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "'Done.'",
+      "next": "ACT2_SCENE3_BLACK"
+    },
+    {
+      "id": "ACT2_SCENE3_BLACK",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "黑屏",
+      "next": "ACT3_SCENE1_SETUP",
+      "delay": 5000
+    },
+    {
+      "id": "ACT3_SCENE1_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "答辩大厅",
+      "next": "ACT3_SCENE1_01"
+    },
+    {
+      "id": "ACT3_SCENE1_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "光线强度逐渐减弱，轮廓开始出现。",
+      "next": "ACT3_SCENE1_02"
+    },
+    {
+      "id": "ACT3_SCENE1_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你看到光晕的边缘是一个巨大的、空旷的空间。",
+      "next": "ACT3_SCENE1_03"
+    },
+    {
+      "id": "ACT3_SCENE1_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "光线的来源，是一台吊顶投影仪的镜头。嗡鸣声正是它散热风扇的声音。",
+      "next": "ACT3_SCENE1_04"
+    },
+    {
+      "id": "ACT3_SCENE1_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的视点慢慢适应了光线。惨白的讲台、空无一人的观众席、远处坐着的一个模糊人影……",
+      "next": "ACT3_SCENE1_05"
+    },
+    {
+      "id": "ACT3_SCENE1_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "一个冷静、清晰、不带任何感情色彩的声音，穿透了耳鸣，直接灌入你的脑中。",
+      "next": "ACT3_SCENE1_06"
+    },
+    {
+      "id": "ACT3_SCENE1_06",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "…对于你的行为所造成的后果——你的项目失败了，你的队友的努力付诸东流——对于这一切…",
+      "next": "ACT3_SCENE1_07"
+    },
+    {
+      "id": "ACT3_SCENE1_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的视点终于完全清晰。你正站在项目答辩大厅的讲台上。",
+      "next": "ACT3_SCENE1_08"
+    },
+    {
+      "id": "ACT3_SCENE1_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳、琳、绘像影子一样沉默地站在你身边。",
+      "next": "ACT3_SCENE1_09"
+    },
+    {
+      "id": "ACT3_SCENE1_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "台下，陈教授的身影清晰起来，他正看着你，镜片反射着投影仪的光。",
+      "next": "ACT3_SCENE1_10"
+    },
+    {
+      "id": "ACT3_SCENE1_10",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他的声音再次响起，像是对一个程序执行最后的指令。",
+      "next": "ACT3_SCENE1_CHENAPPEARS"
+    },
+    {
+      "id": "ACT1_SCENE1_CHENAPPEARS",
+      "type": "showCharacter",
+      "charId": "CHEN",
+      "position": "pos-center",
+      "next": "ACT3_SCENE1_11"
+    },
+    {
+      "id": "ACT3_SCENE1_11",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "……默同学。",
+      "next": "ACT3_SCENE1_12"
+    },
+    {
+      "id": "ACT3_SCENE1_12",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你感到后悔吗？",
+      "next": "ACT3_SCENE1_13"
+    },
+    {
+      "id": "ACT3_SCENE1_13",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "后悔。一个复杂的、与情感数据库强关联的变量。",
+      "next": "ACT3_SCENE1_14"
+    },
+    {
+      "id": "ACT3_SCENE1_14",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "定义：因对过去的某种行为感到懊恼、遗憾而产生的一种负面情绪。",
+      "next": "ACT3_SCENE1_15"
+    },
+    {
+      "id": "ACT3_SCENE1_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "要计算这个变量的值，必须首先访问并处理相关的事件日志。",
+      "next": "ACT3_SCENE1_16"
+    },
+    {
+      "id": "ACT3_SCENE1_16",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "查询请求已发送。正在访问最近的归档记录…",
+      "next": "ACT3_SCENE1_BLACK"
+    },
+    {
+      "id": "ACT3_SCENE1_BLACK",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "黑屏",
+      "next": "ACT3_SCENE1_17"
+    },
+    {
+      "id": "ACT3_SCENE1_17",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "[时间戳: T-2小时. 实验室.]",
+      "next": "ACT3_SCENE1_18"
+    },
+    {
+      "id": "ACT3_SCENE1_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "正在播放事件记录…",
+      "next": "ACT3_SCENE2_SETUP"
+    },
+    {
+      "id": "ACT3_SCENE2_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/2.1深夜实验室.png",
+      "comment": "白天实验室",
+      "next": "ACT3_SCENE2_01",
+      "delay": 2000
+    },
+    {
+      "id": "ACT3_SCENE2_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "清晨，08:05。",
+      "next": "ACT3_SCENE2_02"
+    },
+    {
+      "id": "ACT3_SCENE2_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "答辩时间是上午十点。实验室的窗帘没有拉开，室内光线昏暗，只有几台显示器亮着，如同黑暗中的墓碑。",
+      "next": "ACT3_SCENE2_03"
+    },
+    {
+      "id": "ACT3_SCENE2_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你早已到达，静静地坐在自己的座位上，屏幕上是你重构后的、纯净的代码结构图。",
+      "next": "ACT3_SCENE2_04"
+    },
+    {
+      "id": "ACT3_SCENE2_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你像一个完成了伟大作品的艺术家，在审视自己的杰作。",
+      "next": "ACT3_SCENE2_05"
+    },
+    {
+      "id": "ACT3_SCENE2_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "实验室的门被推开，阳、琳、绘拖着疲惫的身体走进来。",
+      "next": "ACT3_SCENE2_06"
+    },
+    {
+      "id": "ACT3_SCENE2_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他们眼圈发黑，但精神上似乎准备好了做最后的冲刺。",
+      "next": "ACT3_SCENE2_YANG_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE2_YANG_APPEARS",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-left",
+      "next": "ACT3_SCENE2_LIN_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE2_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "ACT3_SCENE2_HUI_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE2_HUI_APPEARS",
+      "type": "showCharacter",
+      "charId": "HUI",
+      "position": "pos-right",
+      "next": "ACT3_SCENE2_07"
+    },
+    {
+      "id": "ACT3_SCENE2_07",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（打着哈欠，强行振作）好了伙计们！最后两小时！",
+      "next": "ACT3_SCENE2_08"
+    },
+    {
+      "id": "ACT3_SCENE2_08",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "我们再过一遍流程，把PPT最后顺一下，然后就去……",
+      "next": "ACT3_SCENE2_09"
+    },
+    {
+      "id": "ACT3_SCENE2_09",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（第一个发现异常，她走到自己的座位，脸色瞬间变了）",
+      "next": "ACT3_SCENE2_10"
+    },
+    {
+      "id": "ACT3_SCENE2_09",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "……我的……我的动画预览……怎么黑屏了？",
+      "next": "ACT3_SCENE2_10"
+    },
+    {
+      "id": "ACT3_SCENE2_10",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（她慌乱地点击着鼠标。）接口报错？昨天……昨天还是好的啊！",
+      "next": "ACT3_SCENE2_11"
+    },
+    {
+      "id": "ACT3_SCENE2_11",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（听到报错，立刻警觉起来，迅速打开自己的工程）等一下，我的UI模块也在报错……",
+      "next": "ACT3_SCENE2_12"
+    },
+    {
+      "id": "ACT3_SCENE2_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她开始编译整个项目，屏幕上瞬间被一片鲜红的错误信息淹没。",
+      "next": "ACT3_SCENE2_14"
+    },
+    {
+      "id": "ACT3_SCENE2_14",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 'FATAL ERROR: Type'AnimationController' not found.'  'FATAL ERROR: Function 'Player.UpdateState' is not defined.'",
+      "next": "ACT3_SCENE2_15"
+    },
+    {
+      "id": "ACT3_SCENE2_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 一行又一行，触目惊心。",
+      "next": "ACT3_SCENE2_16"
+    },
+    {
+      "id": "ACT3_SCENE2_16",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（声音开始颤抖）……怎么会……所有的函数接口……全都不对了……",
+      "next": "ACT3_SCENE2_17"
+    },
+    {
+      "id": "ACT3_SCENE2_17",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（看到琳屏幕上的红色，心沉了下去）怎么回事？是不是谁不小心提交了错误的版本？",
+      "next": "ACT3_SCENE2_18"
+    },
+    {
+      "id": "ACT3_SCENE2_18",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "琳，回滚！立刻回滚到昨晚的版本！",
+      "next": "ACT3_SCENE2_19"
+    },
+    {
+      "id": "ACT3_SCENE2_19",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（手指在键盘上飞快操作，调出了gitlog提交记录。然后，她的所有动作都停住了。",
+      "next": "ACT3_SCENE2_20"
+    },
+    {
+      "id": "ACT3_SCENE2_20",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "屏幕上，最新、也是唯一的一条提交记录，静静地躺在那里。",
+      "next": "ACT3_SCENE2_21"
+    },
+    {
+      "id": "ACT3_SCENE2_21",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "'commit [a1b2c3d4e5f6] (HEAD-> master)'   'Author: Mo.'   'Date: Tue Aug 26 03:15:17 2025 +0800'   'Refactor: Purify the core logic.'",
+      "next": "ACT3_SCENE2_22"
+    },
+    {
+      "id": "ACT3_SCENE2_22",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "时间仿佛凝固了。实验室里只剩下服务器风扇单调的嗡鸣声。",
+      "next": "ACT3_SCENE2_23"
+    },
+    {
+      "id": "ACT3_SCENE2_23",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳、琳、绘，三个人，缓缓地、像生锈的机器人一样，转过头，看向了你。",
+      "next": "ACT3_SCENE2_24"
+    },
+    {
+      "id": "ACT3_SCENE2_24",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你坐在那里，平静地回望着他们，仿佛他们正在讨论一件与你无关的事情。",
+      "next": "ACT3_SCENE2_25"
+    },
+    {
+      "id": "ACT3_SCENE2_25",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（第一个开口，声音嘶哑得像是砂纸在摩擦）",
+      "next": "ACT3_SCENE2_26"
+    },
+    {
+      "id": "ACT3_SCENE2_26",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "……默……这是……什么意思？",
+      "next": "ACT3_SCENE3_01"
+    },
+    {
+      "id": "ACT3_SCENE3_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "没有人移动。你就坐着，被三道混杂着震惊、愤怒、和彻底不解的目光包围。",
+      "next": "ACT3_SCENE3_02"
+    },
+    {
+      "id": "ACT3_SCENE3_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这里不再是实验室，是审讯室。",
+      "next": "ACT3_SCENE3_LIN_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE3_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT3_SCENE3_MO_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE3_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-center",
+      "next": "ACT3_SCENE3_03"
+    },
+    {
+      "id": "ACT3_SCENE3_03",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "（带着哭腔，第一个崩溃了）我画的所有东西……我辛辛苦苦画了一个月的角色……它们现在只是一张张不会动的图片了……你到底……做了什么？",
+      "next": "ACT3_SCENE3_04"
+    },
+    {
+      "id": "ACT3_SCENE3_04",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "……它们现在只是一张张不会动的图片了……你到底……做了什么？",
+      "next": "ACT3_SCENE3_05"
+    },
+    {
+      "id": "ACT3_SCENE3_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她的问题充满了情绪化的、无法量化的词语。",
+      "next": "ACT3_SCENE3_06"
+    },
+    {
+      "id": "ACT3_SCENE3_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "“辛苦”、“不会动”…你想纠正她。它们不是“不会动”，只是驱动它们的代码被替换了。",
+      "next": "ACT3_SCENE3_07"
+    },
+    {
+      "id": "ACT3_SCENE3_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这是一个技术问题，不是存在问题。它们从始至终也不过是几张图片。",
+      "next": "ACT3_SCENE3_08"
+    },
+    {
+      "id": "ACT3_SCENE3_08",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（向前走了一步，拳头紧紧攥着，指关节因为用力而发白）回答她，默！你对我们的项目做了什么！？",
+      "next": "ACT3_SCENE3_09"
+    },
+    {
+      "id": "ACT3_SCENE3_09",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "我重构了它。",
+      "next": "ACT3_SCENE3_HUI_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE3_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT3_SCENE3_LIN_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE3_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-right",
+      "next": "ACT3_SCENE3_10"
+    },
+    {
+      "id": "ACT3_SCENE3_10",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（闭上眼睛，仿佛用尽了全身的力气才说出这句话）……他用了force push。他把整个历史记录都覆盖了。",
+      "next": "ACT3_SCENE3_11"
+    },
+    {
+      "id": "ACT3_SCENE3_11",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "他……用他自己的版本，替换了我们所有人的工作。",
+      "next": "ACT3_SCENE3_12"
+    },
+    {
+      "id": "ACT3_SCENE3_12",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（听到“force push”，像是被点燃的炸药，终于爆发了）为什么！？啊！？为什么！",
+      "next": "ACT3_SCENE3_13"
+    },
+    {
+      "id": "ACT3_SCENE3_13",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "就因为你觉得我们的代码“不干净”吗？就因为我们写的东西不符合你那该死的“完美标准”吗？",
+      "next": "ACT3_SCENE3_14"
+    },
+    {
+      "id": "ACT3_SCENE3_14",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "这是一个游戏！是一个要赶着上线的项目！不是他妈的艺术品！",
+      "next": "ACT3_SCENE3_15"
+    },
+    {
+      "id": "ACT3_SCENE3_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他的质问像一连串的错误指令，冲击着你的处理器。你想解析他的话，找出其中的逻辑谬误。",
+      "next": "ACT3_SCENE3_CHOICE_01"
+    },
+    {
+      "id": "ACT3_SCENE3_CHOICE_01",
+      "type": "choice",
+      "options": [
+        {
+          "text": "“艺术品”",
+          "next": "ACT3_SCENE3_BRANCH_A_LIN_HIDES"
+        },
+        {
+          "text": "“项目”",
+          "next": "ACT3_SCENE3_BRANCH_B_01"
+        },
+        {
+          "text": "保持沉默",
+          "next": "ACT3_SCENE3_BRANCH_C_01"
+        }
+      ]
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT3_SCENE3_BRANCH_A_HUI_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_HUI_APPEARS",
+      "type": "showCharacter",
+      "charId": "HUI",
+      "position": "pos-right",
+      "next": "ACT3_SCENE3_BRANCH_A_01"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你抓住了他话语中唯一与“美学”相关的词。",
+      "next": "ACT3_SCENE3_BRANCH_A_02"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_02",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "不纯粹的代码，本身就是缺陷。",
+      "next": "ACT3_SCENE3_BRANCH_A_03"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_03",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "有缺陷的作品，不能称之为合格的工业品，更遑论艺术品。",
+      "next": "ACT3_SCENE3_BRANCH_A_04"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_04",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（被你的回答气得发抖）你……我们跟你说的不是一回事！",
+      "next": "ACT3_SCENE3_BRANCH_A_05"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_05",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "我们在说我们的努力！我们的心血！",
+      "next": "ACT3_SCENE3_BRANCH_A_06"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_06",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "默，你怎么能这么说…我们每个人都尽力了…",
+      "next": "ACT3_SCENE3_BRANCH_A_07"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你与他们的隔阂进一步加深了。你试图进行逻辑辩论，而他们需要的是情感认同。",
+      "next": "ACT3_SCENE3_BRANCH_A_FINAL_HUI_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_FINAL_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT3_SCENE3_BRANCH_A_FINAL_LIN_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_A_FINAL_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-right",
+      "next": "ACT3_SCENE3_16"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_B_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你抓住了他话语中唯一与“目标”相关的词。",
+      "next": "ACT3_SCENE3_BRANCH_B_02"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_B_02",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "一个混乱的、不可维护的项目，无法长期存续。我从根本上解决了它的结构性风险。",
+      "next": "ACT3_SCENE3_BRANCH_B_03"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_B_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（这是她第一次对你发出尖锐的质问）用毁掉它当前所有功能的方式吗？",
+      "next": "ACT3_SCENE3_BRANCH_B_04"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_B_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "默，这不叫解决风险，这叫推倒重来！在答辩前三小时！",
+      "next": "ACT3_SCENE3_BRANCH_B_05"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_B_05",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "你告诉我，这有任何逻辑可言吗？",
+      "next": "ACT3_SCENE3_BRANCH_B_06"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_B_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 琳，团队中逻辑最清晰的人，也无法理解你的行为。",
+      "next": "ACT3_SCENE3_BRANCH_07"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_B_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 因为她的逻辑，建立在“团队合作”和“现实限制”这两个你没有编码进去的前提之上。",
+      "next": "ACT3_SCENE3_16"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_C_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你选择不回应。。",
+      "next": "ACT3_SCENE3_BRANCH_C_02"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_C_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "无法解析的输入，最佳策略是忽略。",
+      "next": "ACT3_SCENE3_BRANCH_C_03"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_C_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（你的沉默让他更加愤怒）不说话？你现在连一句话都懒得跟我们说了是吗？你是不是觉得我们都是傻子！",
+      "next": "ACT3_SCENE3_BRANCH_C_04"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_C_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（失望地看着你）默，我们至少需要一个理由……",
+      "next": "ACT3_SCENE3_BRANCH_C_05"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_C_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的沉默，被他们解读为傲慢、轻蔑或者...",
+      "next": "ACT3_SCENE3_BRANCH_C_06"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_C_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "罪无可赦。",
+      "next": "ACT3_SCENE3_16"
+    },
+    {
+      "id": "ACT3_SCENE3_16",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（走上前来，站在你的面前，直视你的眼睛）默。我最后问你一次。",
+      "next": "ACT3_SCENE3_17"
+    },
+    {
+      "id": "ACT3_SCENE3_17",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "抛开那些代码，抛开那些架构不谈。我们是一个团队，我们在一起工作了一个月。",
+      "next": "ACT3_SCENE3_18"
+    },
+    {
+      "id": "ACT3_SCENE3_18",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "你做这件事的时候，有那么一瞬间……哪怕只有一纳秒，想过我们吗？",
+      "next": "ACT3_SCENE3_19"
+    },
+    {
+      "id": "ACT3_SCENE3_19",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这是一个无法用是或否回答的问题。",
+      "next": "ACT3_SCENE3_20"
+    },
+    {
+      "id": "ACT3_SCENE3_20",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "“想”，是一个复杂的、涉及情感与共情的计算。你的日志里，没有关于这个的记录。",
+      "next": "ACT3_SCENE3_CHOICE_02"
+    },
+    {
+      "id": "ACT3_SCENE3_CHOICE_02",
+      "type": "choice",
+      "options": [
+        {
+          "text": "我的任务是优化代码。(陈述事实)",
+          "next": "ACT3_SCENE3_18"
+        },
+        {
+          "text": "……我不知道。(陈述困惑)",
+          "inc": "compliant",
+          "next": "ACT3_SCENE3_18"
+        },
+        {
+          "text": "（继续沉默）",
+          "next": "ACT3_SCENE3_18"
+        }
+      ]
+    },
+    {
+      "id": "ACT3_SCENE3_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的回答，将决定你与他们之间，最后一丝连接是否会彻底断裂。无论你如何选择，时间都在流逝。去往刑场……不，去往答辩大厅的时间，到了。",
+      "next": "ACT3_SCENE3_FINAL_YANG_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE3_FINAL_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT3_SCENE3_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE3_FINAL_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "ACT3_SCENE3_FINAL_LIN_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE3_FINAL_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT3_SCENE4_SETUP"
+    },
+    {
+      "id": "ACT3_SCENE4_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "答辩大厅",
+      "next": "ACT3_SCENE4_CHEN_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE4_CHEN_APPEARS",
+      "type": "showCharacter",
+      "charId": "CHEN",
+      "position": "pos-center",
+      "next": "ACT3_SCENE4_01"
+    },
+    {
+      "id": "ACT3_SCENE4_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "上午10:00。项目答辩大厅。一个巨大的、空旷的阶梯教室。",
+      "next": "ACT3_SCENE4_02"
+    },
+    {
+      "id": "ACT3_SCENE4_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "台下只坐着一个人——陈教授。他表情严肃，戴着眼镜，眼神锐利。你们四个人站在讲台上，像等待审判的犯人。",
+      "next": "ACT3_SCENE4_03"
+    },
+    {
+      "id": "ACT3_SCENE4_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "身后的大屏幕上，是你们残缺不全、频繁报错的游戏。",
+      "next": "ACT3_SCENE4_04"
+    },
+    {
+      "id": "ACT3_SCENE4_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳用一种毫无生气的语调，进行着灾难般的演示。绘低着头，强忍着不让眼泪掉下来。琳则面无表情地盯着地面。",
+      "next": "ACT3_SCENE4_05"
+    },
+    {
+      "id": "ACT3_SCENE4_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你站在最旁边，看着这一切，内心毫无波澜。",
+      "next": "ACT3_SCENE4_06"
+    },
+    {
+      "id": "ACT3_SCENE4_06",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "（抬起手，打断了阳的演示）够了。（他的声音不大，但在空旷的大厅里格外清晰。）",
+      "next": "ACT3_SCENE4_07"
+    },
+    {
+      "id": "ACT3_SCENE4_07",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你们不用再演示了。今天早上，我花了半个小时，看完了你们项目的整个Git提交历史。",
+      "next": "ACT3_SCENE4_08"
+    },
+    {
+      "id": "ACT3_SCENE4_08",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "（他顿了顿，目光扫过阳、琳、绘，最后，像一枚图钉一样，钉在了你的身上。）",
+      "next": "ACT3_SCENE4_09"
+    },
+    {
+      "id": "ACT3_SCENE4_09",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "所以，我不想讨论这个已经崩溃了的项目。我想讨论一下导致它崩溃的那个行为。",
+      "next": "ACT3_SCENE4_10"
+    },
+    {
+      "id": "ACT3_SCENE4_11",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "默同学。",
+      "next": "ACT3_SCENE4_12"
+    },
+    {
+      "id": "ACT3_SCENE4_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他叫了你的名字。这是最终的审判。",
+      "next": "ACT3_SCENE4_13"
+    },
+    {
+      "id": "ACT3_SCENE4_13",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你的几位组员，把他们所有的工作成果都提交到了共享仓库里。",
+      "next": "ACT3_SCENE4_14"
+    },
+    {
+      "id": "ACT3_SCENE4_14",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "而你，在答辩的当天凌晨，用一次强制推送，抹掉了这一切。",
+      "next": "ACT3_SCENE4_15"
+    },
+    {
+      "id": "ACT3_SCENE4_15",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "从软件工程的角度，这是最恶劣、最不负责任、最无法饶恕的行为。它违背了团队协作的一切基本原则。",
+      "next": "ACT3_SCENE4_16"
+    },
+    {
+      "id": "ACT3_SCENE4_16",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你的技术能力，我看过你的作业，是顶尖的。但现在我需要一个解释。",
+      "next": "ACT3_SCENE4_17"
+    },
+    {
+      "id": "ACT3_SCENE4_17",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "...",
+      "next": "ACT3_SCENE4_18"
+    },
+    {
+      "id": "ACT3_SCENE4_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你没有回答。你的沉默让陈教授微微皱起了眉头。",
+      "next": "ACT3_SCENE4_19"
+    },
+    {
+      "id": "ACT3_SCENE4_19",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "……没有理由吗？",
+      "next": "ACT3_SCENE4_YANG_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE4_YANG_APPEARS",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-left",
+      "next": "ACT3_SCENE4_20"
+    },
+    {
+      "id": "ACT3_SCENE4_20",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": " (再也无法抑制，情绪爆发) 理由？他根本没有理由！或者说，他的理由我们永远无法理解！",
+      "next": "ACT3_SCENE4_21"
+    },
+    {
+      "id": "ACT3_SCENE4_21",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": " 教授，问题根本不在于那次修改！而在于他这个人！",
+      "next": "ACT3_SCENE4_22"
+    },
+    {
+      "id": "ACT3_SCENE4_22",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": " （看向阳）嗯？请你说明。",
+      "next": "ACT3_SCENE4_23"
+    },
+    {
+      "id": "ACT3_SCENE4_23",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": " (转向你，与其说是在对教授解释，不如说是在对你进行控诉) ",
+      "next": "ACT3_SCENE4_24"
+    },
+    {
+      "id": "ACT3_SCENE4_24 ",
+      "type": "branch",
+      "cases": [
+        {
+          "when": "choice1_compliant",
+          "next": "ACT3_SCENE4_25_A_01"
+        },
+        {
+          "when": "choice1_silent",
+          "next": "ACT3_SCENE4_25_B_01"
+        },
+        {
+          "when": "choice1_logical",
+          "next": "ACT3_SCENE4_25_C_01"
+        }
+      ]
+    },
+    {
+      "id": "ACT3_SCENE4_25_A_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "从项目的第一天起！我们为那个‘色彩变化’的核心创意激动得彻夜难眠，他呢？",
+      "next": "ACT3_SCENE4_25_A_02"
+    },
+    {
+      "id": "ACT3_SCENE4_25_A_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他当着所有人的面，冷冰冰地质问我们‘为什么要变色？逻辑上不通。’！",
+      "next": "ACT3_SCENE4_25_A_03"
+    },
+    {
+      "id": "ACT3_SCENE4_25_A_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他根本不理解什么是象征！什么是为玩家创造情感体验！什么是人性！",
+      "next": "ACT3_SCENE4_26"
+    },
+    {
+      "id": "ACT3_SCENE4_25_B_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "从项目的第一天起！我们为那个‘色彩变化’的核心创意激动得彻夜难眠，他呢？",
+      "next": "ACT3_SCENE4_25_B_02"
+    },
+    {
+      "id": "ACT3_SCENE4_25_B_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他一个字都懒得说，就坐在那里，死死地盯着天花板上的灯！",
+      "next": "ACT3_SCENE4_25_B_03"
+    },
+    {
+      "id": "ACT3_SCENE4_25_B_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "好像那盏破灯比我们所有人的梦想加起来都重要！他根本没在听！",
+      "next": "ACT3_SCENE4_26"
+    },
+    {
+      "id": "ACT3_SCENE4_25_C_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "从项目的第一天起！我们为那个‘色彩变化’的核心创意激动得彻夜难眠，他呢？",
+      "next": "ACT3_SCENE4_25_C_02"
+    },
+    {
+      "id": "ACT3_SCENE4_25_C_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他嘴上说着‘可以实现’，但你看得到他眼里有任何一丝光芒吗？",
+      "next": "ACT3_SCENE4_25_C_03"
+    },
+    {
+      "id": "ACT3_SCENE4_25_C_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "没有！就像一台没有灵魂的机器在回答‘true’或‘false’！他从一开始就没融入过我们！",
+      "next": "ACT3_SCENE4_26"
+    },
+    {
+      "id": "ACT3_SCENE4_26",
+      "type": "branch",
+      "cases": [
+        {
+          "when": "choice2_logical",
+          "next": "ACT3_SCENE4_27_A_01"
+        },
+        {
+          "when": "choice2_detached",
+          "next": "ACT3_SCENE4_27_B_01"
+        },
+        {
+          "when": "choice2_cooperative",
+          "next": "ACT3_SCENE4_27_C_01"
+        }
+      ]
+    },
+    {
+      "id": "ACT3_SCENE4_27_A_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "我们庆祝项目启动，那是团队精神的体现！他呢？",
+      "next": "ACT3_SCENE4_27_A_02"
+    },
+    {
+      "id": "ACT3_SCENE4_27_A_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他给我们上了一堂生物课，说什么‘酒精会降低神经元活性’！",
+      "next": "ACT3_SCENE4_27_A_03"
+    },
+    {
+      "id": "ACT3_SCENE4_27_A_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "在他眼里我们的团队情感都是影响他性能的‘Bug’！",
+      "next": "ACT3_SCENE4_28"
+    },
+    {
+      "id": "ACT3_SCENE4_27_B_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "我们庆祝项目启动，那是团队精神的体现！他呢？",
+      "next": "ACT3_SCENE4_27_B_02"
+    },
+    {
+      "id": "ACT3_SCENE4_27_B_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他直接站起来就走了！说‘会议结束了’！",
+      "next": "ACT3_SCENE4_27_B_03"
+    },
+    {
+      "id": "ACT3_SCENE4_27_B_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "好像和我们多待一秒都是对他时间的浪费！",
+      "next": "ACT3_SCENE4_28"
+    },
+    {
+      "id": "ACT3_SCENE4_27_C_01",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "我们庆祝项目启动，那是团队精神的体现！他呢？",
+      "next": "ACT3_SCENE4_27_C_02"
+    },
+    {
+      "id": "ACT3_SCENE4_27_C_02",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他虽然拿起了啤酒 ，但那是什么表情？",
+      "next": "ACT3_SCENE4_27_C_03"
+    },
+    {
+      "id": "ACT3_SCENE4_27_C_03",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "就像在执行一个毫无意义的函数！那不是庆祝，那是敷衍！是侮辱！",
+      "next": "ACT3_SCENE4_YANG_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE4_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT3_SCENE4_HUI_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE4_HUI_APPEARS",
+      "type": "showCharacter",
+      "charId": "HUI",
+      "position": "pos-left",
+      "next": "ACT3_SCENE4_28"
+    },
+    {
+      "id": "ACT3_SCENE4_28",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "(声音颤抖，带着哭腔补充) 还有…还有我的画…",
+      "next": "ACT3_SCENE4_29"
+    },
+    {
+      "id": "ACT3_SCENE4_29",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "我第一次把角色的动画做出来，拿给大家看，所有人都很开心…",
+      "next": "ACT3_SCENE4_30"
+    },
+    {
+      "id": "ACT3_SCENE4_30",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "只有他，他只是点了一下头，一个字都没说。你知道吗，他甚至从来没有笑过。",
+      "next": "ACT3_SCENE4_31"
+    },
+    {
+      "id": "ACT3_SCENE4_31",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "当我们因为Bug而焦虑不安的时候，他平静得…就像一个没有感情的机器。这让人害怕。",
+      "next": "ACT3_SCENE4_HUI_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE4_HUI_HIDES",
+      "type": "hideCharacter",
+      "charId": "HUI",
+      "next": "ACT3_SCENE4_LIN_APPEARS"
+    },
+    {
+      "id": "ACT3_SCENE4_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-left",
+      "next": "ACT3_SCENE4_32"
+    },
+    {
+      "id": "ACT3_SCENE4_32",
+      "type": "branch",
+      "cases": [
+        {
+          "when": "choice3_truth",
+          "next": "ACT3_SCENE4_33_A_01"
+        },
+        {
+          "when": "choice3_duty",
+          "next": "ACT3_SCENE4_33_B_01"
+        },
+        {
+          "when": "choice3_silent",
+          "next": "ACT3_SCENE4_33_C_01"
+        }
+      ]
+    },
+    {
+      "id": "ACT3_SCENE4_33_A_01",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "教授…我试过。那天会后，我在走廊里和他聊过。",
+      "next": "ACT3_SCENE4_33_A_02"
+    },
+    {
+      "id": "ACT3_SCENE4_33_A_02",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我感谢他对技术风险的评估，我试图解释团队需要热情和沟通……",
+      "next": "ACT3_SCENE4_33_A_03"
+    },
+    {
+      "id": "ACT3_SCENE4_33_A_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "但他只是说，‘我只是陈述事实’。他无法理解，或者说拒绝理解，事实和人心是两回事。",
+      "next": "ACT3_SCENE4_33_A_04"
+    },
+    {
+      "id": "ACT3_SCENE4_33_A_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "在他的世界里，可能只有事实。",
+      "next": "ACT3_SCENE4_YANG_APPEARS_AGAIN"
+    },
+    {
+      "id": "ACT3_SCENE4_33_B_01",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "教授…我试过。那天会后，我在走廊里和他聊过。",
+      "next": "ACT3_SCENE4_33_B_02"
+    },
+    {
+      "id": "ACT3_SCENE4_33_B_02",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我试图告诉他这不仅仅是一个任务，是一个‘游戏’，应该去享受过程。",
+      "next": "ACT3_SCENE4_33_B_03"
+    },
+    {
+      "id": "ACT3_SCENE4_33_B_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "他却回答，‘享受与否，是无关变量’。",
+      "next": "ACT3_SCENE4_33_B_04"
+    },
+    {
+      "id": "ACT3_SCENE4_33_A_04",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "在那一刻我才明白，我们所有人的情感和体验，在他的世界里，都是可以被优化掉的‘无关变量’。",
+      "next": "ACT3_SCENE4_YANG_APPEARS_AGAIN"
+    },
+    {
+      "id": "ACT3_SCENE4_33_C_01",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "教授…我试过。那天会后，我试图和他沟通。",
+      "next": "ACT3_SCENE4_33_C_02"
+    },
+    {
+      "id": "ACT3_SCENE4_33_C_02",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "但他只是看着我，一言不发，像看着一个无法解析的程序。",
+      "next": "ACT3_SCENE4_33_C_03"
+    },
+    {
+      "id": "ACT3_SCENE4_33_C_03",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我感觉，我和他之间隔着一堵人性的墙，永远无法穿透。",
+      "next": "ACT3_SCENE4_YANG_APPEARS_AGAIN"
+    },
+    {
+      "id": "ACT3_SCENE4_YANG_APPEARS_AGAIN",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-left",
+      "next": "ACT3_SCENE4_LIN_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE4_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "ACT3_SCENE4_34"
+    },
+    {
+      "id": "ACT3_SCENE4_34",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "所以，教授，他那次强制推送，根本不是一次偶然的技术失误！",
+      "next": "ACT3_SCENE4_35"
+    },
+    {
+      "id": "ACT3_SCENE4_35",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "那是必然的！是他一整个月所有这些冷漠、疏离、非人行为的最终体现！",
+      "next": "ACT3_SCENE4_36"
+    },
+    {
+      "id": "ACT3_SCENE4_36",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他不是在优化代码，他是在谋杀一个他从不承认、从不理解、从不爱的东西！",
+      "next": "ACT3_SCENE4_YANG_HIDES_AGAIN"
+    },
+    {
+      "id": "ACT3_SCENE4_YANG_HIDES_AGAIN",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "ACT3_SCENE4_37"
+    },
+    {
+      "id": "ACT3_SCENE4_37",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他们成功了。他们把你做出的每一个选择，都编织成了一张无法挣脱的网。",
+      "next": "ACT3_SCENE4_38"
+    },
+    {
+      "id": "ACT3_SCENE4_38",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的每一次理性分析，每一次沉默，每一次不合群，都变成了呈堂证供，证明你是一个潜藏在团队中的“异类”。",
+      "next": "ACT3_SCENE4_39"
+    },
+    {
+      "id": "ACT3_SCENE4_39",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的罪行不再是那次git push --force，而是你的“存在”本身。",
+      "next": "ACT3_SCENE4_40"
+    },
+    {
+      "id": "ACT3_SCENE4_40",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "好吧，那我们换个问题。",
+      "next": "ACT3_SCENE4_41"
+    },
+    {
+      "id": "ACT3_SCENE4_41",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "默……他们说的，你听到了吗？对于他们的指控，对于你是一个‘组外人’的这个‘判决’...",
+      "next": "ACT3_SCENE4_42"
+    },
+    {
+      "id": "ACT3_SCENE4_42",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你……你感到后悔吗？",
+      "next": "ACT3_SCENE4_FINAL_CHEN_HIDES"
+    },
+    {
+      "id": "ACT3_SCENE4_FINAL_CHEN_HIDES",
+      "type": "hideCharacter",
+      "charId": "CHEN",
+      "next": "ACT3_SCENE4_43"
+    },
+    {
+      "id": "ACT3_SCENE4_43",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "画面从回忆中被拉扯回现实。",
+      "next": "ACT3_SCENE4_44"
+    },
+    {
+      "id": "ACT3_SCENE4_44",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "整个世界都安静了下来。阳、琳、绘都抬起头看着你。背景中，只有投影仪散热风扇发出的、永恒不变的嗡鸣声。那声音，像是宇宙的呼吸。冷漠，而又公平。它不在乎你的答案。它只是存在着。",
+      "next": "ACT3_SCENE4_CHOICE_FINAL"
+    },
+    {
+      "id": "ACT3_SCENE4_FINAL",
+      "type": "branch",
+      "cases": [
+        {
+          "when": "compliant>2",
+          "next": "ACT3_SCENE4_CHOICE_FINAL_A"
+        },
+        {
+          "when": "else",
+          "next": "ACT3_SCENE4_CHOICE_FINAL_B"
+        }
+      ]
+    },
+    {
+      "id": "ACT3_SCENE4_CHOICE_FINAL_A",
+      "type": "choice",
+      "options": [
+        {
+          "text": "我可能……无法理解你们的感受，但我并非出于恶意。",
+          "next": "CONFUSED_END_CHEN_APPEARS_A"
+        },
+        {
+          "text": "我以为只要完成任务，就是一个好的团队成员。",
+          "next": "CONFUSED_END_CHEN_APPEARS_B"
+        },
+        {
+          "text": "如果说，我的行为伤害了你们，那我后悔。",
+          "next": "HAPPY_END_CHEN_APPEARS"
+        }
+      ]
+    },
+    {
+      "id": "ACT3_SCENE4_CHOICE_FINAL_B",
+      "type": "choice",
+      "options": [
+        {
+          "text": "我的行为遵循代码最优化的原则。团队的情感波动不在我的任务范畴之内。",
+          "next": "TRUE_END_CHEN_APPEARS_A"
+        },
+        {
+          "text": "是的，他们描述的都是事实。但我不理解这为什么是问题。",
+          "next": "TRUE_END_CHEN_APPEARS_B"
+        },
+        {
+          "text": "（沉默）",
+          "next": "BAD_END_CHEN_APPEARS"
+        }
+      ]
+    },
+    {
+      "id": "TRUE_END_CHEN_APPEARS_A",
+      "type": "showCharacter",
+      "charId": "CHEN",
+      "position": "pos-left",
+      "next": "TRUE_END_MO_APPEARS_A"
+    },
+    {
+      "id": "TRUE_END_MO_APPEARS_A",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-right",
+      "next": "TRUE_END_01_A"
+    },
+    {
+      "id": "TRUE_END_01_A",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "我的行为遵循代码最优化的原则。团队的情感波动不在我的任务范畴之内。",
+      "next": "TRUE_END_02"
+    },
+    {
+      "id": "TRUE_END_CHEN_APPEARS_B",
+      "type": "showCharacter",
+      "charId": "CHEN",
+      "position": "pos-left",
+      "next": "TRUE_END_MO_APPEARS_B"
+    },
+    {
+      "id": "TRUE_END_MO_APPEARS_B",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-right",
+      "next": "TRUE_END_01_B"
+    },
+    {
+      "id": "TRUE_END_01_B",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "是的，他们描述的都是事实。但我不理解这为什么是问题。",
+      "next": "TRUE_END_02"
+    },
+    {
+      "id": "TRUE_END_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你给出了最真实的回答。",
+      "next": "TRUE_END_03"
+    },
+    {
+      "id": "TRUE_END_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "陈教授看着你，良久，他摘下了眼镜，揉了揉眉心。",
+      "next": "TRUE_END_04"
+    },
+    {
+      "id": "TRUE_END_04",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "（叹了口气）……我明白了。你们可以走了。",
+      "next": "TRUE_END_05"
+    },
+    {
+      "id": "TRUE_END_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他的声音里没有愤怒，只有一种深不见底的疲惫。",
+      "next": "TRUE_END_06"
+    },
+    {
+      "id": "TRUE_END_06",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你们这组的成绩，合作分为0分。总评，不合格。",
+      "next": "TRUE_END_CHEN_HIDES"
+    },
+    {
+      "id": "TRUE_END_CHEN_HIDES",
+      "type": "hideCharacter",
+      "charId": "CHEN",
+      "next": "TRUE_END_SETUP"
+    },
+    {
+      "id": "TRUE_END_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "走廊复用",
+      "next": "TRUE_END_07"
+    },
+    {
+      "id": "TRUE_END_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你们走出了答辩大厅。阳没有看你，他径直走过去，狠狠一拳砸在墙上。绘的眼泪终于决堤，琳扶着她，两个人互相支撑着离开。",
+      "next": "TRUE_END_LIN_APPEARS"
+    },
+    {
+      "id": "TRUE_END_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "TRUE_END_08"
+    },
+    {
+      "id": "TRUE_END_08",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "默，你活在自己的世界里。我只是希望……那个世界不要太冷。",
+      "next": "TRUE_END_LIN_HIDES"
+    },
+    {
+      "id": "TRUE_END_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "TRUE_END_09"
+    },
+    {
+      "id": "TRUE_END_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她说完，也走了。你独自一人站在走廊里。阳光从窗户里照进来，空气中的尘埃在光柱里缓缓飞舞。",
+      "next": "TRUE_END_10"
+    },
+    {
+      "id": "TRUE_END_10",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你什么都没有感觉到。没有失落，没有愧疚，没有悲伤。",
+      "next": "TRUE_END_11"
+    },
+    {
+      "id": "TRUE_END_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你走出教学楼，夏末的阳光热烈地照在你身上。你眯起眼睛，感到一种奇异的平静。",
+      "next": "TRUE_END_12"
+    },
+    {
+      "id": "TRUE_END_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "项目失败了。团队决裂了。你被所有人抛弃了。但你也自由了。你从那些无意义的社交规则、集体情感、和虚无的成败中，彻底解脱了出来。你坦然地接受了这个世界的荒诞与冷漠，如同接受一个‘return 0;‘的程序终点。",
+      "next": "TRUE_END_12"
+    },
+    {
+      "id": "TRUE_END_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你打开自己的笔记本电脑，屏幕亮起。在这温柔而冷酷的宇宙中，你准备开始构建一个只属于自己的、没有任何杂质的、完美的世界。",
+      "next": "THE_END_SCREEN"
+    },
+    {
+      "id": "HAPPY_END_CHEN_APPEARS",
+      "type": "showCharacter",
+      "charId": "CHEN",
+      "position": "pos-left",
+      "next": "HAPPY_END_MO_APPEARS"
+    },
+    {
+      "id": "HAPPY_END_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-center",
+      "next": "HAPPY_END_01"
+    },
+    {
+      "id": "HAPPY_END_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "如果说，我的行为伤害了你们，那我后悔。",
+      "next": "HAPPY_END_02"
+    },
+    {
+      "id": "HAPPY_END_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你尝试使用他们的语言。你并不真正理解“后悔”，但你观察到了这个词语在特定情境下的功用。",
+      "next": "HAPPY_END_03"
+    },
+    {
+      "id": "HAPPY_END_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这是一个为了通过“编译”而打上的补丁。",
+      "next": "HAPPY_END_04"
+    },
+    {
+      "id": "HAPPY_END_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "听到你的回答，琳和绘的身体明显放松了一点。阳紧攥的拳头也松开了。",
+      "next": "HAPPY_END_05"
+    },
+    {
+      "id": "HAPPY_END_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "陈教授重新戴上眼镜，审视着你。",
+      "next": "HAPPY_END_06"
+    },
+    {
+      "id": "HAPPY_END_06",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "……影响。这是一个很客观的词。",
+      "next": "HAPPY_END_07"
+    },
+    {
+      "id": "HAPPY_END_07",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "默，记住，代码是人写的，为人服务的。你永远无法脱离“人”去谈论技术。这是我给你的最后一课。",
+      "next": "HAPPY_END_08"
+    },
+    {
+      "id": "HAPPY_END_08",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你们这组，项目不合格。但考虑到你们的坦诚……我会给你们一次重做的机会。最终成绩，视重做结果而定。",
+      "next": "HAPPY_END_CHEN_HIDES"
+    },
+    {
+      "id": "HAPPY_END_CHEN_HIDES",
+      "type": "hideCharacter",
+      "charId": "CHEN",
+      "next": "HAPPY_END_SETUP"
+    },
+    {
+      "id": "HAPPY_END_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "走廊复用",
+      "next": "HAPPY_END_YANG_APPEARS"
+    },
+    {
+      "id": "HAPPY_END_YANG_APPEARS",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-right",
+      "next": "HAPPY_END_LIN_APPEARS"
+    },
+    {
+      "id": "HAPPY_END_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-left",
+      "next": "HAPPY_END_09"
+    },
+    {
+      "id": "HAPPY_END_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你们走出了答辩大厅。气氛依然沉重，但不再是绝望。",
+      "next": "HAPPY_END_10"
+    },
+    {
+      "id": "HAPPY_END_10",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "（对你说，声音很低沉）……我还是不明白你。但…谢谢你最后说了那句话。",
+      "next": "HAPPY_END_YANG_HIDES"
+    },
+    {
+      "id": "HAPPY_END_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "HAPPY_END_11"
+    },
+    {
+      "id": "HAPPY_END_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他说完就走了。绘也远远地对你点了一下头。最后只剩下琳。",
+      "next": "HAPPY_END_12"
+    },
+    {
+      "id": "HAPPY_END_12",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "你刚才…是真心的吗？",
+      "next": "HAPPY_END_13"
+    },
+    {
+      "id": "HAPPY_END_13",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "我观察到我的行为导致了负面的输出结果。我对此感到遗憾。",
+      "next": "HAPPY_END_14"
+    },
+    {
+      "id": "HAPPY_END_14",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "（无奈地笑了）……你果然还是你。",
+      "next": "HAPPY_END_15"
+    },
+    {
+      "id": "HAPPY_END_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她走到你面前。",
+      "next": "ACT3_HAPPY_END_16"
+    },
+    {
+      "id": "HAPPY_END_16",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "默，也许你可以尝试从写“注释”开始。不是给机器看的注释，是给人看的。解释你的意图，你的想法…把“人”，也当成一个你需要去学习、去兼容的系统。虽然这个系统……bug很多。",
+      "next": "HAPPY_END_17"
+    },
+    {
+      "id": "HAPPY_END_17",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你看着她。兼容一个bug很多的系统。这听起来……是一个前所未有的、极具挑战性的技术难题。第一次，你对代码之外的世界，产生了一丝微不足道的好奇。",
+      "next": "THE_END_SCREEN"
+    },
+    {
+      "id": "BAD_END_CHEN_APPEARS",
+      "type": "showCharacter",
+      "charId": "CHEN",
+      "position": "pos-left",
+      "next": "BAD_END_MO_APPEARS"
+    },
+    {
+      "id": "BAD_END_MO_APPEARS",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-right",
+      "next": "BAD_END_01"
+    },
+    {
+      "id": "BAD_END_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你选择了沉默。这是你的语言。没有冗余，没有歧义。它代表着你的全部立场。",
+      "next": "BAD_END_02"
+    },
+    {
+      "id": "BAD_END_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的沉默在大厅里回响。陈教授的目光变得锐利而失望。",
+      "next": "BAD_END_03"
+    },
+    {
+      "id": "BAD_END_03",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "……好。我明白了。",
+      "next": "BAD_END_04"
+    },
+    {
+      "id": "BAD_END_04",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "这门课，你个人成绩为零分。团队其他人，酌情处理。",
+      "next": "BAD_END_05"
+    },
+    {
+      "id": "BAD_END_05",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你可以离开了。",
+      "next": "BAD_END_CHEN_HIDES"
+    },
+    {
+      "id": "BAD_END_CHEN_HIDES",
+      "type": "hideCharacter",
+      "charId": "CHEN",
+      "next": "BAD_END_SETUP"
+    },
+    {
+      "id": "BAD_END_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "走廊复用",
+      "next": "BAD_END_06"
+    },
+    {
+      "id": "BAD_END_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你转身，独自一人走出了答辩大厅。没有人和你说话。",
+      "next": "BAD_END_07"
+    },
+    {
+      "id": "BAD_END_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "从此以后，在系里，你成为了一个传说。一个技术顶尖，但绝不能与之合作的“幽灵”。",
+      "next": "BAD_END_08"
+    },
+    {
+      "id": "BAD_END_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你被所有的团队排斥，被所有的社交活动忽略。你被流放了。",
+      "next": "BAD_END_CHANGE"
+    },
+    {
+      "id": "BAD_END_CHANGE",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/1.4默的宿舍.png",
+      "comment": "回宿舍",
+      "next": "BAD_END_09"
+    },
+    {
+      "id": "BAD_END_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你回到了你的宿舍。那个整洁、有序、逻辑自洽的世界。",
+      "next": "BAD_END_10"
+    },
+    {
+      "id": "BAD_END_10",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "它曾经是你的圣殿。但现在，你看着这间完美的房间，第一次感到了一丝空旷。",
+      "next": "BAD_END_11"
+    },
+    {
+      "id": "BAD_END_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你打开电脑，屏幕的光照亮你毫无表情的脸。",
+      "next": "BAD_END_12"
+    },
+    {
+      "id": "BAD_END_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你拥有了绝对的自由，可以创造任何你想要的东西，没有任何人会来干扰你，用他们混乱的逻辑和脆弱的情感。",
+      "next": "BAD_END_13"
+    },
+    {
+      "id": "BAD_END_13",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "但你也永远地失去了与另一个世界连接的端口。",
+      "next": "BAD_END_14"
+    },
+    {
+      "id": "BAD_END_14",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你拥有了你的逻辑王国，但代价是永恒的流放。",
+      "next": "THE_END_SCREEN"
+    },
+    {
+      "id": "CONFUSED_END_CHEN_APPEARS_A",
+      "type": "showCharacter",
+      "charId": "CHEN",
+      "position": "pos-left",
+      "next": "CONFUSED_END_MO_APPEARS_A"
+    },
+    {
+      "id": "CONFUSED_END_MO_APPEARS_A",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-right",
+      "next": "CONFUSED_END_A_01"
+    },
+    {
+      "id": "CONFUSED_END_A_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "我可能……无法理解你们的感受，但我并非出于恶意。",
+      "next": "CONFUSED_END_A_02"
+    },
+    {
+      "id": "CONFUSED_END_A_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "CONFUSED_END_A_02"
+    },
+    {
+      "id": "CONFUSED_END_A_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的回答，像一段语法正确但语义不明的代码，让整个审判的“程序”陷入了死锁。",
+      "next": "CONFUSED_END_A_03"
+    },
+    {
+      "id": "CONFUSED_END_A_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳准备好的愤怒反驳噎在了喉咙里，他张了张嘴，却不知道该如何回应。",
+      "next": "CONFUSED_END_A_YANG_APPEARS"
+    },
+    {
+      "id": "CONFUSED_END_A_YANG_APPEARS",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-right",
+      "next": "CONFUSED_END_A_LIN_APPEARS"
+    },
+    {
+      "id": "CONFUSED_END_A_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "CONFUSED_END_A_04"
+    },
+    {
+      "id": "CONFUSED_END_A_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "绘停止了抽泣，抬起头，眼神里第一次流露出的不是悲伤，而是一种茫然。",
+      "next": "CONFUSED_END_A_05"
+    },
+    {
+      "id": "CONFUSED_END_A_04",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "(他转向陈教授，语气不再是愤怒，而是一种彻底的无力感)教授……您看。他……他根本不明白。",
+      "next": "CONFUSED_END_A_05"
+    },
+    {
+      "id": "CONFUSED_END_A_05",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他真的不明白我们在说什么。我们在这里讨论团队、情感、尊重……而他，还在讨论‘动机’，讨论‘恶意’的有无。",
+      "next": "CONFUSED_END_A_06"
+    },
+    {
+      "id": "CONFUSED_END_A_06",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我明白了……他不是恶意的。他只是……运行在一个完全不同的操作系统上。",
+      "next": "CONFUSED_END_A_07"
+    },
+    {
+      "id": "CONFUSED_END_A_07",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我们的‘情感API’，他的系统里根本没有对应的库文件。",
+      "next": "CONFUSED_END_A_08"
+    },
+    {
+      "id": "CONFUSED_END_A_08",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "所以，我们发送的任何请求，返回的都是‘404 Not Found’。",
+      "next": "CONFUSED_END_A_09"
+    },
+    {
+      "id": "CONFUSED_END_A_09",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "(他摘下眼镜，用手指按压着眉心，沉默了很久)",
+      "next": "CONFUSED_END_A_10"
+    },
+    {
+      "id": "CONFUSED_END_A_10",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "……都坐下吧。",
+      "next": "CONFUSED_END_A_YANG_HIDES"
+    },
+    {
+      "id": "CONFUSED_END_A_YANG_HIDES",
+      "type": "hideCharacter",
+      "charId": "YANG",
+      "next": "CONFUSED_END_A_LIN_HIDES"
+    },
+    {
+      "id": "CONFUSED_END_A_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "CONFUSED_END_A_11"
+    },
+    {
+      "id": "CONFUSED_END_A_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "(团队成员们迟疑地坐回了讲台旁的椅子上)",
+      "next": "CONFUSED_END_A_12"
+    },
+    {
+      "id": "CONFUSED_END_A_12",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "(他再次戴上眼镜，看向你，语气不再是审判，而更像是一位老师在面对一个无解的难题)",
+      "next": "CONFUSED_END_A_13"
+    },
+    {
+      "id": "CONFUSED_END_A_13",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "默。从技术的角度，你的任务完成得无懈可击。",
+      "next": "ACT3_CONFUSED_END_A_14"
+    },
+    {
+      "id": "CONFUSED_END_A_13",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "但一个项目，尤其是一个创造性的项目，从来都不只是任务的集合。",
+      "next": "CONFUSED_END_A_14"
+    },
+    {
+      "id": "CONFUSED_END_A_14",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "它是一个由人、由情感、由无数次妥协和争吵共同构筑的生命体。",
+      "next": "CONFUSED_END_A_15"
+    },
+    {
+      "id": "CONFUSED_END_A_15",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你用手术刀般精准的逻辑，‘治好’了它身上的病，却也杀死了它的灵魂。",
+      "next": "CONFUSED_END_A_BACKGROUND_CHANGE"
+    },
+    {
+      "id": "CONFUSED_END_A_BACKGROUND_CHANGE",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "过场",
+      "next": "CONFUSED_END_A_16"
+    },
+    {
+      "id": "CONFUSED_END_A_16",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "项目失败。",
+      "next": "CONFUSED_END_A_17"
+    },
+    {
+      "id": "CONFUSED_END_A_17",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "陈教授在最终的评语中写道：该团队经历了一次深刻但痛苦的失败。",
+      "next": "CONFUSED_END_A_18"
+    },
+    {
+      "id": "CONFUSED_END_A_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这暴露了一个核心问题：在高度协作的创造性工作中，纯粹的技术能力与人性的共情能力，孰重孰轻？",
+      "next": "CONFUSED_END_A_19"
+    },
+    {
+      "id": "CONFUSED_END_A_19",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这个问题，没有标准答案。",
+      "next": "CONFUSED_END_A_CHANGE_BACKGROUND"
+    },
+    {
+      "id": "CONFUSED_END_A_CHANGE_BACKGROUND",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/HALL.png",
+      "comment": "答辩厅外",
+      "next": "CONFUSED_END_A_20"
+    },
+    {
+      "id": "CONFUSED_END_A_20",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你和团队成员们一起默默地走出答辩大厅。没有人说话。",
+      "next": "CONFUSED_END_A_21"
+    },
+    {
+      "id": "CONFUSED_END_A_21",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳没有看你，他径直走远了，背影看起来比以往任何时候都疲惫。",
+      "next": "CONFUSED_END_A_22"
+    },
+    {
+      "id": "CONFUSED_END_A_22",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 绘走到你面前，犹豫了一下，轻声说：“……对不起。” 然后也快步离开了。",
+      "next": "CONFUSED_END_A_23"
+    },
+    {
+      "id": "CONFUSED_END_A_23",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 你不太理解她为什么要道歉。 最后只剩下琳，她停在你面前。",
+      "next": "CONFUSED_END_A_LAST_LIN_APPEARS"
+    },
+    {
+      "id": "CONFUSED_END_A_LAST_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-left",
+      "next": "CONFUSED_END_A_24"
+    },
+    {
+      "id": "CONFUSED_END_A_24",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "你知道吗，默。最让人难过的，不是你做错了什么。",
+      "next": "CONFUSED_END_A_25"
+    },
+    {
+      "id": "CONFUSED_END_A_25",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "而是你可能永远都无法理解，自己错在哪里。",
+      "next": "CONFUSED_END_A_LAST_LIN_HIDES"
+    },
+    {
+      "id": "CONFUSED_END_A_LAST_LIN_HIDES",
+      "type": "hideCharacter",
+      "charId": "LIN",
+      "next": "CONFUSED_END_A_26"
+    },
+    {
+      "id": "CONFUSED_END_A_26",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她说完，也转身离开了。",
+      "next": "CONFUSED_END_A_27"
+    },
+    {
+      "id": "CONFUSED_END_A_27",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "她说完，也转身离开了。",
+      "next": "CONFUSED_END_A_28"
+    },
+    {
+      "id": "CONFUSED_END_A_28",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的世界，曾是一个由0和1构成的、完美而自洽的系统。",
+      "next": "CONFUSED_END_A_29"
+    },
+    {
+      "id": "CONFUSED_END_A_29",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "但琳的话，像一行无法被编译、也无法被删除的错误代码，永远地留在了你的核心模块里。",
+      "next": "CONFUSED_END_A_30"
+    },
+    {
+      "id": "CONFUSED_END_A_30",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 你依然是“局外人”。 ",
+      "next": "CONFUSED_END_A_31"
+    },
+    {
+      "id": "CONFUSED_END_A_30",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": " 但你的内心第一次产生了一丝裂痕，开始怀疑自己那套坚不可摧的逻辑系统。",
+      "next": "THE_END_SCREEN"
+    },
+    {
+      "id": "CONFUSED_END_CHEN_APPEARS_B",
+      "type": "showCharacter",
+      "charId": "CHEN",
+      "position": "pos-left",
+      "next": "CONFUSED_END_MO_APPEARS_B"
+    },
+    {
+      "id": "CONFUSED_END_MO_APPEARS_B",
+      "type": "showCharacter",
+      "charId": "MO",
+      "position": "pos-right",
+      "next": "CONFUSED_END_B_01"
+    },
+    {
+      "id": "CONFUSED_END_B_01",
+      "type": "dialogue",
+      "character": "MO",
+      "text": "我以为只要完成任务，就是一个好的团队成员。",
+      "next": "CONFUSED_END_B_02"
+    },
+    {
+      "id": "CONFUSED_END_B_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
+      "next": "CONFUSED_END_B_02"
+    },
+    {
+      "id": "CONFUSED_END_B_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的回答，像一段语法正确但语义不明的代码，让整个审判的“程序”陷入了死锁。",
+      "next": "CONFUSED_END_B_03"
+    },
+    {
+      "id": "CONFUSED_END_B_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳准备好的愤怒反驳噎在了喉咙里，他张了张嘴，却不知道该如何回应。",
+      "next": "CONFUSED_END_B_YANG_APPEARS"
+    },
+    {
+      "id": "CONFUSED_END_B_YANG_APPEARS",
+      "type": "showCharacter",
+      "charId": "YANG",
+      "position": "pos-right",
+      "next": "CONFUSED_END_B_LIN_APPEARS"
+    },
+    {
+      "id": "CONFUSED_END_B_LIN_APPEARS",
+      "type": "showCharacter",
+      "charId": "LIN",
+      "position": "pos-center",
+      "next": "CONFUSED_END_B_04"
+    },
+    {
+      "id": "CONFUSED_END_B_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "绘停止了抽泣，抬起头，眼神里第一次流露出的不是悲伤，而是一种茫然。",
+      "next": "CONFUSED_END_B_05"
+    },
+    {
+      "id": "CONFUSED_END_B_04",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "(他转向陈教授，语气不再是愤怒，而是一种彻底的无力感)教授……您看。他……他根本不明白。",
+      "next": "CONFUSED_END_B_05"
+    },
+    {
+      "id": "CONFUSED_END_B_05",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他真的不明白我们在说什么。我们在这里讨论团队、情感、尊重……而他，他还在讨论‘任务’。",
+      "next": "CONFUSED_END_A_06"
+    },
+    {
+      "id": "ACT3_SCENE5_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "隐藏场景",
+      "next": "ACT3_SCENE5_01"
+    },
+    {
+      "id": "ACT3_SCENE5_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "陈教授的影像开始出现马赛克和像素错位，如同一个损坏的视频文件。他身后的答辩大厅，墙壁、桌椅的贴图开始剥落，露出底下冰冷的、由绿色线条构成的线框模型。阳、琳、绘三人的身体变得半透明，化作无数飞散的代码字符，消散在空气中。最终，整个三维的“答辩大厅”世界，像一块被敲碎的玻璃，猛地碎裂成无数碎片，向内坍缩，最终被一个纯黑的奇点吞噬。",
+      "next": "ACT3_SCENE5_02"
+    },
+    {
+      "id": "ACT3_SCENE5_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘......Simulation complete.‘",
+      "next": "ACT3_SCENE6_SETUP"
+    },
+    {
+      "id": "ACT3_SCENE6_SETUP",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/1.4默的宿舍.png",
+      "comment": "回宿舍",
+      "next": "ACT3_SCENE6_01"
+    },
+    {
+      "id": "ACT3_SCENE6_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "黑暗中，一行光标开始闪烁。‘_’画面缓缓亮起。这里不是答辩大厅。是你自己的宿舍。那个整洁、有序、逻辑自洽的房间。时间是凌晨03:15。你正坐在电脑前。整个房间唯一的声源，是你电脑风扇发出的、平稳而真实的嗡鸣。",
+      "next": "ACT3_SCENE6_02"
+    },
+    {
+      "id": "ACT3_SCENE6_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你的视点，聚焦在电脑屏幕上。那是一个黑色的、无比熟悉的命令行终端。最后一行，光标正在静静地闪烁着。光标的前面，是你刚刚输入，但还未按下回车的指令：",
+      "next": "ACT3_SCENE6_03"
+    },
+    {
+      "id": "ACT3_SCENE6_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "\"$ git push–force \"",
+      "next": "ACT3_SCENE6_04"
+    },
+    {
+      "id": "ACT3_SCENE6_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘Analysis: Three primary outcome branches identified based on final response query.’ ‘分析：基于最终回应查询，已识别出三个主要的结果分支。’",
+      "next": "ACT3_SCENE6_05"
+    },
+    {
+      "id": "ACT3_SCENE6_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘Branch A (Absurd): Leads to total system isolation but preserves internal logical integrity. High probability of individual satisfaction.’ ‘分支A（荒诞）：导致系统完全隔离，但保全了内部逻辑的完整性。个体满意度高概率。’",
+      "next": "ACT3_SCENE6_06"
+    },
+    {
+      "id": "ACT3_SCENE6_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘Branch B (Compromise): Leads to system integration with significant performance cost and required compatibility patching. Low probability of individual satisfaction, but maintains network connection.’ ‘分支B（妥协）：导致系统集成，但伴有显著的性能损耗和必需的兼容性补丁。个体满意度低概率，但维持了网络连接。’",
+      "next": "ACT3_SCENE6_07"
+    },
+    {
+      "id": "ACT3_SCENE6_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘Branch C (nihility): Leads to forced system isolation with negative reputation flags. Lowest probability of satisfaction.’ ‘分支C（虚无）：导致强制系统隔离，并附带负面声誉标记。个体满意度最低概率。’",
+      "next": "ACT3_SCENE6_08"
+    },
+    {
+      "id": "ACT3_SCENE6_08",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘Simulation confirms the initial hypothesis: executing the ‘push’ command will result in a fundamental conflict with the social co-routine of the ‘team’ module.’ ‘模拟证实了初始假说：执行‘推送’指令，将与‘团队’模块的社交协同程序发生根本性冲突。’",
+      "next": "ACT3_SCENE6_09"
+    },
+    {
+      "id": "ACT3_SCENE6_09",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘The core question was not about the past. It was about the future.’ ‘那个核心问题，从来无关过去。它只关乎未来。’",
+      "next": "ACT3_SCENE6_10"
+    },
+    {
+      "id": "ACT3_SCENE6_10",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘The query 'Do you regret it?' can be reframed as 'Will you choose a path that leads to regret?'’ ‘ “你后悔吗？”这个查询，可以被重构为：“你，将要选择一条通往后悔的路吗？”’",
+      "next": "ACT3_SCENE6_11"
+    },
+    {
+      "id": "ACT3_SCENE6_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "‘The simulation is over. Now, you must exist.’ ‘模拟已经结束。现在，你必须存在。’",
+      "next": "ACT3_SCENE6_12"
+    },
+    {
+      "id": "ACT3_SCENE6_12",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "屏幕上，除了那行致命的指令和闪烁的光标，没有其他任何东西。你不需要在对话框里选择你的“想法”。你需要做出一个物理的、唯一的、不可撤销的**动作**。",
+      "next": "ACT3_SCENE6_CHOICE_FINAL_TRUE"
+    },
+    {
+      "id": "ACT3_SCENE6_CHOICE_FINAL_TRUE",
+      "type": "choice",
+      "options": [
+        {
+          "text": "按下 Enter",
+          "next": "ACT3_SCENE6_PUSH_END_01"
+        },
+        {
+          "text": "按下Backspace",
+          "next": "ACT3_SCENE6_BACKSPACE_END_01"
+        }
+      ]
+    },
+    {
+      "id": "ACT3_SCENE6_PUSH_END_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你按下了回车键。指令被执行。上传的进度条在无声地前进，然后显示 ‘Done.’。你靠在椅背上，看着屏幕上那行完成的指令，如同看着一句既定的箴言。",
+      "next": "ACT3_SCENE6_PUSH_END_CHANGE"
+    },
+    {
+      "id": "ACT3_SCENE6_PUSH_END_CHANGE",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "黑屏",
+      "next": "ACT3_SCENE6_PUSH_END_02"
+    },
+    {
+      "id": "ACT3_SCENE6_PUSH_END_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你选择了存在的纯粹。并坦然接受了，随之而来的一切温柔的冷漠。",
+      "next": "ACT3_SCENE6_PUSH_END"
+    },
+    {
+      "id": "ACT3_SCENE6_PUSH_END",
+      "type": "fadeToBlack",
+      "duration": 2000,
+      "next": null
+    },
+    {
+      "id": "ACT3_SCENE6_BACKSPACE_END_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你按下了退格键。光标前的 ‘force’ 这个词，被一个字符一个字符地删除掉。 ‘$ git push ’ 光标在指令的末尾闪烁着，等待着一个新的、未知的参数。你将手从键盘上移开，久久地凝视着屏幕中自己模糊的倒影。",
+      "next": "ACT3_SCENE6_BACKSPACE_END_CHANGE"
+    },
+    {
+      "id": "ACT3_SCENE6_BACKSPACE_END_CHANGE",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "comment": "黑屏",
+      "next": "ACT3_SCENE6_BACKSPACE_END_02"
+    },
+    {
+      "id": "ACT3_SCENE6_PUSH_BACKSPACE_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你选择了兼容。并开始尝试，去解决那个宇宙中最复杂的、充满Bug的系统。",
+      "next": "ACT3_SCENE6_BACKSPACE_END"
+    },
+    {
+      "id": "ACT3_SCENE6_BACKSPACE_END",
+      "type": "fadeToBlack",
+      "duration": 2000,
+      "next": null
+    },
+    {
+      "id": "THE_END_SCREEN",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "THE END",
+      "next": "RETURN_TO_HOME"
+    },
+    {
+      "id": "RETURN_TO_HOME",
+      "type": "goTo",
+      "url": "start.html",
+      "next": null
+    }
+  ]
+}

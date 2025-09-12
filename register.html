@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="stylesheet" href="css/base-responsive.css" />
+    <title>组外人 · 注册</title>
+    <link rel="stylesheet" href="css/start-login.css" />
+</head>
+
+<body class="page-register">
+    <div class="bg-gradient"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="bg-noise"></div>
+    <div class="ui-shell">
+        <h1 class="site-title fade-in-up">REGISTER</h1>
+        <section class="glass-panel fade-in-up fade-delay-1" aria-labelledby="reg-title">
+            <form id="reg-form" class="login-form" autocomplete="off">
+                <h2 id="reg-title"
+                    style="margin:0;font-size:1.05rem;letter-spacing:.25em;font-weight:600;color:var(--clr-text-mid);text-transform:uppercase;">
+                    CREATE ACCOUNT</h2>
+                <div class="field">
+                    <label for="reg-user">账号</label>
+                    <input id="reg-user" name="user" type="text" required maxlength="24" placeholder="用户名 (用于登录)" />
+                </div>
+                <div class="field">
+                    <label for="reg-pass">密码</label>
+                    <input id="reg-pass" name="pass" type="password" required minlength="4" maxlength="32"
+                        placeholder="至少 4 位" />
+                </div>
+                <div class="field">
+                    <label for="reg-pass2">确认密码</label>
+                    <input id="reg-pass2" name="pass2" type="password" required minlength="4" maxlength="32"
+                        placeholder="再次输入密码" />
+                </div>
+                <div class="helper-row"><span id="reg-msg">填写信息以创建账号</span><a href="settings.html"
+                        style="color:var(--clr-accent);text-decoration:none;font-size:.7rem;">设置 ⚙</a></div>
+                <div class="actions-row">
+                    <button type="button" id="btn-register" class="btn">注册</button>
+                    <button type="reset" class="btn alt">重置</button>
+                </div>
+            </form>
+            <p class="footer-hint" style="margin-top:-8px;">THE GROUP OUTSIDER · REGISTRATION</p>
+        </section>
+    </div>
+
+    <script src="js/register-inline.js"></script>
+</body>
+
+</html>

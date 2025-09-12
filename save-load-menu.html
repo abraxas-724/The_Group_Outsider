@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>存档 / 读档</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="css/save-load-menu-inline.css" />
+</head>
+<body>
+    <header>
+        <h1 id="page-title">存档 / 读档</h1>
+        <span id="modeBadge" class="mode-badge mode-save">SAVE</span>
+        <div class="top-actions">
+            <button id="refresh-btn" title="刷新槽位">刷新</button>
+            <button id="close-btn" title="关闭此窗口">关闭</button>
+        </div>
+    </header>
+    <main>
+        <div id="hint" style="font-size:.75rem;color:#94a3b8;line-height:1.4;">
+            单击槽位：执行当前操作（保存/读取）。双击槽位：立即执行且不再确认。保存会覆盖原有数据。
+        </div>
+        <div class="slots" id="slots"></div>
+    </main>
+    <footer>Group Outsider Save / Load System v1</footer>
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="js/save-load-menu-inline.js"></script>
+</body>
+</html>

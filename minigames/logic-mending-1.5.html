@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>逻辑修复 Logic Mending v1.5</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../css/logic-mending-inline.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <span class="badge">v1.5</span>
+      <div class="title">逻辑修复 Logic Mending</div>
+      <button id="btn-exit" class="btn">退出</button>
+      <button id="btn-complete" class="btn" title="调试">完成</button>
+    </div>
+    <div class="grid">
+      <div class="panel">
+        <h3>任务</h3>
+        <div class="rule"><span class="pin"></span><div class="desc">将“条件判断”节点放到正确分支，使状态机避免重复进入错误状态。</div></div>
+        <div class="rule"><span class="pin"></span><div class="desc">拖动节点调整位置；点击错误节点以修复。</div></div>
+        <div class="rule"><span class="pin"></span><div class="desc">按 Esc 可放弃返回。</div></div>
+      </div>
+      <div class="panel canvas" id="canvas" tabindex="0" aria-label="逻辑修复画布">
+        <svg id="wires" viewBox="0 0 800 500" preserveAspectRatio="none" style="position:absolute;inset:0"></svg>
+        <div class="node" id="n-start" style="left:40px;top:180px;">
+          <div class="hd"><span class="dot"></span><strong>Start</strong></div>
+          <div class="body">入口</div>
+          <div class="port" data-port="start"></div>
+        </div>
+        <div class="node err" id="n-logic" style="left:260px;top:160px;">
+          <div class="hd"><span class="dot" style="background:var(--danger);box-shadow:0 0 8px var(--danger)"></span><strong>条件判断 if()</strong></div>
+          <div class="body">当前分支错误：条件放置在错误路径，导致 UI 闪烁。</div>
+          <div class="port" data-port="logic"></div>
+        </div>
+        <div class="node" id="n-good" style="left:520px;top:120px;">
+          <div class="hd"><span class="dot"></span><strong>正确分支</strong></div>
+          <div class="body">应将条件判断放在此处。</div>
+          <div class="port" data-port="good"></div>
+        </div>
+        <div class="node" id="n-bad" style="left:520px;top:300px;">
+          <div class="hd"><span class="dot" style="background:var(--danger);"></span><strong>错误分支</strong></div>
+          <div class="body">当前条件误连到这里。</div>
+          <div class="port" data-port="bad"></div>
+        </div>
+        <div class="hint">提示：用鼠标拖动“条件判断”节点靠近“正确分支”，然后点击它进行修复。</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="../js/logic-mending-inline.js"></script>
+</body>
+</html>
