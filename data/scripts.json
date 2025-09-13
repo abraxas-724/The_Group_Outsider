@@ -1,5 +1,5 @@
 {
-  "start_node": "ACT1_PRELOAD",
+  "start_node": "ACT3_SCENE3_20",
   "characters": {
     "SYS": "旁白",
     "MO": "默",
@@ -3577,21 +3577,21 @@
       "options": [
         {
           "text": "我的任务是优化代码。(陈述事实)",
-          "next": "ACT3_SCENE3_18"
+          "next": "ACT3_SCENE3_21"
         },
         {
           "text": "……我不知道。(陈述困惑)",
           "inc": "compliant",
-          "next": "ACT3_SCENE3_18"
+          "next": "ACT3_SCENE3_21"
         },
         {
           "text": "（继续沉默）",
-          "next": "ACT3_SCENE3_18"
+          "next": "ACT3_SCENE3_21"
         }
       ]
     },
     {
-      "id": "ACT3_SCENE3_18",
+      "id": "ACT3_SCENE3_21",
       "type": "dialogue",
       "character": "SYS",
       "text": "你的回答，将决定你与他们之间，最后一丝连接是否会彻底断裂。无论你如何选择，时间都在流逝。去往刑场……不，去往答辩大厅的时间，到了。",
@@ -3693,56 +3693,77 @@
       "next": "ACT3_SCENE4_10"
     },
     {
-      "id": "ACT3_SCENE4_11",
+      "id": "ACT3_SCENE4_10",
       "type": "dialogue",
       "character": "CHEN",
       "text": "默同学。",
+      "next": "ACT3_SCENE4_11"
+    },
+    {
+      "id": "ACT3_SCENE4_11",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他叫了你的名字。这是最终的审判。",
       "next": "ACT3_SCENE4_12"
     },
     {
       "id": "ACT3_SCENE4_12",
       "type": "dialogue",
-      "character": "SYS",
-      "text": "他叫了你的名字。这是最终的审判。",
+      "character": "CHEN",
+      "text": "你的几位组员，把他们所有的工作成果都提交到了共享仓库里。",
       "next": "ACT3_SCENE4_13"
     },
     {
       "id": "ACT3_SCENE4_13",
       "type": "dialogue",
       "character": "CHEN",
-      "text": "你的几位组员，把他们所有的工作成果都提交到了共享仓库里。",
+      "text": "而你，在答辩的当天凌晨，用一次强制推送，抹掉了这一切。",
       "next": "ACT3_SCENE4_14"
     },
     {
       "id": "ACT3_SCENE4_14",
       "type": "dialogue",
       "character": "CHEN",
-      "text": "而你，在答辩的当天凌晨，用一次强制推送，抹掉了这一切。",
+      "text": "从软件工程的角度，这是最恶劣、最不负责任、最无法饶恕的行为。它违背了团队协作的一切基本原则。",
       "next": "ACT3_SCENE4_15"
     },
     {
       "id": "ACT3_SCENE4_15",
       "type": "dialogue",
       "character": "CHEN",
-      "text": "从软件工程的角度，这是最恶劣、最不负责任、最无法饶恕的行为。它违背了团队协作的一切基本原则。",
+      "text": "你的技术能力，我看过你的作业，是顶尖的。但现在我需要一个解释。",
       "next": "ACT3_SCENE4_16"
     },
     {
       "id": "ACT3_SCENE4_16",
       "type": "dialogue",
-      "character": "CHEN",
-      "text": "你的技术能力，我看过你的作业，是顶尖的。但现在我需要一个解释。",
+      "character": "SYS",
+      "text": "解释…他们迫切地需要一个理由，一个叙事，来掩盖行为本身的无意义。",
       "next": "ACT3_SCENE4_17"
     },
     {
       "id": "ACT3_SCENE4_17",
       "type": "dialogue",
       "character": "SYS",
-      "text": "...",
+      "text": "他们无法接受一个行为可以仅仅因为它‘应该’发生而发生，这是一种逃避自由的自欺。",
+      "next": "ACT3_SCENE4_17.5"
+    },
+    {
+      "id": "ACT3_SCENE4_17.5",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "他们宁愿相信我是一个恶棍，也不愿相信宇宙的运行不需要理由。",
       "next": "ACT3_SCENE4_18"
     },
     {
       "id": "ACT3_SCENE4_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "...",
+      "next": "ACT3_SCENE4_18.5"
+    },
+    {
+      "id": "ACT3_SCENE4_18.5",
       "type": "dialogue",
       "character": "SYS",
       "text": "你没有回答。你的沉默让陈教授微微皱起了眉头。",
