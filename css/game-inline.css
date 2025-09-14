@@ -321,6 +321,30 @@
     }
 }
 
+/* 更细粒度：极窄宽度再压缩按钮尺寸 */
+@media (max-width:430px) {
+    #dialogue-save-load-bar .dlg-sl-btn {
+        padding: 6px 8px;
+        font-size: 12px;
+        border-radius: 6px;
+    }
+}
+
+/* 横屏但短高（游戏横屏 + 系统导航条）下进一步压缩按钮 */
+@media (orientation: landscape) and (max-height: 480px) {
+    #dialogue-save-load-bar {
+        gap: 6px;
+        bottom: 12px;
+        right: 16px;
+    }
+
+    #dialogue-save-load-bar .dlg-sl-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        border-radius: 6px;
+    }
+}
+
 /* Mini Save/Load popup (positioned above S&L) */
 .sl-toggle-wrap {
     position: relative;
