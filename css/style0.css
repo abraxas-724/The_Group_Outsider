@@ -179,10 +179,46 @@ textarea *,
     font-size: clamp(0.95rem, 2.2vw + 0.5rem, 1.6rem);
     line-height: 1.65;
     color: #E5E7EB;
-    /* 避免英文长词/无空格文本在窄屏溢出 */
-    overflow-wrap: break-word;
-    word-break: break-word;
-    hyphens: auto;
+}
+
+/* 移动端通用优化：缩小对话框并确保内容不溢出 */
+@media (max-width: 768px) {
+    #dialogue-box {
+        width: min(96%, 1200px);
+        height: clamp(20%, 26vh, 30%);
+        padding: clamp(12px, 2vh, 24px) clamp(12px, 2vh, 24px) clamp(55px, 7vh, 80px);
+        bottom: 20px;
+        border-width: 1px;
+    }
+
+    #speaker-name {
+        font-size: clamp(0.9rem, 1.8vw + 0.6rem, 1.8rem);
+        margin-bottom: 0.4em;
+    }
+
+    #dialogue-text {
+        font-size: clamp(0.85rem, 2vw + 0.4rem, 1.3rem);
+        line-height: 1.55;
+    }
+}
+
+/* 小屏手机进一步优化 */
+@media (max-width: 480px) {
+    #dialogue-box {
+        width: min(98%, 1000px);
+        height: clamp(18%, 24vh, 28%);
+        padding: 10px 10px clamp(50px, 6vh, 70px);
+        bottom: 15px;
+    }
+
+    #speaker-name {
+        font-size: clamp(0.85rem, 1.5vw + 0.5rem, 1.5rem);
+    }
+
+    #dialogue-text {
+        font-size: clamp(0.8rem, 1.8vw + 0.3rem, 1.2rem);
+        line-height: 1.5;
+    }
 }
 
 /* 横屏且高度较小的设备：整体 UI 缩放以避免过大 */
@@ -200,37 +236,6 @@ textarea *,
     #dialogue-text {
         font-size: clamp(0.9rem, 1.05rem, 1.2rem);
         line-height: 1.5;
-    }
-}
-
-/* ======== 竖屏小宽度设备下进一步压缩对话框与文字 ======== */
-@media (max-width: 640px) and (orientation: portrait) {
-    #dialogue-box {
-        height: auto;
-        min-height: 32%;
-        padding: 12px 14px 64px;
-    }
-
-    #speaker-name {
-        font-size: clamp(0.85rem, 3.4vw + 0.4rem, 1.15rem);
-        margin-bottom: .45em;
-    }
-
-    #dialogue-text {
-        font-size: clamp(0.8rem, 3.8vw + 0.35rem, 1.05rem);
-        line-height: 1.5;
-    }
-}
-
-/* 极窄屏（例如老小屏或分屏） */
-@media (max-width: 420px) and (orientation: portrait) {
-    #dialogue-box {
-        padding: 10px 12px 60px;
-    }
-
-    #dialogue-text {
-        font-size: clamp(0.78rem, 4.2vw + 0.32rem, 0.98rem);
-        line-height: 1.45;
     }
 }
 
