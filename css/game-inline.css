@@ -274,16 +274,16 @@
     background: #475569;
 }
 
-/* ===== Dialogue Save/Load Bar (flex layout, no longer absolute positioned) ===== */
+/* ===== Dialogue Save/Load Bar (PC端绝对定位，移动端flex布局) ===== */
 #dialogue-save-load-bar {
-    /* 改为普通 flex 子项，不再绝对定位 */
+    /* PC端默认：绝对定位 */
+    position: absolute;
+    right: 24px;
+    bottom: 18px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 8px;
     justify-content: flex-end;
-    flex-shrink: 0;
-    /* 防止被压缩 */
 }
 
 #dialogue-save-load-bar .dlg-sl-btn {
@@ -309,12 +309,16 @@
 
 @media (max-width:600px) {
     #dialogue-save-load-bar {
-        gap: 6px;
+        /* 移动端：取消绝对定位，改为flex子项 */
+        position: static;
+        right: auto;
+        bottom: auto;
         margin-top: 6px;
-        /* 改为两列布局，避免过宽 */
+        gap: 6px;
         max-width: 100%;
         justify-content: flex-end;
         flex-wrap: wrap;
+        flex-shrink: 0;
     }
 
     #dialogue-save-load-bar .dlg-sl-btn {
@@ -336,6 +340,10 @@
 /* 更小屏幕进一步优化 */
 @media (max-width: 480px) {
     #dialogue-save-load-bar {
+        /* 继续使用static定位 */
+        position: static;
+        right: auto;
+        bottom: auto;
         margin-top: 4px;
         gap: 4px;
         /* 强制两列布局 */
@@ -385,6 +393,10 @@
 /* 横屏模式专门优化：无论屏幕宽度多大，都要缩小按钮 */
 @media (orientation: landscape) and (max-height: 600px) {
     #dialogue-save-load-bar {
+        /* 横屏移动端也使用static定位 */
+        position: static;
+        right: auto;
+        bottom: auto;
         margin-top: 4px;
         gap: 4px;
         /* 横屏时强制紧凑布局 */
@@ -407,6 +419,9 @@
 /* 横屏且屏幕很矮时：更激进的压缩 */
 @media (orientation: landscape) and (max-height: 480px) {
     #dialogue-save-load-bar {
+        position: static;
+        right: auto;
+        bottom: auto;
         margin-top: 3px;
         gap: 3px;
         grid-template-columns: repeat(3, 1fr);
@@ -423,6 +438,9 @@
 /* 横屏且极矮屏幕：最紧凑布局 */
 @media (orientation: landscape) and (max-height: 400px) {
     #dialogue-save-load-bar {
+        position: static;
+        right: auto;
+        bottom: auto;
         margin-top: 2px;
         gap: 2px;
         grid-template-columns: repeat(2, 1fr);

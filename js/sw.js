@@ -6,7 +6,7 @@
   Note: This file is imported by a root-level sw.js stub to preserve root scope.
 */
 
-const CACHE_NAME = 'tgo-v5';
+const CACHE_NAME = 'tgo-v6';
 const CORE_CACHE = `${CACHE_VERSION}-core`;
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
