@@ -41,48 +41,65 @@ class GameApp {
     init() {
         console.log("游戏应用初始化...");
 
-        // **【简化】** 拦截_showNode，现在只为通知成就系统
-        if (this.dialogueEngine && typeof this.dialogueEngine._showNode === 'function') {
-            const __origShowNode = this.dialogueEngine._showNode.bind(this.dialogueEngine);
-            this.dialogueEngine._showNode = (nodeId) => {
-                // 若存在延迟读档请求，屏蔽自动 start() 触发的起始节点显示，等待读档接管
-                if (this._deferredLoadSlot) {
-                    return; // 抑制开场节点，避免覆盖即将加载的存档节点
-                }
-                // 每次显示节点，都通知成就系统
-                this.achievements?.onNodeShown?.(nodeId);
-                // 执行原始的显示逻辑
-                return __origShowNode(nodeId);
-            };
+        // 添加错误捕获
+        window.addEventListener('error', (e) => {
+            console.error('游戏初始化错误:', e.error);
+        });
+
+        try {
+            // **【简化】** 拦截_showNode，现在只为通知成就系统
+            if (this.dialogueEngine && typeof this.dialogueEngine._showNode === 'function') {
+                const __origShowNode = this.dialogueEngine._showNode.bind(this.dialogueEngine);
+                this.dialogueEngine._showNode = (nodeId) => {
+                    // 若存在延迟读档请求，屏蔽自动 start() 触发的起始节点显示，等待读档接管
+                    if (this._deferredLoadSlot) {
+                        return; // 抑制开场节点，避免覆盖即将加载的存档节点
+                    }
+                    // 每次显示节点，都通知成就系统
+                    this.achievements?.onNodeShown?.(nodeId);
+                    // 执行原始的显示逻辑
+                    return __origShowNode(nodeId);
+                };
+            }
+
+            this.achievements.init();
+
+            // 读取待加载槽位（来自开始页）并先缓存，避免异步竞态
+            const pendingSlot = sessionStorage.getItem(LOAD_FROM_SLOT_KEY);
+            if (pendingSlot) {
+                this._deferredLoadSlot = parseInt(pendingSlot, 10) || null;
+                sessionStorage.removeItem(LOAD_FROM_SLOT_KEY);
+            }
+
+            this.dialogueEngine.start();
+            this._wireInlineSaveLoad();
+            this._wireQuickKeys();
+            // ... (其他init代码) ...
+            this._loadSettings();
+            this._listenSettingsChanges();
+            this._wireInlineSettings();
+            this._initMobileOrientationGuard();
+
+            console.log("游戏初始化完成");
+
+        } catch (error) {
+            console.error('游戏初始化失败:', error);
+            alert('游戏初始化失败: ' + error.message);
         }
-
-        this.achievements.init();
-
-        // 读取待加载槽位（来自开始页）并先缓存，避免异步竞态
-        const pendingSlot = sessionStorage.getItem(LOAD_FROM_SLOT_KEY);
-        if (pendingSlot) {
-            this._deferredLoadSlot = parseInt(pendingSlot, 10) || null;
-            sessionStorage.removeItem(LOAD_FROM_SLOT_KEY);
-        }
-
-        this.dialogueEngine.start();
-        this._wireInlineSaveLoad();
-        this._wireQuickKeys();
-        // ... (其他init代码) ...
-        this._loadSettings();
-        this._listenSettingsChanges();
-        this._wireInlineSettings();
-        this._initMobileOrientationGuard();
         // 若有延迟读档需求，等待剧本加载完毕后再跳转到存档节点
         if (this._deferredLoadSlot) {
+            console.log('检测到延迟加载槽位:', this._deferredLoadSlot);
             const slot = this._deferredLoadSlot;
             const saved = this.saveLoadManager.load(slot);
             const targetId = saved?.currentNodeId || null;
+            console.log('延迟加载目标节点:', targetId);
             const tryLoad = () => {
                 const scriptReady = this.dialogueEngine && Array.isArray(this.dialogueEngine.script);
                 const nodeReady = scriptReady && (targetId ? this.dialogueEngine.script.some(n => n.id === targetId) : true);
+                console.log('加载状态检查:', { scriptReady, nodeReady, scriptLength: this.dialogueEngine?.script?.length });
                 if (scriptReady && nodeReady) {
                     this._deferredLoadSlot = null;
+                    console.log('开始执行延迟加载');
                     this.loadGame(slot);
                 } else {
                     setTimeout(tryLoad, 60);
@@ -1025,6 +1042,35 @@ class GameApp {
             console.log(msg); // 降级处理
         }
     }
+
+    // 预加载角色立绘
+    preloadCharacterImages() {
+        // 实际存在的角色列表
+        const availableCharacters = [
+            'hui', 'lin', 'mo', 'yang'
+        ];
+
+        console.log('开始预加载角色立绘...');
+
+        availableCharacters.forEach(charId => {
+            const imagePath = `assets/images/characters/${charId.toLowerCase()}-neutral.png`;
+
+            // 创建Image对象进行预加载
+            const img = new Image();
+            img.onload = () => {
+                this.preloadedImages.set(imagePath, img);
+                console.log(`✅ 预加载完成: ${charId}`);
+            };
+            img.onerror = () => {
+                console.log(`⚠️ 预加载失败: ${charId} (文件可能不存在)`);
+            };
+
+            // 开始加载
+            img.src = imagePath;
+        });
+
+        console.log(`开始预加载 ${availableCharacters.length} 个角色立绘...`);
+    }
 }
 
 // 启动游戏
@@ -1150,32 +1196,3 @@ function showNode(nodeId) {
     // 继续执行默认的节点显示逻辑
     app.dialogueEngine._showNode(nodeId);
 }
-
-// 在 GameApp 类内添加预加载方法
-GameApp.prototype.preloadCharacterImages = function () {
-    // 实际存在的角色列表
-    const availableCharacters = [
-        'hui', 'lin', 'mo', 'yang'
-    ];
-
-    console.log('开始预加载角色立绘...');
-
-    availableCharacters.forEach(charId => {
-        const imagePath = `assets/images/characters/${charId.toLowerCase()}-neutral.png`;
-
-        // 创建Image对象进行预加载
-        const img = new Image();
-        img.onload = () => {
-            this.preloadedImages.set(imagePath, img);
-            console.log(`✅ 预加载完成: ${charId}`);
-        };
-        img.onerror = () => {
-            console.log(`⚠️ 预加载失败: ${charId} (文件可能不存在)`);
-        };
-
-        // 开始加载
-        img.src = imagePath;
-    });
-
-    console.log(`开始预加载 ${availableCharacters.length} 个角色立绘...`);
-};
