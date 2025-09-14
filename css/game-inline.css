@@ -330,6 +330,64 @@
     }
 }
 
+/* 超小屏再缩一次（例如 360~380 宽 Android） */
+@media (max-width:380px) {
+    #dialogue-save-load-bar {
+        gap: 6px;
+        right: 10px;
+        bottom: 12px;
+        max-width: 72%;
+    }
+
+    #dialogue-save-load-bar .dlg-sl-btn {
+        padding: 5px 7px;
+        font-size: 11px;
+        line-height: 1.15;
+        border-radius: 6px;
+        letter-spacing: .2px;
+    }
+
+    #dialogue-save-load-bar .dlg-sl-btn .label {
+        font-size: 0.85em;
+    }
+}
+
+/* 极限窄屏或分屏（<340px）改为单列堆叠避免拥挤 */
+@media (max-width:340px) {
+    #dialogue-save-load-bar {
+        flex-direction: column;
+        align-items: flex-end;
+        max-width: 80%;
+    }
+
+    #dialogue-save-load-bar .dlg-sl-btn {
+        flex: 0 0 auto !important;
+        width: auto;
+        min-width: 110px;
+        text-align: right;
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    #dialogue-save-load-bar .sl-toggle-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+/* 横屏 + 短高场景再次全局微缩按钮 (在先前基础再缩 0.9) */
+@media (orientation: landscape) and (max-height: 420px) {
+    #dialogue-save-load-bar .dlg-sl-btn {
+        transform: scale(.9);
+        transform-origin: center;
+    }
+
+    #dialogue-save-load-bar {
+        gap: 6px;
+    }
+}
+
 /* 横屏但短高（游戏横屏 + 系统导航条）下进一步压缩按钮 */
 @media (orientation: landscape) and (max-height: 480px) {
     #dialogue-save-load-bar {
