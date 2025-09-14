@@ -4,7 +4,7 @@ export const MAX_SLOTS = 6;
 
 export class SaveLoadManager {
     constructor() {
-        
+
     }
 
     // 保存数据到指定槽位
@@ -27,7 +27,7 @@ export class SaveLoadManager {
     // 从指定槽位读取数据
     load(slot) {
         if (slot < 1 || slot > MAX_SLOTS) return null;
-    const jsonString = localStorage.getItem(nsKey(`${SAVE_GAME_PREFIX}${slot}`));
+        const jsonString = localStorage.getItem(nsKey(`${SAVE_GAME_PREFIX}${slot}`));
         if (!jsonString) return null;
 
         try {
@@ -37,11 +37,11 @@ export class SaveLoadManager {
             return null;
         }
     }
-    
+
     // 删除指定槽位的存档
     delete(slot) {
         if (slot < 1 || slot > MAX_SLOTS) return;
-    localStorage.removeItem(nsKey(`${SAVE_GAME_PREFIX}${slot}`));
+        localStorage.removeItem(nsKey(`${SAVE_GAME_PREFIX}${slot}`));
         console.log(`存档槽位 ${slot} 已删除。`);
     }
 
@@ -61,8 +61,8 @@ export class SaveLoadManager {
     static summarize(saveData) {
         if (!saveData) return '空槽位';
         const time = new Date(saveData.saveTime || Date.now());
-        const hh = String(time.getHours()).padStart(2,'0');
-        const mm = String(time.getMinutes()).padStart(2,'0');
+        const hh = String(time.getHours()).padStart(2, '0');
+        const mm = String(time.getMinutes()).padStart(2, '0');
         return `${hh}:${mm} 节点:${saveData.currentNodeId}`;
     }
 }
