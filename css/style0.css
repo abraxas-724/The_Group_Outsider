@@ -1,4 +1,4 @@
-/* 响应式与安全区变�?*/
+/* 响应式与安全区变�?*/
 :root {
     --safe-top: env(safe-area-inset-top);
     --safe-right: env(safe-area-inset-right);
@@ -19,7 +19,7 @@ body {
     overflow: hidden;
 }
 
-/* 修正移动端地址栏导致的 100vh 偏差（支持动态视口单位时�?*/
+/* 修正移动端地址栏导致的 100vh 偏差（支持动态视口单位时�?*/
 @supports (height: 100dvh) {
     body {
         height: 100dvh;
@@ -28,7 +28,7 @@ body {
 
 #game-container {
     position: relative;
-    /* �?16:9 为设计基准，在视口内等比缩放，不溢出 */
+    /* �?16:9 为设计基准，在视口内等比缩放，不溢出 */
     width: min(100vw, calc(100vh * (16 / 9)));
     height: min(100vh, calc(100vw * (9 / 16)));
     max-width: 100vw;
@@ -107,7 +107,7 @@ body {
     filter: brightness(0.6);
 }
 
-/* --- UI - 对话�?(UI - Dialogue Box) --- */
+/* --- UI - 对话�?(UI - Dialogue Box) --- */
 #dialogue-box {
     position: absolute;
     bottom: 25px;
@@ -128,7 +128,7 @@ body {
     cursor: pointer;
 }
 
-/* 美化滚动�?*/
+/* 美化滚动�?*/
 .dialogue-content::-webkit-scrollbar {
     width: 6px;
 }
@@ -152,7 +152,7 @@ body {
     pointer-events: none;
 }
 
-/* 防止快速点击时选中文本/出现系统呼出与点击高�?—�?扩大到整页（�?game.html 引入本文件） */
+/* 防止快速点击时选中文本/出现系统呼出与点击高�?—�?扩大到整页（�?game.html 引入本文件） */
 body,
 body * {
     -webkit-user-select: none;
@@ -175,7 +175,7 @@ textarea *,
     -webkit-touch-callout: default;
 }
 
-/* 如需在某处允许选中文本，可为容器添�?.allow-select */
+/* 如需在某处允许选中文本，可为容器添�?.allow-select */
 .allow-select,
 .allow-select * {
     -webkit-user-select: text !important;
@@ -202,16 +202,16 @@ textarea *,
 
 /* 移动端通用优化：缩小对话框并确保内容不溢出 */
 @media (max-width: 768px) {
-@media (max-width: 768px) {
-    #dialogue-box {
-        width: min(96%, 1200px);
-        height: clamp(80px, 12vh, 120px);
-        min-height: clamp(70px, 10vh, 100px);
-        max-height: clamp(150px, 28vh, 250px);
-        padding: clamp(12px, 2vh, 24px) clamp(12px, 2vh, 24px) clamp(55px, 7vh, 80px);
-        bottom: 20px;
-        border-width: 1px;
-    }
+    @media (max-width: 768px) {
+        #dialogue-box {
+            width: min(96%, 1200px);
+            height: clamp(80px, 12vh, 120px);
+            min-height: clamp(70px, 10vh, 100px);
+            max-height: clamp(150px, 28vh, 250px);
+            padding: clamp(12px, 2vh, 24px) clamp(12px, 2vh, 24px) clamp(55px, 7vh, 80px);
+            bottom: 20px;
+            border-width: 1px;
+        }
     }
 
     #speaker-name {
@@ -225,7 +225,7 @@ textarea *,
     }
 }
 
-/* 小屏手机进一步优�?*/
+/* 小屏手机进一步优�?*/
 @media (max-width: 480px) {
     #dialogue-box {
         width: min(98%, 1000px);
@@ -245,7 +245,7 @@ textarea *,
     }
 }
 
-/* 横屏且高度较小的设备：整�?UI 缩放以避免过�?*/
+/* 横屏且高度较小的设备：整�?UI 缩放以避免过�?*/
 @media (orientation: landscape) and (max-height: 480px) {
     #dialogue-box {
         height: clamp(16%, 20vh, 22%);
@@ -284,7 +284,7 @@ textarea *,
     }
 }
 
-/* 横屏且极矮屏：最激进压�?*/
+/* 横屏且极矮屏：最激进压�?*/
 @media (orientation: landscape) and (max-height: 400px) {
     #dialogue-box {
         min-height: clamp(40px, 6vh, 60px);
@@ -410,8 +410,8 @@ textarea *,
     opacity: 0.35;
 }
 
-/* ===== 移动端专用样�?(Mobile Only Styles) ===== */
-/* 移动端对话框：使用flex布局实现自动高度和滚�?*/
+/* ===== 移动端专用样�?(Mobile Only Styles) ===== */
+/* 移动端对话框：使用flex布局实现自动高度和滚�?*/
 @media (max-width: 768px) {
     #dialogue-box {
         /* 移动端改为flex布局 */
@@ -425,7 +425,7 @@ textarea *,
         padding: clamp(10px, 2vh, 20px) clamp(10px, 2vh, 20px) clamp(8px, 1.5vh, 12px);
     }
 
-    /* 移动端对话内容：可滚动区�?*/
+    /* 移动端对话内容：可滚动区�?*/
     .dialogue-content {
         flex: 1;
         overflow-y: auto;
@@ -451,7 +451,7 @@ textarea *,
         background: rgba(156, 163, 175, 0.7);
     }
 
-    /* 移动端文字大小调�?*/
+    /* 移动端文字大小调�?*/
     #speaker-name {
         font-size: clamp(13px, 3.2vw, 16px);
     }
@@ -476,17 +476,17 @@ textarea *,
         padding: clamp(8px, 1.5vh, 15px) clamp(10px, 2vh, 20px) clamp(6px, 1vh, 10px);
     }
 
-    /* 横屏模式下对话内容区�?*/
+    /* 横屏模式下对话内容区�?*/
     .dialogue-content {
         flex: 1;
         overflow-y: auto;
         min-height: 0;
         padding-right: 4px;
-        /* 确保内容区域有足够的最小高�?*/
+        /* 确保内容区域有足够的最小高�?*/
         min-height: 60px;
     }
 
-    /* 横屏模式下文字稍微缩�?*/
+    /* 横屏模式下文字稍微缩�?*/
     #speaker-name {
         font-size: clamp(11px, 2.8vw, 14px);
     }
@@ -497,7 +497,7 @@ textarea *,
     }
 }
 
-/* 小屏幕移动设备进一步优�?*/
+/* 小屏幕移动设备进一步优�?*/
 @media (max-width: 480px) {
     #dialogue-box {
         width: 96%;
