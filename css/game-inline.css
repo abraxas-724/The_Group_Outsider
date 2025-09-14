@@ -384,6 +384,63 @@
     }
 }
 
+/* 横屏模式专门优化：无论屏幕宽度多大，都要缩小按钮 */
+@media (orientation: landscape) and (max-height: 600px) {
+    #dialogue-save-load-bar {
+        right: 10px;
+        bottom: 8px;
+        gap: 4px;
+        /* 横屏时强制紧凑布局 */
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 180px;
+    }
+
+    #dialogue-save-load-bar .dlg-sl-btn {
+        padding: 4px 6px;
+        font-size: 10px;
+        border-radius: 5px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* 横屏且屏幕很矮时：更激进的压缩 */
+@media (orientation: landscape) and (max-height: 480px) {
+    #dialogue-save-load-bar {
+        right: 8px;
+        bottom: 6px;
+        gap: 3px;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 150px;
+    }
+
+    #dialogue-save-load-bar .dlg-sl-btn {
+        padding: 3px 5px;
+        font-size: 9px;
+        border-radius: 4px;
+    }
+}
+
+/* 横屏且极矮屏幕：最紧凑布局 */
+@media (orientation: landscape) and (max-height: 400px) {
+    #dialogue-save-load-bar {
+        right: 6px;
+        bottom: 4px;
+        gap: 2px;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 120px;
+    }
+
+    #dialogue-save-load-bar .dlg-sl-btn {
+        padding: 2px 4px;
+        font-size: 8px;
+        border-radius: 3px;
+    }
+}
+
 /* Mini Save/Load popup (positioned above S&L) */
 .sl-toggle-wrap {
     position: relative;

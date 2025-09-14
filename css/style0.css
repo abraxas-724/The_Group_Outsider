@@ -239,6 +239,45 @@ textarea *,
     }
 }
 
+/* 横屏模式通用优化：确保对话框不会过高 */
+@media (orientation: landscape) and (max-height: 600px) {
+    #dialogue-box {
+        height: clamp(18%, 22vh, 26%);
+        padding: 8px 14px clamp(45px, 7vh, 65px);
+        bottom: 15px;
+        width: min(94%, 1300px);
+    }
+
+    #speaker-name {
+        font-size: clamp(0.9rem, 1.4rem, 1.6rem);
+        margin-bottom: 0.3em;
+    }
+
+    #dialogue-text {
+        font-size: clamp(0.85rem, 1.1rem, 1.3rem);
+        line-height: 1.45;
+    }
+}
+
+/* 横屏且极矮屏：最激进压缩 */
+@media (orientation: landscape) and (max-height: 400px) {
+    #dialogue-box {
+        height: clamp(14%, 18vh, 20%);
+        padding: 6px 10px clamp(35px, 5vh, 50px);
+        bottom: 10px;
+    }
+
+    #speaker-name {
+        font-size: clamp(0.8rem, 1rem, 1.2rem);
+        margin-bottom: 0.2em;
+    }
+
+    #dialogue-text {
+        font-size: clamp(0.75rem, 0.9rem, 1rem);
+        line-height: 1.3;
+    }
+}
+
 #choices-container {
     position: relative;
     margin-top: 20px;
