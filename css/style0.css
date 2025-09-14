@@ -129,8 +129,38 @@ body {
     transition: opacity 0.3s ease;
     pointer-events: auto;
     cursor: pointer;
-    /* 超长内容时显示滚动条 */
+    /* 移除整体滚动，改为内容区域滚动 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 对话框内容区域：可滚动的文本部分 */
+.dialogue-content {
+    flex: 1;
     overflow-y: auto;
+    min-height: 0;
+    /* 允许 flex 子项缩小 */
+    padding-right: 4px;
+    /* 为滚动条留出空间 */
+}
+
+/* 美化滚动条 */
+.dialogue-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dialogue-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.dialogue-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.dialogue-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
 }
 
 #dialogue-box.hidden {
