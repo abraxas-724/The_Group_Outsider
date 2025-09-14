@@ -12,6 +12,8 @@ class GameApp {
         this.backgroundEl = document.getElementById('scene-background');
         this.characterLayer = document.getElementById('character-layer');
         this.characters = {};
+        this.preloadedImages = new Map(); // 预加载的图片缓存
+
         // 绑定内嵌存/读档与设置面板的 DOM 引用
         this.inlineOverlay = document.getElementById('inline-save-load');
         this.slTitle = document.getElementById('sl-title');
@@ -31,6 +33,9 @@ class GameApp {
 
         // **【修复】实例化成就系统**
         this.achievements = new AchievementManager(this);
+
+        // 预加载常用角色立绘
+        this.preloadCharacterImages();
     }
 
     init() {
@@ -881,8 +886,15 @@ class GameApp {
             this.characters[node.charId] = charEl;
         }
 
-        // 将来可以根据node.expression来加载不同表情的立绘
-        charEl.src = `assets/images/characters/${node.charId.toLowerCase()}-neutral.png`;
+        // 使用预加载的图片或直接设置src
+        const imagePath = `assets/images/characters/${node.charId.toLowerCase()}-neutral.png`;
+        if (this.preloadedImages.has(imagePath)) {
+            // 使用预加载的图片，避免重新加载
+            charEl.src = this.preloadedImages.get(imagePath).src;
+        } else {
+            // 如果没有预加载，直接设置src（会重新加载）
+            charEl.src = imagePath;
+        }
 
         charEl.classList.remove('pos-left', 'pos-center', 'pos-right');
         if (node.position) {
@@ -1138,3 +1150,32 @@ function showNode(nodeId) {
     // 继续执行默认的节点显示逻辑
     app.dialogueEngine._showNode(nodeId);
 }
+
+// 在 GameApp 类内添加预加载方法
+GameApp.prototype.preloadCharacterImages = function () {
+    // 实际存在的角色列表
+    const availableCharacters = [
+        'hui', 'lin', 'mo', 'yang'
+    ];
+
+    console.log('开始预加载角色立绘...');
+
+    availableCharacters.forEach(charId => {
+        const imagePath = `assets/images/characters/${charId.toLowerCase()}-neutral.png`;
+
+        // 创建Image对象进行预加载
+        const img = new Image();
+        img.onload = () => {
+            this.preloadedImages.set(imagePath, img);
+            console.log(`✅ 预加载完成: ${charId}`);
+        };
+        img.onerror = () => {
+            console.log(`⚠️ 预加载失败: ${charId} (文件可能不存在)`);
+        };
+
+        // 开始加载
+        img.src = imagePath;
+    });
+
+    console.log(`开始预加载 ${availableCharacters.length} 个角色立绘...`);
+};

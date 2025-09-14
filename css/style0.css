@@ -114,7 +114,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: min(94%, 1400px);
-    height: clamp(80px, 12vh, 120px);
+    height: 25%;
     padding: clamp(14px, 2.2vh, 30px) clamp(14px, 2.2vh, 30px) clamp(60px, 8vh, 90px);
     box-sizing: border-box;
     background-color: rgba(17, 24, 39, 0.85);
@@ -409,8 +409,7 @@ textarea *,
 
 /* ===== 移动端专用样式 (Mobile Only Styles) ===== */
 /* 移动端对话框：使用flex布局实现自动高度和滚动 */
-@media (max-width: 768px),
-(orientation: landscape) and (max-height: 600px) {
+@media (max-width: 768px) {
     #dialogue-box {
         /* 移动端改为flex布局 */
         display: flex;
@@ -457,6 +456,41 @@ textarea *,
     #dialogue-text {
         font-size: clamp(12px, 3vw, 15px);
         line-height: 1.4;
+    }
+}
+
+/* 横屏模式特殊处理：增加高度以容纳文字 */
+@media (orientation: landscape) and (max-height: 600px) {
+    #dialogue-box {
+        /* 横屏时改为flex布局 */
+        display: flex;
+        flex-direction: column;
+        /* 横屏时增加最小高度，确保文字可见 */
+        min-height: clamp(100px, 20vh, 140px);
+        max-height: clamp(200px, 50vh, 280px);
+        height: auto;
+        /* 横屏时减少底部padding，为按钮留出空间 */
+        padding: clamp(8px, 1.5vh, 15px) clamp(10px, 2vh, 20px) clamp(6px, 1vh, 10px);
+    }
+
+    /* 横屏模式下对话内容区域 */
+    .dialogue-content {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+        padding-right: 4px;
+        /* 确保内容区域有足够的最小高度 */
+        min-height: 60px;
+    }
+
+    /* 横屏模式下文字稍微缩小 */
+    #speaker-name {
+        font-size: clamp(11px, 2.8vw, 14px);
+    }
+
+    #dialogue-text {
+        font-size: clamp(10px, 2.5vw, 13px);
+        line-height: 1.3;
     }
 }
 
