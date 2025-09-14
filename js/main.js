@@ -34,8 +34,8 @@ class GameApp {
         // **【修复】实例化成就系统**
         this.achievements = new AchievementManager(this);
 
-        // 预加载常用角色立绘
-        this.preloadCharacterImages();
+        // 异步预加载角色立绘，不阻塞游戏启动
+        setTimeout(() => this.preloadCharacterImages(), 100);
     }
 
     init() {
@@ -47,6 +47,37 @@ class GameApp {
         });
 
         try {
+            // 首先获取并验证DOM元素
+            this.backgroundEl = document.getElementById('scene-background');
+            this.characterLayer = document.getElementById('character-layer');
+            this.uiLayer = document.getElementById('ui-layer');
+            this.dialogueBox = document.getElementById('dialogue-box');
+            this.speakerName = document.getElementById('speaker-name');
+            this.dialogueText = document.getElementById('dialogue-text');
+
+            // 验证关键元素
+            if (!this.backgroundEl) {
+                throw new Error('scene-background 元素未找到');
+            }
+            console.log('✅ scene-background 元素已找到:', this.backgroundEl);
+
+            // 确保背景元素有正确的样式
+            this.backgroundEl.style.display = 'block';
+            this.backgroundEl.style.width = '100%';
+            this.backgroundEl.style.height = '100%';
+            this.backgroundEl.style.objectFit = 'cover';
+            this.backgroundEl.style.position = 'absolute';
+            this.backgroundEl.style.top = '0';
+            this.backgroundEl.style.left = '0';
+
+            if (!this.characterLayer) {
+                throw new Error('character-layer 元素未找到');
+            }
+
+            if (!this.dialogueBox) {
+                throw new Error('dialogue-box 元素未找到');
+            }
+
             // **【简化】** 拦截_showNode，现在只为通知成就系统
             if (this.dialogueEngine && typeof this.dialogueEngine._showNode === 'function') {
                 const __origShowNode = this.dialogueEngine._showNode.bind(this.dialogueEngine);
@@ -71,6 +102,12 @@ class GameApp {
                 sessionStorage.removeItem(LOAD_FROM_SLOT_KEY);
             }
 
+            // 确保背景元素有默认背景
+            if (this.backgroundEl) {
+                this.backgroundEl.src = 'assets/images/scenes/black.png';
+                console.log('✅ 设置默认起始背景: black.png');
+            }
+
             this.dialogueEngine.start();
             this._wireInlineSaveLoad();
             this._wireQuickKeys();
@@ -80,11 +117,12 @@ class GameApp {
             this._wireInlineSettings();
             this._initMobileOrientationGuard();
 
-            console.log("游戏初始化完成");
+            console.log("✅ 游戏核心初始化完成！");
 
         } catch (error) {
-            console.error('游戏初始化失败:', error);
-            alert('游戏初始化失败: ' + error.message);
+            console.error('❌ 游戏初始化失败:', error);
+            alert('游戏启动失败: ' + error.message + '\n请刷新页面重试');
+            return; // 如果初始化失败，直接返回，不执行后续代码
         }
         // 若有延迟读档需求，等待剧本加载完毕后再跳转到存档节点
         if (this._deferredLoadSlot) {
@@ -504,7 +542,15 @@ class GameApp {
 
     changeBackground(node) {
         try {
-            console.log('正在更换背景为:', node.imagePath);
+            console.log('🖼️ 正在更换背景为:', node.imagePath);
+
+            if (!this.backgroundEl) {
+                console.error('❌ backgroundEl 未找到!');
+                return;
+            }
+
+            console.log('✅ backgroundEl 存在:', this.backgroundEl);
+
             // 场景切换前隐藏上一个场景所有角色（支持未来通过 node.keepCharacters 控制保留）
             if (!node.keepCharacters) {
                 for (const id in this.characters) {
@@ -515,25 +561,40 @@ class GameApp {
             // 规范化为绝对 URL，避免在不同 base 下解析异常
             const base = (typeof document !== 'undefined' && document.baseURI) ? document.baseURI : window.location.href;
             let url = node.imagePath;
-            try { url = new URL(node.imagePath, base).toString(); } catch { }
+            console.log('🔗 解析前路径:', url);
+            console.log('🔗 Base URL:', base);
+            try { url = new URL(node.imagePath, base).toString(); } catch (e) {
+                console.warn('URL 解析失败，使用原路径:', e);
+            }
+            console.log('🔗 解析后URL:', url);
+
             // 渐隐旧背景
-            this.backgroundEl.style.opacity = 0;
+            this.backgroundEl.style.opacity = '0.3';
+            console.log('🎭 设置背景透明度为 0.3');
+
             // 预加载后再切换，确保显示正确图片
             const probe = new Image();
             probe.onload = () => {
+                console.log('✅ 背景图加载成功，设置src:', url);
                 this.backgroundEl.src = url;
-                this.backgroundEl.style.opacity = 1;
+                this.backgroundEl.style.opacity = '1';
+                console.log('🎭 背景设置完成，透明度已恢复为 1');
             };
-            probe.onerror = () => {
-                console.warn('背景图片加载失败，仍尝试切换:', url);
+            probe.onerror = (e) => {
+                console.error('❌ 背景图片加载失败:', url, e);
+                // 即使加载失败也要尝试显示，可能是缓存问题
                 this.backgroundEl.src = url;
-                this.backgroundEl.style.opacity = 1;
+                this.backgroundEl.style.opacity = '1';
+                console.log('⚠️ 强制设置背景，即使加载失败');
             };
             probe.src = url;
+            console.log('🔄 开始预加载背景图片:', url);
         } catch (e) {
-            console.warn('切换背景异常，直接应用路径:', e);
-            this.backgroundEl.src = node?.imagePath || '';
-            this.backgroundEl.style.opacity = 1;
+            console.error('❌ 切换背景异常:', e);
+            if (this.backgroundEl) {
+                this.backgroundEl.src = node?.imagePath || '';
+                this.backgroundEl.style.opacity = '1';
+            }
         }
     }
 
@@ -1043,33 +1104,36 @@ class GameApp {
         }
     }
 
-    // 预加载角色立绘
+    // 预加载角色立绘（异步、非阻塞）
     preloadCharacterImages() {
         // 实际存在的角色列表
         const availableCharacters = [
             'hui', 'lin', 'mo', 'yang'
         ];
 
-        console.log('开始预加载角色立绘...');
+        console.log('🚀 后台预加载角色立绘...');
 
-        availableCharacters.forEach(charId => {
-            const imagePath = `assets/images/characters/${charId.toLowerCase()}-neutral.png`;
+        // 分批预加载，避免一次性请求过多
+        availableCharacters.forEach((charId, index) => {
+            setTimeout(() => {
+                const imagePath = `assets/images/characters/${charId.toLowerCase()}-neutral.png`;
 
-            // 创建Image对象进行预加载
-            const img = new Image();
-            img.onload = () => {
-                this.preloadedImages.set(imagePath, img);
-                console.log(`✅ 预加载完成: ${charId}`);
-            };
-            img.onerror = () => {
-                console.log(`⚠️ 预加载失败: ${charId} (文件可能不存在)`);
-            };
+                // 创建Image对象进行预加载
+                const img = new Image();
+                img.onload = () => {
+                    this.preloadedImages.set(imagePath, img);
+                    console.log(`✅ 预加载完成: ${charId}`);
+                };
+                img.onerror = () => {
+                    console.log(`⚠️ 预加载失败: ${charId} (跳过)`);
+                };
 
-            // 开始加载
-            img.src = imagePath;
+                // 开始加载
+                img.src = imagePath;
+            }, index * 200); // 每个角色延迟200ms加载，避免网络拥塞
         });
 
-        console.log(`开始预加载 ${availableCharacters.length} 个角色立绘...`);
+        console.log(`📦 预加载队列: ${availableCharacters.length} 个角色`);
     }
 }
 

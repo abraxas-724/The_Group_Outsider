@@ -290,9 +290,9 @@
     background: rgba(0, 0, 0, 0.45);
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 8px 18px;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
     cursor: pointer;
     backdrop-filter: blur(4px);
     transition: background .25s, border-color .25s, transform .2s;
