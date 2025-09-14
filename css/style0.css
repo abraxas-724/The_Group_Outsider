@@ -114,7 +114,10 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: min(94%, 1400px);
-    height: clamp(22%, 24vh, 28%);
+    /* 改为自适应高度：最小高度 + 自动扩展 */
+    min-height: clamp(80px, 12vh, 120px);
+    max-height: clamp(180px, 32vh, 320px);
+    height: auto;
     padding: clamp(14px, 2.2vh, 30px) clamp(14px, 2.2vh, 30px) clamp(60px, 8vh, 90px);
     box-sizing: border-box;
     background-color: rgba(17, 24, 39, 0.85);
@@ -126,6 +129,8 @@ body {
     transition: opacity 0.3s ease;
     pointer-events: auto;
     cursor: pointer;
+    /* 超长内容时显示滚动条 */
+    overflow-y: auto;
 }
 
 #dialogue-box.hidden {
@@ -185,7 +190,8 @@ textarea *,
 @media (max-width: 768px) {
     #dialogue-box {
         width: min(96%, 1200px);
-        height: clamp(20%, 26vh, 30%);
+        min-height: clamp(70px, 10vh, 100px);
+        max-height: clamp(150px, 28vh, 250px);
         padding: clamp(12px, 2vh, 24px) clamp(12px, 2vh, 24px) clamp(55px, 7vh, 80px);
         bottom: 20px;
         border-width: 1px;
@@ -206,7 +212,8 @@ textarea *,
 @media (max-width: 480px) {
     #dialogue-box {
         width: min(98%, 1000px);
-        height: clamp(18%, 24vh, 28%);
+        min-height: clamp(60px, 8vh, 90px);
+        max-height: clamp(140px, 24vh, 200px);
         padding: 10px 10px clamp(50px, 6vh, 70px);
         bottom: 15px;
     }
@@ -242,7 +249,8 @@ textarea *,
 /* 横屏模式通用优化：确保对话框不会过高 */
 @media (orientation: landscape) and (max-height: 600px) {
     #dialogue-box {
-        height: clamp(18%, 22vh, 26%);
+        min-height: clamp(60px, 10vh, 80px);
+        max-height: clamp(120px, 22vh, 160px);
         padding: 8px 14px clamp(45px, 7vh, 65px);
         bottom: 15px;
         width: min(94%, 1300px);
@@ -262,7 +270,8 @@ textarea *,
 /* 横屏且极矮屏：最激进压缩 */
 @media (orientation: landscape) and (max-height: 400px) {
     #dialogue-box {
-        height: clamp(14%, 18vh, 20%);
+        min-height: clamp(40px, 6vh, 60px);
+        max-height: clamp(80px, 14vh, 100px);
         padding: 6px 10px clamp(35px, 5vh, 50px);
         bottom: 10px;
     }
