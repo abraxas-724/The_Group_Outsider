@@ -6,7 +6,8 @@
     "YANG": "阳",
     "LIN": "琳",
     "HUI": "绘",
-    "CHEN": "陈教授"
+    "CHEN": "陈教授",
+    "COM": "命令行"
   },
   "nodes": [
     {
@@ -3618,7 +3619,7 @@
     {
       "id": "ACT3_SCENE4_SETUP",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/black.png",
+      "imagePath": "assets/images/scenes/1.1项目讨论室.png",
       "comment": "答辩大厅",
       "next": "ACT3_SCENE4_CHEN_APPEARS"
     },
@@ -5115,14 +5116,28 @@
       "id": "ACT3_SCENE5_01",
       "type": "dialogue",
       "character": "SYS",
-      "text": "陈教授的影像开始出现马赛克和像素错位，如同一个损坏的视频文件。他身后的答辩大厅，墙壁、桌椅的贴图开始剥落，露出底下冰冷的、由绿色线条构成的线框模型。阳、琳、绘三人的身体变得半透明，化作无数飞散的代码字符，消散在空气中。最终，整个三维的“答辩大厅”世界，像一块被敲碎的玻璃，猛地碎裂成无数碎片，向内坍缩，最终被一个纯黑的奇点吞噬。",
+      "text": "陈教授的影像开始出现马赛克和像素错位，如同一个损坏的视频文件。",
       "next": "ACT3_SCENE5_02"
     },
     {
       "id": "ACT3_SCENE5_02",
       "type": "dialogue",
       "character": "SYS",
-      "text": "‘......Simulation complete.‘",
+      "text": "他身后的答辩大厅，墙壁、桌椅的贴图开始剥落，露出底下冰冷的、由绿色线条构成的线框模型。",
+      "next": "ACT3_SCENE5_03"
+    },
+    {
+      "id": "ACT3_SCENE5_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳、琳、绘三人的身体变得半透明，化作无数飞散的代码字符，消散在空气中。",
+      "next": "ACT3_SCENE5_04"
+    },
+    {
+      "id": "ACT3_SCENE5_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "'......Simulation complete.'",
       "next": "ACT3_SCENE6_SETUP"
     },
     {
@@ -5143,77 +5158,119 @@
       "id": "ACT3_SCENE6_02",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你的视点，聚焦在电脑屏幕上。那是一个黑色的、无比熟悉的命令行终端。最后一行，光标正在静静地闪烁着。光标的前面，是你刚刚输入，但还未按下回车的指令：",
+      "text": "你的视点，聚焦在电脑屏幕上。那是一个黑色的、无比熟悉的命令行终端。",
       "next": "ACT3_SCENE6_03"
     },
     {
       "id": "ACT3_SCENE6_03",
       "type": "dialogue",
       "character": "SYS",
-      "text": "\"$ git push–force \"",
+      "text": "最后一行，光标正在静静地闪烁着。光标的前面，是你刚刚输入，但还未按下回车的指令：",
       "next": "ACT3_SCENE6_04"
     },
     {
       "id": "ACT3_SCENE6_04",
       "type": "dialogue",
       "character": "SYS",
-      "text": "‘Analysis: Three primary outcome branches identified based on final response query.’ ‘分析：基于最终回应查询，已识别出三个主要的结果分支。’",
+      "text": "\"$ git push–force \"",
       "next": "ACT3_SCENE6_05"
     },
     {
       "id": "ACT3_SCENE6_05",
       "type": "dialogue",
-      "character": "SYS",
-      "text": "‘Branch A (Absurd): Leads to total system isolation but preserves internal logical integrity. High probability of individual satisfaction.’ ‘分支A（荒诞）：导致系统完全隔离，但保全了内部逻辑的完整性。个体满意度高概率。’",
+      "character": "COM",
+      "text": "‘分析：基于最终回应查询，已识别出三个主要的结果分支。’",
       "next": "ACT3_SCENE6_06"
     },
     {
       "id": "ACT3_SCENE6_06",
       "type": "dialogue",
-      "character": "SYS",
-      "text": "‘Branch B (Compromise): Leads to system integration with significant performance cost and required compatibility patching. Low probability of individual satisfaction, but maintains network connection.’ ‘分支B（妥协）：导致系统集成，但伴有显著的性能损耗和必需的兼容性补丁。个体满意度低概率，但维持了网络连接。’",
+      "character": "COM",
+      "text": " ‘分支A（荒诞）：导致系统完全隔离，但保全了内部逻辑的完整性。个体满意度高概率。’",
       "next": "ACT3_SCENE6_07"
     },
     {
       "id": "ACT3_SCENE6_07",
       "type": "dialogue",
-      "character": "SYS",
-      "text": "‘Branch C (nihility): Leads to forced system isolation with negative reputation flags. Lowest probability of satisfaction.’ ‘分支C（虚无）：导致强制系统隔离，并附带负面声誉标记。个体满意度最低概率。’",
+      "character": "COM",
+      "text": " ‘分支B（妥协）：导致系统集成，但伴有显著的性能损耗和必需的兼容性补丁。",
       "next": "ACT3_SCENE6_08"
     },
     {
       "id": "ACT3_SCENE6_08",
       "type": "dialogue",
-      "character": "SYS",
-      "text": "‘Simulation confirms the initial hypothesis: executing the ‘push’ command will result in a fundamental conflict with the social co-routine of the ‘team’ module.’ ‘模拟证实了初始假说：执行‘推送’指令，将与‘团队’模块的社交协同程序发生根本性冲突。’",
+      "character": "COM",
+      "text": " 个体满意度低概率，但维持了网络连接。’",
       "next": "ACT3_SCENE6_09"
     },
     {
       "id": "ACT3_SCENE6_09",
       "type": "dialogue",
-      "character": "SYS",
-      "text": "‘The core question was not about the past. It was about the future.’ ‘那个核心问题，从来无关过去。它只关乎未来。’",
+      "character": "COM",
+      "text": "‘分支C（虚无）：导致强制系统隔离，并附带负面声誉标记。个体满意度最低概率。’",
       "next": "ACT3_SCENE6_10"
     },
     {
       "id": "ACT3_SCENE6_10",
       "type": "dialogue",
-      "character": "SYS",
-      "text": "‘The query 'Do you regret it?' can be reframed as 'Will you choose a path that leads to regret?'’ ‘ “你后悔吗？”这个查询，可以被重构为：“你，将要选择一条通往后悔的路吗？”’",
+      "character": "COM",
+      "text": "模拟证实了初始假说：执行‘推送’指令，将与‘团队’模块的社交协同程序发生根本性冲突。",
       "next": "ACT3_SCENE6_11"
     },
     {
       "id": "ACT3_SCENE6_11",
       "type": "dialogue",
-      "character": "SYS",
-      "text": "‘The simulation is over. Now, you must exist.’ ‘模拟已经结束。现在，你必须存在。’",
+      "character": "COM",
+      "text": "那个核心问题，从来无关过去。",
       "next": "ACT3_SCENE6_12"
     },
     {
       "id": "ACT3_SCENE6_12",
       "type": "dialogue",
+      "character": "COM",
+      "text": "它只关乎未来。",
+      "next": "ACT3_SCENE6_13"
+    },
+    {
+      "id": "ACT3_SCENE6_13",
+      "type": "dialogue",
+      "character": "COM",
+      "text": " “你后悔吗？”",
+      "next": "ACT3_SCENE6_14"
+    },
+    {
+      "id": "ACT3_SCENE6_14",
+      "type": "dialogue",
+      "character": "COM",
+      "text": " 这个查询，可以被重构为：“你，将要选择一条通往后悔的路吗？”",
+      "next": "ACT3_SCENE6_15"
+    },
+    {
+      "id": "ACT3_SCENE6_15",
+      "type": "dialogue",
+      "character": "COM",
+      "text": "模拟已经结束。现在，你必须存在。",
+      "next": "ACT3_SCENE6_16"
+    },
+    {
+      "id": "ACT3_SCENE6_17",
+      "type": "dialogue",
       "character": "SYS",
-      "text": "屏幕上，除了那行致命的指令和闪烁的光标，没有其他任何东西。你不需要在对话框里选择你的“想法”。你需要做出一个物理的、唯一的、不可撤销的**动作**。",
+      "text": "屏幕上，除了那行致命的指令和闪烁的光标，没有其他任何东西。",
+      "next": "ACT3_SCENE6_18"
+    },
+    {
+      "id": "ACT3_SCENE6_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你不再需要在对话框里选择你的“想法”。",
+      "next": "ACT3_SCENE6_19"
+    },
+    {
+      "id": "ACT3_SCENE6_19",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你需要做出一个物理的、唯一的、不可撤销的动作。",
       "next": "ACT3_SCENE6_CHOICE_FINAL_TRUE"
     },
     {

@@ -89,7 +89,16 @@ class GameApp {
                     // 每次显示节点，都通知成就系统
                     this.achievements?.onNodeShown?.(nodeId);
                     // 执行原始的显示逻辑
-                    return __origShowNode(nodeId);
+                    const ret = __origShowNode(nodeId);
+                    // 节点钩子：ACT3_SCENE4_42 出现后，渲染边缘模糊/晃动遮罩；其它节点则清理
+                    try {
+                        if (nodeId === 'ACT3_SCENE4_42') {
+                            this._showEdgeAnomalyOverlay({ gotoNode: 'ACT3_SCENE5_SETUP', noise: true });
+                        } else {
+                            this._removeEdgeAnomalyOverlay();
+                        }
+                    } catch { }
+                    return ret;
                 };
             }
 
@@ -988,6 +997,56 @@ class GameApp {
         if (charEl) {
             charEl.classList.add('hidden');
         }
+    }
+
+    // ======= 特效：边缘模糊 + 轻微晃动（点击进入隐藏分支） =======
+    _showEdgeAnomalyOverlay(opts = {}) {
+        const gotoNode = opts.gotoNode || 'ACT3_SCENE5_SETUP';
+        if (this._edgeOv) {
+            return; // 避免重复创建
+        }
+        // 容器
+        const ov = document.createElement('div');
+        ov.id = 'edge-anomaly';
+        if (opts.noise) {
+            ov.classList.add('with-noise');
+        }
+        // 四个边缘可点击区域
+        const mkEdge = (cls) => {
+            const d = document.createElement('div');
+            d.className = 'edge ' + cls;
+            d.setAttribute('role', 'button');
+            d.setAttribute('aria-label', '进入隐藏分支');
+            // 仅边缘捕获点击，不影响中央对话框点击推进
+            d.addEventListener('click', (e) => {
+                e.stopPropagation();
+                try { this._removeEdgeAnomalyOverlay(); } catch { }
+                // 跳转到隐藏分支节点
+                if (gotoNode) {
+                    this.dialogueEngine?._showNode(gotoNode);
+                }
+            });
+            return d;
+        };
+        ov.appendChild(mkEdge('top'));
+        ov.appendChild(mkEdge('bottom'));
+        ov.appendChild(mkEdge('left'));
+        ov.appendChild(mkEdge('right'));
+        // 可选：添加细微噪点层（纯 CSS 背景 + 叠加混合）
+        if (opts.noise) {
+            const noise = document.createElement('div');
+            noise.className = 'noise';
+            ov.appendChild(noise);
+        }
+        document.body.appendChild(ov);
+        this._edgeOv = ov;
+    }
+
+    _removeEdgeAnomalyOverlay() {
+        if (this._edgeOv && this._edgeOv.parentNode) {
+            try { this._edgeOv.parentNode.removeChild(this._edgeOv); } catch { }
+        }
+        this._edgeOv = null;
     }
 
 

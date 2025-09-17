@@ -152,7 +152,7 @@ body {
     pointer-events: none;
 }
 
-/* 防止快速点击时选中文本/出现系统呼出与点击高�?—�?扩大到整页（�?game.html 引入本文件） */
+/* 防止快速点击时选中文本/出现系统呼出 */
 body,
 body * {
     -webkit-user-select: none;

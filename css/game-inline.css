@@ -962,3 +962,143 @@
         font-size: .85rem;
     }
 }
+
+/* ===== Edge Anomaly Overlay: 边缘模糊 + 轻微晃动（点击边缘进入隐藏分支） ===== */
+#edge-anomaly {
+    position: fixed;
+    inset: 0;
+    z-index: 480;
+    /* 低于小游戏(500)，高于对话与S&L */
+    pointer-events: none;
+    /* 中心点击可穿透到对话区域 */
+}
+
+/* 使用遮罩仅对边缘进行模糊与暗角处理，中心保持清晰可交互 */
+#edge-anomaly::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(6px) brightness(0.95);
+    -webkit-backdrop-filter: blur(6px) brightness(0.95);
+    /* 通过径向遮罩保留中心，模糊边缘 */
+    mask: radial-gradient(circle at 50% 55%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 1) 70%);
+    -webkit-mask: radial-gradient(circle at 50% 55%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 1) 70%);
+    /* 轻微的整体晃动动画，营造不稳定感 */
+    animation: edge-wobble 1.8s ease-in-out infinite alternate;
+}
+
+/* 可选：细微噪点层（with-noise 时启用） */
+#edge-anomaly.with-noise .noise {
+    position: absolute;
+    inset: -2px;
+    /* 略超出避免边缘缝隙 */
+    pointer-events: none;
+    z-index: -1;
+    /* 位于 ::before 下方，避免影响模糊遮罩 */
+    opacity: .06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2NkYGD4z0AEYBxVSFUwCkb9T0A0DNMgDTBqGgQAa3QFCW7MQJwAAAAASUVORK5CYII=");
+    background-size: 128px 128px;
+    animation: noise-shift 320ms steps(2, end) infinite;
+}
+
+/* 轻微抖动（比 wobble 更快更小，模拟屏幕微震） */
+@keyframes noise-shift {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(0.5px, -0.4px);
+    }
+
+    50% {
+        transform: translate(-0.4px, 0.5px);
+    }
+
+    75% {
+        transform: translate(0.4px, 0.3px);
+    }
+
+    100% {
+        transform: translate(-0.3px, -0.4px);
+    }
+}
+
+/* 边缘的可点击命中区域（仅这些区域能够响应点击） */
+#edge-anomaly .edge {
+    position: absolute;
+    pointer-events: auto;
+    /* 让边缘可以点击 */
+    /* 提示性光标 */
+    cursor: pointer;
+}
+
+#edge-anomaly .edge.top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 15vh;
+}
+
+#edge-anomaly .edge.bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 15vh;
+}
+
+#edge-anomaly .edge.left {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 12vw;
+}
+
+#edge-anomaly .edge.right {
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 12vw;
+}
+
+/* 轻微位移的晃动动画（幅度很小，避免眩晕） */
+@keyframes edge-wobble {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(0.6px, -0.6px);
+    }
+
+    100% {
+        transform: translate(-0.6px, 0.6px);
+    }
+}
+
+/* 移动端适配：边缘命中更宽一些，便于点击 */
+@media (max-width: 640px) {
+
+    #edge-anomaly .edge.top,
+    #edge-anomaly .edge.bottom {
+        height: 18vh;
+    }
+
+    #edge-anomaly .edge.left,
+    #edge-anomaly .edge.right {
+        width: 16vw;
+    }
+
+    #edge-anomaly::before {
+        mask: radial-gradient(circle at 50% 58%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 70%);
+        -webkit-mask: radial-gradient(circle at 50% 58%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 70%);
+    }
+
+    /* 移动端上噪点更轻、更慢，减少能量消耗与眩晕 */
+    #edge-anomaly.with-noise .noise {
+        opacity: .045;
+        animation-duration: 420ms;
+        background-size: 160px 160px;
+    }
+}
