@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>代码节拍 · Code Beat</title>
+    <link rel="stylesheet" href="../../css/base-responsive.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="beat-body">
+    <header class="beat-header" aria-label="小游戏标题栏">
+        <div>
+            <h1>代码节拍 <span>Code Beat</span></h1>
+            <p>屏蔽噪音，聆听逻辑。随着节拍输入，让代码回到可控的频率。</p>
+        </div>
+        <button id="exitGame" type="button">退出剧情</button>
+    </header>
+
+    <main class="beat-stage" aria-live="polite">
+        <section class="metronome-panel" aria-label="节拍器">
+            <div class="metronome-frame">
+                <div class="beat-pulse" id="beatPulse"></div>
+                <div class="metronome-arm" id="metronomeArm"></div>
+                <div class="summary-panel" id="summaryPanel" role="dialog" aria-modal="true">
+                    <h3 id="summaryTitle">节奏统计</h3>
+                    <p id="summaryBody">保持稳定呼吸，再试一次。</p>
+                    <div class="controls">
+                        <button id="replayButton" type="button" class="primary">重新来一次</button>
+                        <button id="backToStory" type="button" class="secondary">返回剧情</button>
+                    </div>
+                </div>
+            </div>
+            <div class="code-panel">
+                <div class="code-title" id="patternTitle">未开始</div>
+                <pre class="code-lines" id="codeLines" aria-label="节奏代码展示"></pre>
+            </div>
+        </section>
+
+        <aside class="control-panel" aria-label="状态与操作">
+            <div class="status-row">
+                <h2>当前状态</h2>
+                <div class="status-pill">
+                    <span id="statusLabel">等待开始</span>
+                    <strong id="beatCounter">0 / 0</strong>
+                </div>
+            </div>
+            <div class="score-grid">
+                <div class="score-card perfect">
+                    <span class="label">Perfect</span>
+                    <div class="value" id="scorePerfect">0</div>
+                </div>
+                <div class="score-card good">
+                    <span class="label">Good</span>
+                    <div class="value" id="scoreGood">0</div>
+                </div>
+                <div class="score-card miss">
+                    <span class="label">Miss</span>
+                    <div class="value" id="scoreMiss">0</div>
+                </div>
+            </div>
+            <div class="status-pill">
+                <span>准确率</span>
+                <strong id="accuracyLabel">0%</strong>
+            </div>
+            <div class="feedback" id="feedback">按下开始，聆听节拍</div>
+            <div class="controls">
+                <button id="startButton" type="button" class="primary">开始校准</button>
+                <button id="pauseButton" type="button" class="secondary" disabled>暂停节拍</button>
+            </div>
+            <div class="instructions">
+                <p>· 节奏键：<strong>空格</strong> 或 <strong>J</strong><br />
+                    · 在节拍响起的瞬间按下，获得 Perfect。<br />
+                    · 稍晚一点是 Good；太迟或跳过会计算为 Miss。<br />
+                    · 稳定节奏后，噪音会逐渐褪去。</p>
+            </div>
+        </aside>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

@@ -25,10 +25,37 @@ class GameApp {
 
         // 明确定义小游戏
         this.minigames = {
-            code_zen_garden: { url: 'mini-game.html', title: '小游戏：收集方块', mode: 'iframe' },
-            // 噪音过滤小游戏（Noise_Filtering 目录）
-            noise_filtering: { url: 'Noise_Filtering/index.html', title: '噪音过滤 (Noise Filtering)', mode: 'iframe' },
-            logic_mending: { url: 'minigame1.5/index.html', title: '逻辑修复 (Logic Mending)', mode: 'iframe' }
+            code_zen_garden: {
+                url: 'minigames/code-zen-garden/index.html',
+                title: '代码禅院 (Code Zen Garden)',
+                mode: 'iframe',
+                desc: '通过命名、注释与格式，将混乱的函数打磨成一件艺术品。',
+                difficulty: 'Zen',
+                duration: '≈ 2 分钟',
+                controls: '鼠标点击 / 选择'
+            },
+            code_beat: {
+                url: 'minigames/code-beat/index.html',
+                title: '代码节拍 (Code Beat)',
+                mode: 'iframe',
+                desc: '跟随节拍输入代码，让噪音降级为秩序。',
+                difficulty: 'Focus',
+                duration: '≈ 2 分钟',
+                controls: '键盘空格 / J 键'
+            },
+            great_refactoring: {
+                url: 'minigames/great-refactoring/index.html',
+                title: '大重构 (The Great Refactoring)',
+                mode: 'iframe',
+                desc: '深入代码库的深渊，合并冗余、切断硬编码、理顺数据流。',
+                difficulty: 'Architect',
+                duration: '≈ 3 分钟',
+                controls: '鼠标拖拽 / 点击 / 键盘回车',
+                fullscreen: true
+            },
+            // 噪音过滤小游戏
+            noise_filtering: { url: 'minigames/noise-filtering/index.html', title: '噪音过滤 (Noise Filtering)', mode: 'iframe' },
+            logic_mending: { url: 'minigames/logic-mending/index.html', title: '逻辑修复 (Logic Mending)', mode: 'iframe' }
         };
 
         // **【修复】实例化成就系统**
@@ -786,6 +813,8 @@ class GameApp {
     _openMinigame(def, params, onDone) {
         this._minigameDone = onDone;
         const ov = this._ensureMinigameOverlay();
+        const isFullscreen = !!def.fullscreen || params.fullscreen === true;
+        ov.classList.toggle('fullscreen', isFullscreen);
         let frame = ov.querySelector('#mg-frame');
         const titleEl = ov.querySelector('#mg-title');
         if (titleEl) titleEl.textContent = def.title || 'Mini Game';
@@ -908,7 +937,7 @@ class GameApp {
         const ov = document.getElementById('minigame-overlay');
         const frame = ov?.querySelector('#mg-frame');
         if (frame) { frame.src = 'about:blank'; }
-        if (ov) { ov.classList.remove('show'); }
+        if (ov) { ov.classList.remove('show'); ov.classList.remove('fullscreen'); }
         window.removeEventListener('message', this._mgMsgHandler || (() => { }));
         this._mgMsgHandler = null;
         const cb = this._minigameDone; this._minigameDone = null;

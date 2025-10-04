@@ -1,12 +1,162 @@
+/* 粒子背景系统 */
+const particlesCanvas = document.getElementById('particles-canvas');
+if (particlesCanvas) {
+    const particlesCtx = particlesCanvas.getContext('2d');
+    const particlesArray = [];
+    const numberOfParticles = 100;
+
+    const resizeParticlesCanvas = () => {
+        particlesCanvas.width = window.innerWidth;
+        particlesCanvas.height = window.innerHeight;
+    };
+
+    class Particle {
+        constructor() {
+            this.reset(true);
+            this.size = Math.random() * 3 + 1;
+            this.speedX = Math.random() * 1 - 1;
+            this.speedY = Math.random() * 1 - 1;
+        }
+
+        reset(initial = false) {
+            if (initial) {
+                this.x = Math.random() * particlesCanvas.width;
+                this.y = Math.random() * particlesCanvas.height;
+            } else {
+                this.x = Math.random() * window.innerWidth;
+                this.y = Math.random() * window.innerHeight;
+            }
+            this.color = `hsl(${Math.random() * 60 + 180}, 70%, 50%)`;
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x > particlesCanvas.width) this.x = 0;
+            if (this.x < 0) this.x = particlesCanvas.width;
+            if (this.y > particlesCanvas.height) this.y = 0;
+            if (this.y < 0) this.y = particlesCanvas.height;
+        }
+
+        draw(ctx) {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    const connectParticles = () => {
+        for (let a = 0; a < particlesArray.length; a++) {
+            for (let b = a; b < particlesArray.length; b++) {
+                const dx = particlesArray[a].x - particlesArray[b].x;
+                const dy = particlesArray[a].y - particlesArray[b].y;
+                const distance = dx * dx + dy * dy;
+                if (distance < (particlesCanvas.width / 15) * (particlesCanvas.height / 15)) {
+                    const opacityValue = 1 - (distance / 10000);
+                    particlesCtx.strokeStyle = `rgba(100, 200, 255, ${opacityValue})`;
+                    particlesCtx.lineWidth = 0.5;
+                    particlesCtx.beginPath();
+                    particlesCtx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                    particlesCtx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                    particlesCtx.stroke();
+                }
+            }
+        }
+    };
+
+    const animateParticles = () => {
+        particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+            particlesArray[i].draw(particlesCtx);
+        }
+        connectParticles();
+        requestAnimationFrame(animateParticles);
+    };
+
+    resizeParticlesCanvas();
+    window.addEventListener('resize', resizeParticlesCanvas);
+    window.addEventListener('orientationchange', resizeParticlesCanvas);
+
+    for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+    }
+
+    animateParticles();
+}
+
+const isFile = window.location.protocol === 'file:' || window.location.origin === 'null';
+const parentOrigin = isFile ? '*' : window.location.origin;
+const hasParent = (() => {
+    try {
+        return window.parent && window.parent !== window;
+    } catch {
+        return false;
+    }
+})();
+
+const postToParent = (message) => {
+    if (!hasParent) return;
+    try {
+        window.parent.postMessage(message, parentOrigin);
+    } catch (err) {
+        console.warn('无法通知父级窗口:', err);
+    }
+};
+
+const completeGame = (payload = {}) => {
+    postToParent({
+        type: 'minigame:complete',
+        payload: {
+            ...payload,
+            gameId: 'logic_mending'
+        }
+    });
+};
+
+const exitToStory = () => {
+    postToParent({ type: 'minigame:exit' });
+};
+
+postToParent({ type: 'minigame:ready', gameId: 'logic_mending' });
+
+const gameStats = {
+    totalLevels: 0,
+    levelsCleared: 0,
+    failures: 0
+};
+
+let autoCompleteMode = false;
+
 /* ========================= 1. 基础初始化 ========================= */
 const canvas = document.getElementById('gameCanvas');
 const WW = 10000, WH = 10000;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+if (typeof Matter === 'undefined') {
+    const overlay = document.getElementById('overlay');
+    const overlayText = document.getElementById('overlayText');
+    const overlayMessage = document.getElementById('overlayMessage');
+    const btnRestart = document.getElementById('btnRestart');
+    if (overlay && overlayText && btnRestart) {
+        overlayText.innerText = '⚙️ Matter.js 未加载';
+        btnRestart.innerText = '刷新重试';
+        btnRestart.onclick = () => location.reload();
+        overlay.style.display = 'flex';
+    }
+    if (overlayMessage) {
+        overlayMessage.hidden = false;
+        overlayMessage.textContent = '请确认网络可访问 jsDelivr CDN，或改为本地引入 matter.min.js。';
+    }
+    throw new Error('Matter.js 未加载');
+}
+
 const { Engine, Render, Runner, Bodies, Body, World, Mouse, MouseConstraint, Events, Query } = Matter;
 const engine = Engine.create();
-const world  = engine.world;
+const world = engine.world;
 const runner = Runner.create();
 const render = Render.create({
     canvas: canvas,
@@ -36,7 +186,7 @@ function updateCamera() {
 
 /* ========================= 2. 资源加载 ========================= */
 const TEX = {};
-['dirt','ore','danger','goal','moveDanger'].forEach(name => {
+['dirt', 'ore', 'danger', 'goal', 'moveDanger'].forEach(name => {
     const img = new Image();
     img.src = `assets/${name}.png`;
     img.onerror = () => img.failed = true;
@@ -60,7 +210,7 @@ Promise.all(Object.values(TEX).map(img => {
 const player = Bodies.rectangle(120, WH - 300, 80, 48, {
     frictionAir: 0.01, friction: 0.001, restitution: 0,
     label: 'player',
-    chamfer: { radius: 6},
+    chamfer: { radius: 6 },
     render: { fillStyle: '#ff7f50', strokeStyle: '#fff', lineWidth: 2 }
 });
 World.add(world, player);
@@ -100,6 +250,27 @@ const fallbackColor = {
 /* ========================= 8. 建图 ========================= */
 const blocks = [];
 let mapLibrary = [];
+
+const triggerAutoComplete = () => {
+    if (!mapLibrary.length) return false;
+    completeGame({
+        totalLevels: mapLibrary.length,
+        levelsCleared: mapLibrary.length,
+        failures: 0,
+        passed: true,
+        autoComplete: true
+    });
+    const overlay = document.getElementById('overlay');
+    const overlayText = document.getElementById('overlayText');
+    const btnRestart = document.getElementById('btnRestart');
+    if (overlay && overlayText && btnRestart) {
+        overlayText.innerText = '✅ 剧情需求：已自动修复节点';
+        btnRestart.innerText = '返回剧情';
+        btnRestart.onclick = () => exitToStory();
+        overlay.style.display = 'flex';
+    }
+    return true;
+};
 let currentLevel = 0;
 const BLOCK = 80;
 const moveDangerList = [];
@@ -143,8 +314,8 @@ function createMapFromArray(mapArr, offsetX = 0, offsetY = WH - mapArr.length * 
             blocks.push(b);
             if (label === 'moveDanger') {
                 b._moveCenterX = b.position.x;
-                b._moveRange   = 2 * BLOCK;
-                b._moveDir     = 1;
+                b._moveRange = 2 * BLOCK;
+                b._moveDir = 1;
                 moveDangerList.push(b);
             }
         }
@@ -191,8 +362,8 @@ function createParticles(x, y, count, color, isDeadly = false) {
         particle.style.height = `${size}px`;
         const angle = Math.random() * Math.PI * 2;
         const distance = Math.random() * 40;
-        const left = x + Math.cos(angle) * distance - size/2;
-        const top = y + Math.sin(angle) * distance - size/2;
+        const left = x + Math.cos(angle) * distance - size / 2;
+        const top = y + Math.sin(angle) * distance - size / 2;
         particle.style.left = `${left}px`;
         particle.style.top = `${top}px`;
         particle.style.background = color;
@@ -252,7 +423,7 @@ Events.on(mouseConstraint, 'mousedown', e => {
     const b = clicked[0];
     const rect = render.canvas.getBoundingClientRect();
     const screenX = rect.left + e.mouse.position.x * (rect.width / render.canvas.width);
-    const screenY = rect.top  + e.mouse.position.y * (rect.height / render.canvas.height);
+    const screenY = rect.top + e.mouse.position.y * (rect.height / render.canvas.height);
     if (b.label === 'dirt') {
         createParticles(screenX, screenY, 50, '#C0C0C0', false);
         removeBlock(b);
@@ -272,21 +443,25 @@ function removeBlock(b) {
 /* ========================= 11. 地面检测 ========================= */
 function isOnGround() {
     const start = { x: player.position.x, y: player.position.y + 40 };
-    const end   = { x: start.x, y: start.y + 2 };
+    const end = { x: start.x, y: start.y + 2 };
     return Query.ray(blocks, start, end).length > 0 ||
-           Query.ray([safeGround], start, end).length > 0;
+        Query.ray([safeGround], start, end).length > 0;
 }
 
 /* ========================= 12. 键盘控制 ========================= */
 const keys = {};
-const cheatCode = ['KeyS', 'KeyJ', 'KeyX', 'KeyC', 'KeyZ','KeyS', 'KeyJ', 'KeyX', 'KeyC', 'KeyZ'];
+const cheatCode = ['KeyS', 'KeyJ', 'KeyX', 'KeyC', 'KeyZ', 'KeyS', 'KeyJ', 'KeyX', 'KeyC', 'KeyZ'];
 let codeIndex = 0;
 window.addEventListener('keydown', e => {
+    if (e.code === 'Escape') {
+        exitToStory();
+        return;
+    }
     keys[e.code] = true;
     if (window.gameOver && e.code === 'KeyR') {
         document.getElementById('btnRestart').click();
     }
-    else if(e.code === 'KeyR' && e.shiftKey) {
+    else if (e.code === 'KeyR' && e.shiftKey) {
         endGame(false);
     }
     if (e.code === cheatCode[codeIndex]) {
@@ -299,7 +474,7 @@ window.addEventListener('keydown', e => {
         codeIndex = 0;
     }
 });
-window.addEventListener('keyup',   e => keys[e.code] = false);
+window.addEventListener('keyup', e => keys[e.code] = false);
 const JUMP_SPEED = 18;
 let lastJumpTime = 0;
 const JUMP_COOLDOWN = 800;
@@ -308,8 +483,8 @@ function controlLoop() {
     if (window.gameOver) return;
     const { velocity } = player;
     let vx = 0;
-    if (keys['KeyA'] || keys['ArrowLeft'])  vx = -3.0;
-    if (keys['KeyD'] || keys['ArrowRight']) vx =  3.0;
+    if (keys['KeyA'] || keys['ArrowLeft']) vx = -3.0;
+    if (keys['KeyD'] || keys['ArrowRight']) vx = 3.0;
     Body.setVelocity(player, { x: vx, y: velocity.y });
     const now = Date.now();
     if ((keys['Space'] || keys['KeyW'] || keys['ArrowUp']) && isOnGround() && (now - lastJumpTime >= JUMP_COOLDOWN || lastJumpTime === 0)) {
@@ -330,24 +505,39 @@ Events.on(engine, 'beforeUpdate', () => {
         if (Math.abs(b.position.x - dest) < 2) b._moveDir *= -1;
         Body.setPosition(b, { x: b.position.x + b._moveDir * MOVE_SPEED, y: b.position.y });
     }
-    const goals   = blocks.filter(b => b.label === 'goal');
-    const dangers = blocks.filter(b => ['danger','moveDanger'].includes(b.label));
-    if (Query.collides(player, goals).length)   endGame(true);
+    const goals = blocks.filter(b => b.label === 'goal');
+    const dangers = blocks.filter(b => ['danger', 'moveDanger'].includes(b.label));
+    if (Query.collides(player, goals).length) endGame(true);
     if (Query.collides(player, dangers).length) endGame(false);
 });
 
 function endGame(win) {
     window.gameOver = true;
     const overlay = document.getElementById('overlay');
-    const btn     = document.getElementById('btnRestart');
+    const btn = document.getElementById('btnRestart');
+    const hint = document.getElementById('overlayMessage');
+    if (hint) {
+        hint.hidden = true;
+        hint.textContent = '';
+    }
     if (!win) {
+        gameStats.failures += 1;
         document.getElementById('overlayText').innerText = window.currentFailMsg || '💀 你失败了！';
         btn.innerText = '重开本关(R)';
         btn.onclick = () => { overlay.style.display = 'none'; loadLevel(currentLevel); };
     } else {
+        gameStats.levelsCleared = Math.max(gameStats.levelsCleared, currentLevel + 1);
         document.getElementById('overlayText').innerText = '🎉 通关！';
         btn.innerText = '下一关(R)';
         btn.onclick = () => { overlay.style.display = 'none'; loadLevel(currentLevel + 1); };
+        if (gameStats.totalLevels > 0 && currentLevel + 1 >= gameStats.totalLevels) {
+            completeGame({
+                totalLevels: gameStats.totalLevels,
+                levelsCleared: gameStats.levelsCleared,
+                failures: gameStats.failures,
+                passed: true
+            });
+        }
     }
     overlay.style.display = 'flex';
 }
@@ -355,11 +545,65 @@ function endGame(win) {
 /* ========================= 14. 异步加载地图 ========================= */
 async function loadMaps() {
     try {
-        const config = await fetch('maps.json').then(r => r.json());
-        const mapPromises = config.levels.map(lv => fetch(lv.file).then(r => r.text()));
+        const response = await fetch('maps.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`maps.json 请求失败: ${response.status}`);
+        const config = await response.json();
+        const levelEntries = Array.isArray(config.levels) ? config.levels : [];
+        if (!levelEntries.length) throw new Error('maps.json 中没有关卡配置');
+
+        const mapPromises = levelEntries.map(async (lv) => {
+            const res = await fetch(lv.file, { cache: 'no-store' });
+            if (!res.ok) throw new Error(`无法加载地图 ${lv.file}: ${res.status}`);
+            return res.text();
+        });
+
         mapLibrary = await Promise.all(mapPromises);
-        if (mapLibrary.length) loadLevel(0);
-        else console.error('maps.json 中没有找到任何关卡文件');
-    } catch (e) { console.error('加载地图时出错:', e); }
+        gameStats.totalLevels = mapLibrary.length;
+
+        console.info(`已加载 ${mapLibrary.length} 个地图`, levelEntries.map(lv => lv.name || lv.file));
+
+        if (!mapLibrary.length) throw new Error('未成功加载任何地图文件');
+
+        if (autoCompleteMode && triggerAutoComplete()) {
+            return;
+        }
+
+        loadLevel(0);
+    } catch (error) {
+        console.error('加载关卡失败:', error);
+        const overlay = document.getElementById('overlay');
+        const overlayText = document.getElementById('overlayText');
+        const btn = document.getElementById('btnRestart');
+        const hint = document.getElementById('overlayMessage');
+        if (hint) {
+            const helpText = isFile
+                ? '浏览器在直接双击本地文件时会拒绝读取 ./maps/*.csv。请使用本地静态服务器（例如 VS Code Live Server、`npx http-server` 或 `python -m http.server`）后再次打开本页面。'
+                : `详细信息：${error.message || '未知错误'}`;
+            hint.textContent = helpText;
+            hint.hidden = false;
+        }
+        if (overlay && overlayText && btn) {
+            overlayText.innerText = '⚠️ 无法读取关卡数据';
+            btn.innerText = isFile ? '我知道了，稍后重试' : '重试加载';
+            btn.onclick = () => {
+                overlay.style.display = 'none';
+                loadMaps();
+            };
+            overlay.style.display = 'flex';
+        }
+    }
 }
+
+const handleInitMessage = (event) => {
+    if (!isFile && event.origin !== window.location.origin) return;
+    const data = event.data || {};
+    if (data.type === 'minigame:init') {
+        if (data.payload?.params?.autoComplete) {
+            autoCompleteMode = true;
+            triggerAutoComplete();
+        }
+    }
+};
+
+window.addEventListener('message', handleInitMessage);
 loadMaps();

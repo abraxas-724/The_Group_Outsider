@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>大重构 · The Great Refactoring</title>
+    <link rel="stylesheet" href="../../css/base-responsive.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="refactor-body" data-phase="idle">
+    <header class="refactor-header" aria-label="小游戏标题栏">
+        <div class="header-copy">
+            <h1>大重构 <span>The Great Refactoring</span></h1>
+            <p>悬浮在代码之海上方，拆解杂乱的黑色有机体，让系统重新回到纯白与秩序。</p>
+        </div>
+        <div class="header-actions">
+            <button id="exitGame" type="button" class="ghost">退出剧情</button>
+            <button id="restartButton" type="button" class="ghost">重新开始</button>
+        </div>
+    </header>
+
+    <main class="refactor-main" aria-live="polite">
+        <section class="stage-panel" aria-label="当前重构阶段">
+            <div class="stage-info">
+                <div class="stage-pill">阶段 <span id="stageIndex">0</span> / 3</div>
+                <h2 id="stageTitle">初始化</h2>
+                <p id="stageDescription">准备进入代码库的深渊……</p>
+                <div class="stage-instruction" id="stageInstruction">点击开始，深呼吸，稳住感官。</div>
+                <div class="stage-cta">
+                    <button id="startButton" type="button" class="primary">开始净化</button>
+                    <button id="continueButton" type="button" class="secondary" hidden>继续巡检</button>
+                </div>
+            </div>
+            <div class="stage-content" id="stageContent" aria-live="polite"></div>
+        </section>
+
+        <aside class="progress-panel" aria-label="净化日志">
+            <div class="progress-status">
+                <h3>净化进度</h3>
+                <p id="progressSummary">待启动</p>
+                <div class="ambient-meter" role="presentation">
+                    <div class="hum" id="ambientHum"></div>
+                </div>
+            </div>
+            <ol class="phase-list" id="phaseList">
+                <li data-stage="merge">
+                    <div class="label">合并同类项</div>
+                    <div class="meta">拖拽冗余模块，将其重铸为纯白核心。</div>
+                </li>
+                <li data-stage="chains">
+                    <div class="label">切断硬编码</div>
+                    <div class="meta">持稳手术刀，替换灵活接口。</div>
+                </li>
+                <li data-stage="flow">
+                    <div class="label">理顺数据流</div>
+                    <div class="meta">旋转节点，让数据直达终点。</div>
+                </li>
+            </ol>
+            <div class="legend">
+                <span class="legend-tag pending">待净化</span>
+                <span class="legend-tag active">净化中</span>
+                <span class="legend-tag cleared">已净化</span>
+            </div>
+        </aside>
+    </main>
+
+    <section class="summary-panel" id="summaryPanel" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="summary-card">
+            <h3>净化完成</h3>
+            <p id="summaryNarrative">黑色噪音消散，系统回到纯白。</p>
+            <dl class="summary-metrics">
+                <div>
+                    <dt>合并模块</dt>
+                    <dd id="summaryMerges">0 组</dd>
+                </div>
+                <div>
+                    <dt>替换接口</dt>
+                    <dd id="summaryChains">0 条</dd>
+                </div>
+                <div>
+                    <dt>数据流效率</dt>
+                    <dd id="summaryFlow">0%</dd>
+                </div>
+            </dl>
+            <div class="summary-actions">
+                <button id="replayButton" type="button" class="primary">再度净化</button>
+                <button id="backToStory" type="button" class="secondary">返回剧情</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

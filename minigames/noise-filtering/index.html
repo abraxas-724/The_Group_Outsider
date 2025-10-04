@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>噪音过滤 · Noise Filtering</title>
+    <link rel="stylesheet" href="../../css/base-responsive.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nf-body">
+    <div class="nf-backdrop" aria-hidden="true"></div>
+
+    <header class="nf-header" aria-label="小游戏信息栏">
+        <div class="nf-title">
+            <h1>噪音过滤 <span>Noise Filtering</span></h1>
+            <p>在信息洪流中筛选信号。把理性的声音留在手边，将情绪性的噪音送往回收站。</p>
+        </div>
+        <div class="nf-stats" aria-live="polite">
+            <div class="stat-card">
+                <span class="label">分数</span>
+                <span class="value" id="score">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="label">时间</span>
+                <span class="value"><span id="time">60</span><span class="unit">s</span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="nf-stage" aria-live="polite">
+        <section class="drop-zone task-list" id="taskList" aria-label="任务列表投放区">
+            <img src="assets/task_list.png" alt="任务列表图标">
+            <p>任务列表</p>
+        </section>
+
+        <section class="word-board" id="wordBoard" aria-label="词汇浮动区域"></section>
+
+        <section class="drop-zone trash" id="trash" aria-label="回收站投放区">
+            <img id="trashImage" src="assets/trash.png" alt="回收站图标">
+            <p>回收站</p>
+        </section>
+    </main>
+
+    <div id="overlay" class="nf-overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle"
+        aria-describedby="overlayMessage">
+        <div class="overlay-card">
+            <h2 id="overlayTitle">游戏开始</h2>
+            <p id="overlayMessage">将技术词汇拖到左侧，感性词汇拖到右侧。</p>
+            <div class="overlay-actions">
+                <button id="startButton" type="button" class="primary">开始</button>
+                <button id="returnButton" type="button" class="secondary hidden">返回剧情</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

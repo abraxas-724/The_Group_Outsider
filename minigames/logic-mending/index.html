@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>逻辑修复 · Logic Mending</title>
+    <link rel="stylesheet" href="../../css/base-responsive.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="lm-body">
+    <div class="lm-backdrop" aria-hidden="true"></div>
+
+    <canvas id="particles-canvas" class="lm-particles" aria-hidden="true"></canvas>
+
+    <div class="lm-stage" role="presentation">
+        <canvas id="gameCanvas" aria-label="逻辑修复主画布"></canvas>
+    </div>
+
+    <aside id="ui" class="lm-hud" aria-live="polite" aria-label="关卡信息">
+        <header class="hud-header">
+            <div class="hud-title">逻辑修复</div>
+            <div class="hud-subtitle">Logic Mending v1.5</div>
+        </header>
+        <div class="hud-grid">
+            <div class="hud-card">
+                <span class="label">坐标</span>
+                <span id="coordinates" class="value">X: 0, Y: 0</span>
+            </div>
+            <div class="hud-card">
+                <span class="label">关卡</span>
+                <span id="level" class="value">0 / 0</span>
+            </div>
+        </div>
+        <div class="hud-tip">
+            <p>按 <strong>WASD</strong> / <strong>方向键</strong> 移动，<strong>空格</strong> 跳跃。</p>
+            <p>挖掉 <span class="highlight">危险块</span> 后保持距离，避免余波。</p>
+        </div>
+    </aside>
+
+    <div id="overlay" class="lm-overlay" role="dialog" aria-modal="true" aria-labelledby="overlayText">
+        <div class="overlay-card">
+            <h2 id="overlayText">继续</h2>
+            <p id="overlayMessage" class="overlay-tip" hidden></p>
+            <button id="btnRestart" type="button" class="primary">继续</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 {
-  "start_node": "ACT1_PRELOAD",
+  "start_node": "ACT2_LIN_PC_05",
   "characters": {
     "SYS": "旁白",
     "MO": "默",
@@ -1106,7 +1106,7 @@
       "id": "ACT1_SCENE2_WHITEBOARD_01",
       "type": "dialogue",
       "character": "SYS",
-      "text": "（看着整理好的任务列表，感到一种成就感。）",
+      "text": "白板上布满了箭头、框图和潦草的字迹。",
       "next": "ACT1_SCENE2_WHITEBOARD_02"
     },
     {
@@ -1784,25 +1784,44 @@
       "id": "ACT1_MO_PC_04",
       "type": "dialogue",
       "character": "SYS",
-      "text": "看着屏幕上这段简洁、优雅、清晰的代码，你感到一种近乎生理上的愉悦。",
+      "text": "怎么会有人这么写代码？什么abc，名称如此模糊，注释不翼而飞，效率低下的代码，丑陋的代码。",
+      "next": "ACT1_MO_PC_MINIGAME"
+    },
+    {
+      "id": "ACT1_MO_PC_MINIGAME",
+      "type": "startMinigame",
+      "gameId": "code_zen_garden",
+      "params": {
+        "description": "屏幕上依次出现三个循序渐进的函数：先是纯粹的求和，再到带分支的循环，最后为任务列表打上清晰状态。请通过命名、注释与格式，让它们一步步蜕变为沉稳而优雅的 C++ 代码。",
+        "difficulty": "Zen",
+        "duration": "≈ 2 分钟",
+        "controls": "鼠标点击 / 选择"
+      },
       "next": "ACT1_MO_PC_05"
     },
     {
       "id": "ACT1_MO_PC_05",
       "type": "dialogue",
       "character": "SYS",
-      "text": "混乱被抚平了。",
+      "text": "看着屏幕上这些逐级精炼、井然有序的代码，你感到一种近乎生理上的愉悦。",
       "next": "ACT1_MO_PC_06"
     },
     {
       "id": "ACT1_MO_PC_06",
       "type": "dialogue",
       "character": "SYS",
-      "text": "秩序被重建了。",
+      "text": "混乱被抚平了。",
       "next": "ACT1_MO_PC_07"
     },
     {
       "id": "ACT1_MO_PC_07",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "秩序被重建了。",
+      "next": "ACT1_MO_PC_08"
+    },
+    {
+      "id": "ACT1_MO_PC_08",
       "type": "dialogue",
       "character": "SYS",
       "text": " 现在，你可以开始工作了。",
@@ -2642,6 +2661,18 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "你需要秩序。你需要专注。你需要一个……节拍器。",
+      "next": "ACT2_SCENE2_CODEBEAT"
+    },
+    {
+      "id": "ACT2_SCENE2_CODEBEAT",
+      "type": "startMinigame",
+      "gameId": "code_beat",
+      "params": {
+        "description": "屏幕中央浮现出一只节拍器，滴答声划破噪音。跟着节奏敲击键位，在逻辑的律动中驱散信息过载。",
+        "difficulty": "Focus",
+        "duration": "≈ 2 分钟",
+        "controls": "键盘空格 / J 键"
+      },
       "next": "ACT2_SCENE2_12"
     },
     {
@@ -2712,63 +2743,117 @@
       "id": "ACT2_SCENE3_01",
       "type": "dialogue",
       "character": "SYS",
-      "text": "不洁。冗余。错误。",
+      "text": "一个巨大的三维空间在你面前展开，像是由无数代码片段编织成的宇宙。",
       "next": "ACT2_SCENE3_02"
     },
     {
       "id": "ACT2_SCENE3_02",
       "type": "dialogue",
       "character": "SYS",
-      "text": "一个被污染的系统。它在你的眼前“尖叫”，用它混乱的结构，恳求着被净化。",
+      "text": "你站在一个纯白、由几何体拼接的高台上——那是你撰写的底层架构，稳定而精确。",
       "next": "ACT2_SCENE3_03"
     },
     {
       "id": "ACT2_SCENE3_03",
       "type": "dialogue",
       "character": "SYS",
-      "text": "这不是一个选择,这是一种责任。一种将错误修正为正确的、不可动摇的物理定律。",
+      "text": "然而，在这层结构之上，生长着某种异质的黑色有机体。",
       "next": "ACT2_SCENE3_04"
     },
     {
       "id": "ACT2_SCENE3_04",
       "type": "dialogue",
       "character": "SYS",
-      "text": "当最后一个黑色节点被修正，整个世界安静了。",
+      "text": "有的像寄生藤蔓，将雪白的模块紧紧缠绕，留下仓促的接口与补丁。",
       "next": "ACT2_SCENE3_05"
     },
     {
       "id": "ACT2_SCENE3_05",
       "type": "dialogue",
       "character": "SYS",
-      "text": "所有的黑色藤蔓、肿瘤、血管，在一瞬间化为尘埃，灰飞烟灭。",
+      "text": "有的像恶性肿瘤，在功能模块上肆意膨胀，充斥着冗余与重复的代码。",
       "next": "ACT2_SCENE3_06"
     },
     {
       "id": "ACT2_SCENE3_06",
       "type": "dialogue",
       "character": "SYS",
-      "text": "空间中只剩下纯白的、由几何体构成的宏伟建筑。",
+      "text": "还有的像错乱的血管，数据在其中横冲直撞，硬编码与全局变量随时可能让系统栓塞。",
       "next": "ACT2_SCENE3_07"
     },
     {
       "id": "ACT2_SCENE3_07",
       "type": "dialogue",
       "character": "SYS",
-      "text": "它们彼此以完美的角度连接，对称、简洁、优雅。",
+      "text": "整个空间因此变得丑陋、病态、摇摇欲坠。",
       "next": "ACT2_SCENE3_08"
     },
     {
       "id": "ACT2_SCENE3_08",
       "type": "dialogue",
       "character": "SYS",
-      "text": "像一座寂静的、沐浴在月光下的教堂。背景音是悠远而宁静的圣歌。秩序。和谐。纯粹。",
+      "text": "背景音是不和谐的低沉嗡鸣，仿佛整个世界在痛苦低语：不洁。冗余。错误。",
       "next": "ACT2_SCENE3_09"
     },
     {
       "id": "ACT2_SCENE3_09",
       "type": "dialogue",
       "character": "SYS",
-      "text": "这，才是世界应有的样子。你感到一种前所未有的平静。",
+      "text": "它在你的眼前尖叫，恳求被净化。这不是一个选择，而是一种责任——将混乱改写为秩序的物理定律。",
+      "next": "ACT2_SCENE3_REFACTOR_MINIGAME"
+    },
+    {
+      "id": "ACT2_SCENE3_REFACTOR_MINIGAME",
+      "type": "startMinigame",
+      "gameId": "great_refactoring",
+      "params": {
+        "description": "你的视角悬浮在代码空间上方。通过拖拽、切割与旋转，净化黑色有机体，重建纯白架构。",
+        "difficulty": "Architect",
+        "duration": "≈ 3 分钟",
+        "controls": "鼠标拖拽 / 点击 / 键盘回车"
+      },
+      "next": "ACT2_SCENE3_AFTER_01"
+    },
+    {
+      "id": "ACT2_SCENE3_AFTER_01",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "当最后一个黑色节点被修正，世界短暂地静止。",
+      "next": "ACT2_SCENE3_AFTER_02"
+    },
+    {
+      "id": "ACT2_SCENE3_AFTER_02",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "藤蔓、肿瘤与血管在一瞬间化作尘埃，被纯白的光潮吞没。",
+      "next": "ACT2_SCENE3_AFTER_03"
+    },
+    {
+      "id": "ACT2_SCENE3_AFTER_03",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "空间里只剩下宁静的几何建筑，彼此以完美的角度相连。",
+      "next": "ACT2_SCENE3_AFTER_04"
+    },
+    {
+      "id": "ACT2_SCENE3_AFTER_04",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "暖白与淡蓝的线条在空中交织，构成对称、简洁、优雅的秩序。",
+      "next": "ACT2_SCENE3_AFTER_05"
+    },
+    {
+      "id": "ACT2_SCENE3_AFTER_05",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "背景的嗡鸣化为清澈和谐的音符，宛如沐浴在月光里的教堂。",
+      "next": "ACT2_SCENE3_AFTER_06"
+    },
+    {
+      "id": "ACT2_SCENE3_AFTER_06",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "这才是世界应有的样子。你感到前所未有的平静。",
       "next": "ACT2_SCENE3_BACK"
     },
     {

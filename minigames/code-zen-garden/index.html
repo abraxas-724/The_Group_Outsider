@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>代码禅院 · Code Zen Garden</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="zen-body">
+    <div class="zen-backdrop" aria-hidden="true"></div>
+    <header class="zen-top-bar" aria-label="小游戏控制栏">
+        <div class="title-wrap">
+            <h1>代码禅院 <span>Code Zen Garden</span></h1>
+            <p>将杂乱无章的函数修炼成一件艺术品。</p>
+        </div>
+        <button id="exitToStory" type="button" class="ghost">退出仪式</button>
+    </header>
+
+    <main class="zen-main" aria-live="polite">
+        <section class="task-panel" aria-label="重构仪式任务">
+            <div class="progress" aria-hidden="false">
+                <div class="progress-track">
+                    <div class="progress-value" id="progressValue"></div>
+                </div>
+                <span id="progressLabel">关卡 1 / 3 · 步骤 0 / 3</span>
+            </div>
+            <div class="level-chip" id="levelBadge">关卡 1 / 3 · 求和入门</div>
+
+            <article class="task" data-task="rename">
+                <header>
+                    <h2>步骤一：正名</h2>
+                    <span class="task-status" aria-live="polite">未完成</span>
+                </header>
+                <p>选择最贴切的名称，让函数与参数摆脱“abc”的混沌。</p>
+                <div class="choice-grid" id="renameChoices"></div>
+                <p class="task-hint">提示：语言应该揭示意图，而不是掩盖意图。</p>
+            </article>
+
+            <article class="task" data-task="comment">
+                <header>
+                    <h2>步骤二：注释</h2>
+                    <span class="task-status" aria-live="polite">未完成</span>
+                </header>
+                <p>为函数写下精准的注释，告诉读者它做了什么、接收什么、返回什么。</p>
+                <div class="comment-grid" id="commentChoices"></div>
+                <button id="applyComment" type="button" class="primary">生成注释</button>
+                <p class="task-hint">提示：准确的注释能让读者瞬间理解你的意图。</p>
+            </article>
+
+            <article class="task" data-task="format">
+                <header>
+                    <h2>步骤三：格式</h2>
+                    <span class="task-status" aria-live="polite">未完成</span>
+                </header>
+                <p>让代码遵循禅意般的秩序：合适的语言、缩进、空格与行距。</p>
+                <div class="format-actions">
+                    <label class="toggle">
+                        <input type="checkbox" id="indentToggle" checked />
+                        <span>4 空格缩进</span>
+                    </label>
+                    <button id="formatButton" type="button" class="accent">运行格式化</button>
+                </div>
+                <p class="task-hint">提示：格式不仅是外表，更是对读者的尊重。</p>
+            </article>
+        </section>
+
+        <section class="editor-panel" aria-label="代码预览">
+            <div class="editor-header">
+                <h2>当前代码</h2>
+                <span id="editorState">原始状态</span>
+            </div>
+            <pre id="codeStage" aria-live="polite"><code id="codeContent"></code></pre>
+            <footer class="editor-footer">
+                <button id="resetButton" type="button" class="ghost">重置仪式</button>
+                <button id="finishButton" type="button" class="primary" disabled>完成并返回</button>
+            </footer>
+            <p class="editor-caption">完成每一关的三个步骤后，你将看到一段真正能让人平静的 C++ 代码。</p>
+        </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
