@@ -49,6 +49,21 @@
     </div>
   </div>
 
+  <!-- 小游戏选择面板 -->
+  <div id="minigame-overlay" class="sl-hidden" aria-hidden="true">
+    <div class="sl-panel" role="dialog" aria-modal="true" aria-labelledby="minigame-title" tabindex="-1">
+      <div class="sl-header">
+        <h2 id="minigame-title">小游戏模式</h2>
+        <div class="sl-header-actions">
+          <button id="minigame-close" class="sl-btn sl-ghost" title="关闭">✕</button>
+        </div>
+      </div>
+      <div class="sl-hint" id="minigame-hint">选择一个小游戏单独游玩，完成后可使用浏览器返回键回到主菜单。</div>
+      <div id="minigame-list"></div>
+      <div class="sl-footer">包含代码禅院、代码节拍、大重构、噪音过滤、逻辑修复等五款玩法。</div>
+    </div>
+  </div>
+
   <!-- 内嵌设置面板 (扩展版，与游戏内一致) -->
   <div id="settings-overlay" class="sl-hidden" aria-hidden="true">
     <div class="sl-panel" style="width:clamp(640px,78vw,1180px);max-height:84vh;padding:26px 28px 30px;gap:20px;"

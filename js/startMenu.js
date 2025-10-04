@@ -2,6 +2,54 @@ import { SaveLoadManager } from './engine/SaveLoadManager.js';
 import { AchievementManager } from './engine/AchievementManager.js';
 import { getCurrentUser, nsKey } from './engine/UserContext.js';
 
+const MINI_GAMES = [
+    {
+        id: 'code_zen_garden',
+        title: '代码禅院 (Code Zen Garden)',
+        url: 'minigames/code-zen-garden/index.html',
+        desc: '通过命名、注释与格式，将混乱的函数打磨成一件艺术品。',
+        difficulty: 'Zen',
+        duration: '≈ 2 分钟',
+        controls: '鼠标点击 / 选择'
+    },
+    {
+        id: 'code_beat',
+        title: '代码节拍 (Code Beat)',
+        url: 'minigames/code-beat/index.html',
+        desc: '跟随节拍输入代码，让噪音降级为秩序。',
+        difficulty: 'Focus',
+        duration: '≈ 2 分钟',
+        controls: '键盘空格 / J 键'
+    },
+    {
+        id: 'great_refactoring',
+        title: '大重构 (The Great Refactoring)',
+        url: 'minigames/great-refactoring/index.html',
+        desc: '深入代码库的深渊，合并冗余、切断硬编码、理顺数据流。',
+        difficulty: 'Architect',
+        duration: '≈ 3 分钟',
+        controls: '鼠标拖拽 / 点击 / 键盘回车'
+    },
+    {
+        id: 'noise_filtering',
+        title: '噪音过滤 (Noise Filtering)',
+        url: 'minigames/noise-filtering/index.html',
+        desc: '过滤信号中的噪声，恢复系统的宁静有序。',
+        difficulty: 'Filter',
+        duration: '≈ 3 分钟',
+        controls: '鼠标点击'
+    },
+    {
+        id: 'logic_mending',
+        title: '逻辑修复 (Logic Mending)',
+        url: 'minigames/logic-mending/index.html',
+        desc: '修复破损的逻辑链路，让真相重新连贯。',
+        difficulty: 'Insight',
+        duration: '≈ 4 分钟',
+        controls: '鼠标拖拽 / 点击'
+    }
+];
+
 // 定义一个常量，用于在页面间传递读档信息
 const LOAD_FROM_SLOT_KEY = 'groupOutsiderLoadFromSlot';
 
@@ -24,6 +72,9 @@ class StartMenuApp {
         this.slotList = document.getElementById('slot-list');
         this.closeButton = document.getElementById('close-button');
         this.menuTitle = document.getElementById('menu-title');
+        this.miniGameOverlay = document.getElementById('minigame-overlay');
+        this.miniGameList = document.getElementById('minigame-list');
+        this.miniGameClose = document.getElementById('minigame-close');
 
         // 绑定所有按钮的点击事件
         this._bindEvents();
@@ -60,6 +111,22 @@ class StartMenuApp {
         this.closeButton.addEventListener('click', () => this.closeMenu());
         // 监听存档槽位列表中的点击
         this.slotList.addEventListener('click', (event) => this.handleSlotClick(event));
+
+        if (this.miniGameClose) {
+            this.miniGameClose.addEventListener('click', () => this.closeMiniGame());
+        }
+        if (this.miniGameOverlay) {
+            this.miniGameOverlay.addEventListener('click', (e) => {
+                if (e.target === this.miniGameOverlay) {
+                    this.closeMiniGame();
+                }
+            });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.miniGameOverlay && !this.miniGameOverlay.classList.contains('sl-hidden')) {
+                this.closeMiniGame();
+            }
+        });
     }
 
     openAchievements() {
@@ -73,7 +140,93 @@ class StartMenuApp {
     }
 
     openMiniGame() {
-        window.location.href = 'minigames/code-zen-garden/index.html';
+        if (!this.miniGameOverlay) {
+            window.location.href = MINI_GAMES[0]?.url || 'minigames/code-zen-garden/index.html';
+            return;
+        }
+        if (!this._miniListBuilt) {
+            this._buildMiniGameList();
+            this._miniListBuilt = true;
+        }
+        this.miniGameOverlay.classList.remove('sl-hidden');
+        this.miniGameOverlay.setAttribute('aria-hidden', 'false');
+        setTimeout(() => {
+            this.miniGameOverlay?.querySelector('.sl-panel')?.focus?.();
+        }, 0);
+    }
+
+    closeMiniGame() {
+        if (!this.miniGameOverlay) {
+            return;
+        }
+        this.miniGameOverlay.classList.add('sl-hidden');
+        this.miniGameOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    _buildMiniGameList() {
+        if (!this.miniGameList) {
+            return;
+        }
+        this.miniGameList.innerHTML = '';
+        MINI_GAMES.forEach(game => {
+            const card = document.createElement('article');
+            card.className = 'mini-card';
+
+            const title = document.createElement('h3');
+            title.textContent = game.title;
+
+            const desc = document.createElement('p');
+            desc.textContent = game.desc;
+
+            const meta = document.createElement('div');
+            meta.className = 'mini-meta';
+            [game.difficulty, game.duration, game.controls].forEach(text => {
+                if (!text) {
+                    return;
+                }
+                const badge = document.createElement('span');
+                badge.textContent = text;
+                meta.appendChild(badge);
+            });
+
+            const actions = document.createElement('div');
+            actions.className = 'mini-actions';
+
+            const playBtn = document.createElement('button');
+            playBtn.className = 'sl-btn';
+            playBtn.type = 'button';
+            playBtn.textContent = '开始游玩';
+            playBtn.addEventListener('click', () => this._launchMiniGame(game));
+
+            const newTabBtn = document.createElement('button');
+            newTabBtn.className = 'sl-btn sl-ghost';
+            newTabBtn.type = 'button';
+            newTabBtn.textContent = '新标签打开';
+            newTabBtn.addEventListener('click', () => this._launchMiniGame(game, true));
+
+            actions.appendChild(playBtn);
+            actions.appendChild(newTabBtn);
+
+            card.appendChild(title);
+            card.appendChild(desc);
+            card.appendChild(meta);
+            card.appendChild(actions);
+
+            this.miniGameList.appendChild(card);
+        });
+    }
+
+    _launchMiniGame(game, newTab = false) {
+        this.closeMiniGame();
+        if (!game || !game.url) {
+            return;
+        }
+        if (newTab) {
+            window.open(game.url, '_blank', 'noopener');
+        } else {
+            document.body.classList.add('page-exit');
+            setTimeout(() => { window.location.href = game.url; }, 200);
+        }
     }
 
     openSettings() {

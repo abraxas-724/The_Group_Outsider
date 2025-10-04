@@ -27,6 +27,15 @@ const showToast = (text) => {
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
 };
 
+const exitToMenu = () => {
+    if (hasParent) {
+        postToParent({ type: 'minigame:exit' });
+        showToast('已尝试退出到剧情。');
+    } else {
+        window.location.href = '../../start.html';
+    }
+};
+
 const levels = [
     {
         id: 'easy-sum',
@@ -657,16 +666,12 @@ if (finishButton) {
 }
 
 if (exitButton) {
-    exitButton.addEventListener('click', () => {
-        postToParent({ type: 'minigame:exit' });
-        showToast('已尝试退出到剧情。');
-    });
+    exitButton.addEventListener('click', exitToMenu);
 }
 
 window.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-        postToParent({ type: 'minigame:exit' });
-        showToast('已尝试退出到剧情。');
+        exitToMenu();
     }
 });
 

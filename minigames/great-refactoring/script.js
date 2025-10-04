@@ -27,6 +27,15 @@ const showToast = (text) => {
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
 };
 
+const exitToMenu = () => {
+    if (hasParent) {
+        postToParent({ type: 'minigame:exit' });
+        showToast('已尝试退出到剧情');
+    } else {
+        window.location.href = '../../start.html';
+    }
+};
+
 const stageIndexEl = document.getElementById('stageIndex');
 const stageTitleEl = document.getElementById('stageTitle');
 const stageDescEl = document.getElementById('stageDescription');
@@ -366,8 +375,7 @@ const completeGame = (payload = {}) => {
 };
 
 const handleExit = () => {
-    postToParent({ type: 'minigame:exit' });
-    showToast('已尝试退出到剧情');
+    exitToMenu();
 };
 
 const handleReturnToStory = () => {
@@ -375,6 +383,7 @@ const handleReturnToStory = () => {
         finalizeGame();
     }
     completeGame(lastResults || {});
+    exitToMenu();
 };
 
 const handleReplay = () => {
@@ -914,6 +923,6 @@ resetGame();
 
 if (!hasParent) {
     setTimeout(() => {
-        showToast('独立模式：完成后可手动关闭窗口。');
+        showToast('独立模式：退出时会返回主菜单页面。');
     }, 600);
 }

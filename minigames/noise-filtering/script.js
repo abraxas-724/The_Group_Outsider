@@ -10,6 +10,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayMessage = document.getElementById('overlayMessage');
     const returnButton = document.getElementById('returnButton');
+    const exitButton = document.getElementById('exitButton');
+
+    const isFile = window.location.protocol === 'file:' || window.location.origin === 'null';
+    const parentOrigin = isFile ? '*' : window.location.origin;
+    const hasParent = (() => {
+        try {
+            return window.parent && window.parent !== window;
+        } catch (err) {
+            return false;
+        }
+    })();
+
+    const postToParent = (message) => {
+        if (!hasParent) return;
+        try {
+            window.parent.postMessage(message, parentOrigin);
+        } catch (err) {
+            console.warn('无法通知父级窗口:', err);
+        }
+    };
+
+    const exitToMenu = () => {
+        if (hasParent) {
+            postToParent({ type: 'minigame:exit' });
+        } else {
+            window.location.href = '../../start.html';
+        }
+    };
+
+    exitButton?.addEventListener('click', () => {
+        exitToMenu();
+    });
 
     const technicalWords = ["渲染管线", "API", "数据库", "算法", "后端", "前端", "云计算", "框架", "版本控制", "函数"];
     const emotionalWords = ["梦想", "酷炫", "爱", "灵感", "激情", "幸福", "痛苦", "挑战", "友谊", "冒险"];
@@ -42,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (const existingWordDiv of allWords) {
                 // 如果是正在拖拽的词汇（或尚未完全放置的），忽略它
-                if (existingWordDiv.dataset.dragging === 'true') continue; 
-                
+                if (existingWordDiv.dataset.dragging === 'true') continue;
+
                 const existingRect = {
                     left: existingWordDiv.offsetLeft,
                     top: existingWordDiv.offsetTop,
@@ -52,10 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
 
                 // 检查是否重叠 (AABB 碰撞检测)
-                if (!(newRect.right + padding < existingRect.left || 
-                      newRect.left > existingRect.right + padding || 
-                      newRect.bottom + padding < existingRect.top || 
-                      newRect.top > existingRect.bottom + padding)) {
+                if (!(newRect.right + padding < existingRect.left ||
+                    newRect.left > existingRect.right + padding ||
+                    newRect.bottom + padding < existingRect.top ||
+                    newRect.top > existingRect.bottom + padding)) {
                     isOverlapping = true;
                     break;
                 }
@@ -75,9 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
         wordDiv.textContent = text;
         wordDiv.classList.add('word');
         wordDiv.dataset.type = type;
-        
+
         // 暂时添加到DOM以获取其尺寸，然后移除
-        wordBoard.appendChild(wordDiv); 
+        wordBoard.appendChild(wordDiv);
         const wordWidth = wordDiv.offsetWidth;
         const wordHeight = wordDiv.offsetHeight;
         wordBoard.removeChild(wordDiv); // 移除，因为 getNonOverlappingPosition 还需要它
@@ -131,10 +163,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const dx = e.clientX - initialMousePos.x;
             const dy = e.clientY - initialMousePos.y;
-            
+
             const newX = initialElementPos.x + dx;
             const newY = initialElementPos.y + dy;
-            
+
             element.style.left = `${newX}px`;
             element.style.top = `${newY}px`;
 
@@ -148,14 +180,14 @@ document.addEventListener('DOMContentLoaded', () => {
             delete element.dataset.dragging; // 移除拖拽标记
 
             const targetZone = getTargetZone(e.clientX, e.clientY);
-            
+
             if (targetZone) {
                 handleDrop(element, targetZone);
             } else {
                 element.style.left = `${initialElementPos.x}px`;
                 element.style.top = `${initialElementPos.y}px`;
             }
-            
+
             taskList.classList.remove('hover');
             trash.classList.remove('hover');
         });
@@ -199,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (zone === 'trash' && type === 'emotional') {
             points = 10;
             // 如果正确回收了一个感性词汇，改变回收站图片
-            trashImage.src = 'assets/trash-full.png'; 
+            trashImage.src = 'assets/trash-full.png';
         } else {
             points = -5; // 错误分类
         }
@@ -252,10 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
             returnButton.classList.remove('hidden');
         }
         // 通知父窗口：可选择在此直接上报完成
-        try {
-            const target = (window.location.protocol === 'file:' || window.location.origin === 'null') ? '*' : window.location.origin;
-            window.parent && window.parent.postMessage({ type: 'minigame:complete', payload: { score } }, target);
-        } catch {}
+        postToParent({ type: 'minigame:complete', payload: { score } });
     };
 
     // 绑定开始按钮事件
@@ -266,23 +295,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // 返回剧情：显式退出（不计完成），父页面会关闭覆盖层
     if (returnButton) {
         returnButton.addEventListener('click', () => {
-            try {
-                const target = (window.location.protocol === 'file:' || window.location.origin === 'null') ? '*' : window.location.origin;
-                window.parent && window.parent.postMessage({ type: 'minigame:exit' }, target);
-            } catch {}
+            exitToMenu();
         });
     }
 
     // —— 与父页面的消息协议 ——
     // 通知父页面：小游戏就绪，可接收 init
-    try {
-        const target = (window.location.protocol === 'file:' || window.location.origin === 'null') ? '*' : window.location.origin;
-        window.parent && window.parent.postMessage({ type: 'minigame:ready', gameId: 'noise_filtering' }, target);
-    } catch {}
+    postToParent({ type: 'minigame:ready', gameId: 'noise_filtering' });
 
     // 接收父页面发送的初始化参数，如难度、时间等
     window.addEventListener('message', (e) => {
-        const isFile = window.location.protocol === 'file:' || window.location.origin === 'null';
         if (!isFile && e.origin !== window.location.origin) return;
         const data = e.data || {};
         if (data.type === 'minigame:init') {
@@ -293,6 +315,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 time = Math.floor(params.time);
                 timeDisplay.textContent = time;
             }
+        }
+    });
+
+    if (!hasParent && returnButton) {
+        returnButton.classList.remove('hidden');
+    }
+
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            exitToMenu();
         }
     });
 });

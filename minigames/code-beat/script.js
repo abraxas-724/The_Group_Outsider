@@ -27,6 +27,15 @@ const showToast = (text) => {
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
 };
 
+const exitToMenu = () => {
+    if (hasParent) {
+        postToParent({ type: 'minigame:exit' });
+        showToast('已尝试退出到剧情');
+    } else {
+        window.location.href = '../../start.html';
+    }
+};
+
 const PERFECT_WINDOW = 180;
 const GOOD_WINDOW = 360;
 
@@ -396,12 +405,11 @@ const handleReturnToStory = () => {
         };
     }
     completeGame(lastResults);
-    showToast('成绩已回传剧情');
+    exitToMenu();
 };
 
 const handleExit = () => {
-    postToParent({ type: 'minigame:exit' });
-    showToast('已尝试退出到剧情');
+    exitToMenu();
 };
 
 const handleInitMessage = (event) => {
@@ -458,7 +466,7 @@ window.addEventListener('keydown', (event) => {
         return;
     }
     if (event.code === 'Escape') {
-        handleExit();
+        exitToMenu();
     }
 });
 

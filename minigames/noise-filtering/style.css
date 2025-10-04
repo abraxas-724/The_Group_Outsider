@@ -96,6 +96,16 @@ body.nf-body {
     align-items: stretch;
 }
 
+.nf-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nf-actions .secondary {
+    padding-inline: 22px;
+}
+
 .stat-card {
     min-width: 140px;
     padding: 18px 22px;

@@ -116,11 +116,28 @@ const completeGame = (payload = {}) => {
     });
 };
 
-const exitToStory = () => {
-    postToParent({ type: 'minigame:exit' });
+const exitToMenu = () => {
+    if (hasParent) {
+        postToParent({ type: 'minigame:exit' });
+    } else {
+        window.location.href = '../../start.html';
+    }
 };
 
 postToParent({ type: 'minigame:ready', gameId: 'logic_mending' });
+
+const btnReturn = document.getElementById('btnReturn');
+if (btnReturn) {
+    btnReturn.addEventListener('click', () => {
+        exitToMenu();
+    });
+}
+
+const overlayMessageDefault = document.getElementById('overlayMessage');
+if (!hasParent && overlayMessageDefault) {
+    overlayMessageDefault.hidden = false;
+    overlayMessageDefault.textContent = '独立模式：点击“返回主菜单”可回到开始界面。';
+}
 
 const gameStats = {
     totalLevels: 0,
@@ -265,8 +282,8 @@ const triggerAutoComplete = () => {
     const btnRestart = document.getElementById('btnRestart');
     if (overlay && overlayText && btnRestart) {
         overlayText.innerText = '✅ 剧情需求：已自动修复节点';
-        btnRestart.innerText = '返回剧情';
-        btnRestart.onclick = () => exitToStory();
+        btnRestart.innerText = '返回主菜单';
+        btnRestart.onclick = () => exitToMenu();
         overlay.style.display = 'flex';
     }
     return true;
@@ -454,7 +471,7 @@ const cheatCode = ['KeyS', 'KeyJ', 'KeyX', 'KeyC', 'KeyZ', 'KeyS', 'KeyJ', 'KeyX
 let codeIndex = 0;
 window.addEventListener('keydown', e => {
     if (e.code === 'Escape') {
-        exitToStory();
+        exitToMenu();
         return;
     }
     keys[e.code] = true;

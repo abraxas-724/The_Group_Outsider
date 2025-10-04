@@ -9,7 +9,8 @@
 
 #save-load-overlay,
 #inline-save-load,
-#settings-overlay {
+#settings-overlay,
+#minigame-overlay {
 	position: fixed;
 	inset: 0;
 	display: flex;
@@ -27,13 +28,15 @@
 
 #save-load-overlay:not(.hidden),
 #inline-save-load:not(.sl-hidden),
-#settings-overlay:not(.sl-hidden) {
+#settings-overlay:not(.sl-hidden),
+#minigame-overlay:not(.sl-hidden) {
 	background: rgba(17, 24, 39, 0.68);
 }
 
 #save-load-overlay.hidden,
 #inline-save-load.sl-hidden,
-#settings-overlay.sl-hidden {
+#settings-overlay.sl-hidden,
+#minigame-overlay.sl-hidden {
 	opacity: 0;
 	visibility: hidden;
 	pointer-events: none;
@@ -336,6 +339,112 @@
 
 .sl-slots::-webkit-scrollbar-thumb:hover {
 	background: #475569;
+}
+
+/* ===== Mini Game Selection Overlay ===== */
+#minigame-overlay .sl-panel {
+	width: clamp(340px, 72vw, 1024px);
+	max-height: 86vh;
+}
+
+#minigame-overlay .sl-header h2 {
+	font-size: 1.4rem;
+}
+
+#minigame-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 16px;
+	overflow-y: auto;
+	padding-right: 4px;
+}
+
+.mini-card {
+	background: #1f262d;
+	border: 1px solid #334155;
+	border-radius: 16px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	transition: transform .25s ease, border-color .25s ease, box-shadow .35s ease;
+}
+
+.mini-card:hover {
+	transform: translateY(-4px);
+	border-color: #2563eb;
+	box-shadow: 0 10px 30px -12px rgba(37, 99, 235, 0.55);
+}
+
+.mini-card h3 {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 600;
+	color: #e2e8f0;
+}
+
+.mini-card p {
+	margin: 0;
+	font-size: .75rem;
+	line-height: 1.45;
+	color: #94a3b8;
+}
+
+.mini-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	font-size: .68rem;
+	color: #cbd5f5;
+}
+
+.mini-meta span {
+	background: rgba(37, 99, 235, 0.16);
+	border: 1px solid rgba(37, 99, 235, 0.28);
+	color: #93c5fd;
+	padding: 3px 8px;
+	border-radius: 999px;
+	letter-spacing: .02em;
+}
+
+.mini-actions {
+	margin-top: auto;
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.mini-actions .sl-btn {
+	font-size: .74rem;
+	padding: 7px 14px;
+}
+
+#minigame-overlay .sl-footer {
+	text-align: left;
+	color: #94a3b8;
+	font-size: .64rem;
+}
+
+@media (max-width: 720px) {
+	#minigame-overlay .sl-panel {
+		width: 94vw !important;
+		max-height: 88vh !important;
+		padding: 14px 14px 16px !important;
+	}
+
+	#minigame-list {
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	}
+}
+
+@media (max-width: 600px) {
+	#minigame-list {
+		grid-template-columns: 1fr;
+	}
+
+	.mini-card {
+		padding: 14px;
+	}
 }
 
 /* ===== Settings three column layout ===== */
