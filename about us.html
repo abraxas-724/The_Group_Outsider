@@ -11,27 +11,49 @@
 </head>
 
 <body>
-  <button id="back-btn" type="button" aria-label="返回上一页" title="返回">
+  <button id="back-btn" type="button" aria-label="返回上一页" title="返回" class="btn-back">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
     <span>返回</span>
   </button>
-  <div id="drag-hint"
-    style="position:fixed;top:18px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;padding:10px 22px;border-radius:40px;font-size:16px;letter-spacing:1px;backdrop-filter:blur(6px);box-shadow:0 4px 18px -4px rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;gap:10px;opacity:1;transition:opacity .8s ease, transform .8s ease;">
-    <span style="font-size:18px;">⇆</span> 左右拖动 / 滚轮 切换头像
-  </div>
 
+  <header class="about-hero" role="banner">
+    <div class="hero-inner">
+      <h1 class="hero-title" aria-label="关于我们·制作组">关于我们 <span class="accent">/ TEAM</span></h1>
+      <p class="hero-sub">我们是一群对叙事、交互与代码审美有执念的创作者。下面是项目的核心制作成员，你可以点击任意头像前往他们的个人页面。</p>
+    </div>
+  </header>
 
-  <div class="container"></div>
+  <main id="main" class="about-main" aria-labelledby="team-heading">
+    <section class="team-section" aria-label="制作成员">
+      <h2 id="team-heading" class="section-title">核心成员</h2>
+      <div id="team-grid" class="team-grid" role="list"></div>
+    </section>
 
-  <!-- 新增成员头像网格（如果你进入的是这个页面也能看到区别） -->
-  <div id="team-wrap"
-    style="max-width:940px;margin:60px auto 40px;padding:28px 32px;background:rgba(255,255,255,0.12);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.25);border-radius:26px;">
-    <h2 style="text-align:center;color:#fff;font-size:44px;letter-spacing:3px;margin:0 0 26px;">关于我们 · 成员</h2>
-    <div id="team-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:20px;"></div>
+    <section class="culture-section" aria-label="创作理念">
+      <h2 class="visually-hidden">创作理念</h2>
+      <div class="culture-card">
+        <p class="culture-line">叙事应当是可以被“操纵”的体验，而不是被动观看。</p>
+        <p class="culture-line">我们在意像素的呼吸感、过渡的力度曲线、与玩家关注路径的暗示。</p>
+        <p class="culture-line">技术手段只是骨架，情绪张力才是血肉。</p>
+      </div>
+    </section>
+  </main>
 
-  </div>
+  <noscript>
+    <div class="noscript-fallback">
+      <h2>成员列表 (JS 关闭 — 精简版)</h2>
+      <ul>
+        <li>史雨函</li>
+        <li>翟一舟</li>
+        <li>杨舒童</li>
+        <li>黄昊</li>
+        <li>李子豪</li>
+        <li>王妤文</li>
+      </ul>
+    </div>
+  </noscript>
 
   <script src="js/about-us-inline.js"></script>
   <script src="js/systems/we.js"></script>

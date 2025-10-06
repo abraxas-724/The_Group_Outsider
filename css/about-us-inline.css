@@ -49,3 +49,310 @@
         border-radius: 12px;
     }
 }
+
+/* ===== 新版 About 页面结构 ===== */
+body {
+    --abt-bg: radial-gradient(circle at 20% 25%, rgba(59, 130, 246, 0.18), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(16, 185, 129, 0.15), transparent 55%),
+        linear-gradient(140deg, #0f172a, #111827 60%, #0b1323);
+    background: var(--abt-bg) fixed;
+    min-height: 100vh;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    color: #eef2f7;
+}
+
+.about-hero {
+    max-width: 1160px;
+    margin: 70px auto 10px;
+    padding: clamp(38px, 6vw, 60px) clamp(30px, 5vw, 60px);
+    position: relative;
+}
+
+.about-hero::before,
+.about-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 38px;
+    pointer-events: none;
+}
+
+.about-hero::before {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 70%);
+    mix-blend-mode: overlay;
+    opacity: .55;
+}
+
+.about-hero::after {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 40px;
+    backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: 0 30px 80px -18px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    margin: 0;
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.05;
+    letter-spacing: .08em;
+    font-weight: 700;
+}
+
+.hero-title .accent {
+    background: linear-gradient(90deg, #3b82f6, #6366f1 40%, #0ea5e9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-sub {
+    margin: 24px 0 0;
+    max-width: 880px;
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.7;
+    color: #cbd5e1;
+    letter-spacing: .04em;
+}
+
+.about-main {
+    max-width: 1160px;
+    margin: 10px auto 120px;
+    padding: 0 clamp(20px, 4vw, 34px);
+}
+
+.section-title {
+    margin: 0 0 26px;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 600;
+    letter-spacing: .1em;
+    position: relative;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 68px;
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 14px;
+    background: linear-gradient(90deg, #3b82f6, #0ea5e9);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 4px 14px -2px rgba(56, 189, 248, .45);
+}
+
+.team-section {
+    margin-top: 70px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.team-card {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.team-card a {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-decoration: none;
+    color: #e2e8f0;
+    padding: 18px 18px 20px;
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 26px;
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04) 60%);
+    backdrop-filter: blur(18px) saturate(140%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 18px 48px -12px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    transition: .55s cubic-bezier(.6, .2, .1, 1);
+}
+
+.team-card a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .18), transparent 65%);
+    opacity: 0;
+    transition: .6s;
+}
+
+.team-card a:hover {
+    transform: translateY(-10px) scale(1.04);
+    border-color: rgba(255, 255, 255, .28);
+    box-shadow: 0 28px 68px -10px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .08) inset;
+}
+
+.team-card a:hover::before {
+    opacity: .9;
+}
+
+.avatar-wrap {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 24px -8px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .15) inset;
+}
+
+.avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(.1) contrast(1.05) saturate(1.15);
+    transition: transform .8s ease, filter .8s ease;
+}
+
+.team-card a:hover .avatar-wrap img {
+    transform: scale(1.08);
+    filter: grayscale(0) saturate(1.25);
+}
+
+.member-name {
+    font-weight: 600;
+    letter-spacing: .15em;
+    font-size: .78rem;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.member-role {
+    font-size: .55rem;
+    letter-spacing: .25em;
+    opacity: .65;
+    text-transform: uppercase;
+    margin-top: -4px;
+}
+
+/* 文化块 */
+.culture-section {
+    margin-top: 120px;
+}
+
+.culture-card {
+    padding: 40px clamp(24px, 4vw, 60px);
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 34px;
+    backdrop-filter: blur(22px) saturate(150%);
+    background: linear-gradient(145deg, rgba(15, 23, 42, .8), rgba(30, 41, 59, .68));
+    box-shadow: 0 24px 60px -16px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .05) inset;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.culture-line {
+    margin: 0;
+    font-size: clamp(14px, 1.1vw, 16px);
+    line-height: 1.75;
+    letter-spacing: .06em;
+    color: #cbd5e1;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* 无脚本提示 */
+.noscript-fallback {
+    max-width: 800px;
+    margin: 40px auto 120px;
+    padding: 24px 30px;
+    border: 1px solid rgba(255, 255, 255, .18);
+    background: rgba(15, 23, 42, .7);
+    border-radius: 22px;
+    backdrop-filter: blur(14px);
+}
+
+.noscript-fallback h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    letter-spacing: .15em;
+}
+
+.noscript-fallback ul {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 4px 20px;
+}
+
+.noscript-fallback li {
+    font-size: 13px;
+    letter-spacing: .08em;
+}
+
+/* 响应式 */
+@media (max-width:900px) {
+    .team-grid {
+        gap: 24px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .hero-title {
+        font-size: clamp(34px, 7vw, 54px);
+    }
+
+    .culture-card {
+        padding: 34px 32px;
+    }
+}
+
+@media (max-width:640px) {
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+
+        @media (max-width:430px) {
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+        }
+
+        gap: 16px;
+    }
+
+    .hero-sub {
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-size: 30px;
+    }
+
+    .culture-card {
+        padding: 28px 24px;
+        border-radius: 24px;
+    }
+
+    .member-name {
+        font-size: .7rem;
+    }
+}
