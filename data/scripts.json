@@ -1,5 +1,5 @@
 {
-  "start_node": "ACT2_LIN_PC_05",
+  "start_node": "ACT1_PRELOAD",
   "characters": {
     "SYS": "旁白",
     "MO": "默",
@@ -1319,7 +1319,7 @@
     {
       "id": "ACT1_SCENE3_START",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/black.png",
+      "imagePath": "assets/images/scenes/1.3走廊.png",
       "next": "ACT1_SCENE3_LIN_APPEARS"
     },
     {
@@ -1334,7 +1334,8 @@
       "type": "showCharacter",
       "charId": "MO",
       "position": "pos-left",
-      "next": "ACT1_SCENE3_01"
+      "next": "ACT1_SCENE3_01",
+      "delay": 1000
     },
     {
       "id": "ACT1_SCENE3_01",

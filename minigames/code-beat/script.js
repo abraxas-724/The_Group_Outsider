@@ -1,3 +1,5 @@
+import { applyEmbedBehavior, isEmbedded } from '../shared/embed-utils.js';
+
 const isFile = window.location.protocol === 'file:' || window.location.origin === 'null';
 const parentOrigin = isFile ? '*' : window.location.origin;
 const hasParent = (() => {
@@ -9,7 +11,9 @@ const hasParent = (() => {
 })();
 
 const postToParent = (message) => {
-    if (!hasParent) return;
+    if (!hasParent) {
+        return;
+    }
     try {
         window.parent.postMessage(message, parentOrigin);
     } catch (err) {
@@ -20,7 +24,9 @@ const postToParent = (message) => {
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
 const showToast = (text) => {
-    if (!toastEl) return;
+    if (!toastEl) {
+        return;
+    }
     toastEl.textContent = text;
     toastEl.classList.add('show');
     clearTimeout(toastTimer);
@@ -129,7 +135,9 @@ let swingLeft = true;
 let lastResults = null;
 
 const playTick = () => {
-    if (!audioCtx) return;
+    if (!audioCtx) {
+        return;
+    }
     try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
@@ -204,7 +212,9 @@ const registerJudgement = (type) => {
 };
 
 const handleMiss = () => {
-    if (!awaitingInput) return;
+    if (!awaitingInput) {
+        return;
+    }
     awaitingInput = false;
     registerJudgement('miss');
 };
@@ -326,7 +336,9 @@ const runBeat = (index) => {
 };
 
 const handleHit = () => {
-    if (!isRunning || isPaused || !awaitingInput) return;
+    if (!isRunning || isPaused || !awaitingInput) {
+        return;
+    }
     const delta = Math.abs(performance.now() - lastBeatTime);
     awaitingInput = false;
     if (delta <= PERFECT_WINDOW) {
@@ -359,7 +371,9 @@ const startSession = async () => {
 };
 
 const togglePause = () => {
-    if (!isRunning) return;
+    if (!isRunning) {
+        return;
+    }
     if (!isPaused) {
         isPaused = true;
         clearTimer();
@@ -413,10 +427,11 @@ const handleExit = () => {
 };
 
 const handleInitMessage = (event) => {
-    if (!isFile && event.origin !== window.location.origin) return;
+    if (!isFile && event.origin !== window.location.origin) {
+        return;
+    }
     const data = event.data || {};
-    if (data.type === 'minigame:init') {
-        if (data.payload?.params?.autoComplete) {
+    if (data.type === 'minigame:init' && data.payload?.params?.autoComplete) {
             const payload = {
                 perfect: totalBeats,
                 good: 0,
@@ -435,7 +450,6 @@ const handleInitMessage = (event) => {
             startButton.disabled = true;
             pauseButton.disabled = true;
             setFeedback('自动完成模式');
-        }
     }
 };
 
@@ -487,3 +501,6 @@ if (!hasParent) {
         showToast('独立模式：完成后可手动关闭窗口。');
     }, 600);
 }
+
+// 嵌入模式下替换“返回主菜单”为“跳过”
+applyEmbedBehavior('code_beat', { exitSelectors: ['#exitGame', '#backToStory'] });

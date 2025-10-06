@@ -1,3 +1,5 @@
+import { applyEmbedBehavior } from '../shared/embed-utils.js';
+
 const isFile = window.location.protocol === 'file:' || window.location.origin === 'null';
 const parentOrigin = isFile ? '*' : window.location.origin;
 const hasParent = (() => {
@@ -9,7 +11,9 @@ const hasParent = (() => {
 })();
 
 const postToParent = (message) => {
-    if (!hasParent) return;
+    if (!hasParent) {
+        return;
+    }
     try {
         window.parent.postMessage(message, parentOrigin);
     } catch (err) {
@@ -20,7 +24,9 @@ const postToParent = (message) => {
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
 const showToast = (text) => {
-    if (!toastEl) return;
+    if (!toastEl) {
+        return;
+    }
     toastEl.textContent = text;
     toastEl.classList.add('show');
     clearTimeout(toastTimer);
@@ -384,6 +390,9 @@ const markTask = (taskName, completed) => {
         if (status) status.textContent = '未完成';
     }
 };
+
+// 文件末尾附近插入嵌入模式适配调用（放在初始化逻辑之后）
+applyEmbedBehavior('code_zen_garden', { exitSelectors: ['#exitToStory', '#finishButton'] });
 
 const updateFinishButtonLabel = () => {
     if (!finishButton) return;

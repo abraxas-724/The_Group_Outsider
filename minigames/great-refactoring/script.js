@@ -1,3 +1,4 @@
+import { applyEmbedBehavior } from '../shared/embed-utils.js';
 const isFile = window.location.protocol === 'file:' || window.location.origin === 'null';
 const parentOrigin = isFile ? '*' : window.location.origin;
 const hasParent = (() => {
@@ -926,3 +927,5 @@ if (!hasParent) {
         showToast('独立模式：退出时会返回主菜单页面。');
     }, 600);
 }
+import { applyEmbedBehavior as __embed } from '../shared/embed-utils.js';
+__embed('great_refactoring', { exitSelectors: ['#exitGame', '#backToStory'] });

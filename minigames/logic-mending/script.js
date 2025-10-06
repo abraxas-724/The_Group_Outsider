@@ -87,6 +87,7 @@ if (particlesCanvas) {
     animateParticles();
 }
 
+import { applyEmbedBehavior } from '../shared/embed-utils.js';
 const isFile = window.location.protocol === 'file:' || window.location.origin === 'null';
 const parentOrigin = isFile ? '*' : window.location.origin;
 const hasParent = (() => {
@@ -133,6 +134,9 @@ if (btnReturn) {
     });
 }
 
+// 嵌入模式：逻辑修复只需要替换返回按钮
+applyEmbedBehavior('logic_mending', { exitSelectors: ['#btnReturn'] });
+
 const overlayMessageDefault = document.getElementById('overlayMessage');
 if (!hasParent && overlayMessageDefault) {
     overlayMessageDefault.hidden = false;
@@ -154,6 +158,21 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 if (typeof Matter === 'undefined') {
+        // 回退：提供一个最小内置地图，避免完全空白
+        if (!mapLibrary.length) {
+            mapLibrary = [
+                '########################',
+                '#......................#',
+                '#......................#',
+                '#.............G........#',
+                '#......................#',
+                '#..........P...........#',
+                '#......................#',
+                '########################'
+            ];
+            gameStats.totalLevels = 1;
+            loadLevel(0);
+        }
     const overlay = document.getElementById('overlay');
     const overlayText = document.getElementById('overlayText');
     const overlayMessage = document.getElementById('overlayMessage');

@@ -1,3 +1,5 @@
+import { applyEmbedBehavior } from '../shared/embed-utils.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const wordBoard = document.getElementById('wordBoard');
     const taskList = document.getElementById('taskList');
@@ -42,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
     exitButton?.addEventListener('click', () => {
         exitToMenu();
     });
+
+    // 嵌入模式：替换按钮文本为跳过
+    applyEmbedBehavior('noise_filtering', { exitSelectors: ['#exitButton', '#returnButton'] });
 
     const technicalWords = ["渲染管线", "API", "数据库", "算法", "后端", "前端", "云计算", "框架", "版本控制", "函数"];
     const emotionalWords = ["梦想", "酷炫", "爱", "灵感", "激情", "幸福", "痛苦", "挑战", "友谊", "冒险"];
@@ -260,7 +265,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // 每次游戏开始时，重置回收站图片
         trashImage.src = 'assets/trash.png';
 
-        generateWords();
+        // 如果容器尺寸仍未渲染好（可能由于首次布局或嵌入模式强制重排），延迟生成
+        const ensureWords = (attempt = 0) => {
+            const rect = wordBoard.getBoundingClientRect();
+            if ((rect.width < 50 || rect.height < 50) && attempt < 10) {
+                requestAnimationFrame(() => ensureWords(attempt + 1));
+            } else {
+                generateWords();
+            }
+        };
+        ensureWords();
 
         timer = setInterval(() => {
             time--;
