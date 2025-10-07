@@ -50,8 +50,14 @@ export class DialogueEngine {
     advance() {
         // 若游戏被标记为暂停（例如打开存/读档面板），则不推进
         if (this.gameApp && this.gameApp.dialoguePaused) return;
-        if (this.isTyping) { this._skipTyping(); return; }
+        if (this.isTyping) { 
+            // 正在打字时点击：先完整显示本句（不播放推进音）
+            this._skipTyping(); 
+            return; 
+        }
         if (this.currentNode && this.currentNode.type === 'dialogue' && this.currentNode.next) {
+            // 对话从当前句推进到下一节点前播放推进音效（避免在 autoMode 内频繁触发：仍然允许，体验更明确）
+            try { this.gameApp?.audio?.play('dialogue_advance'); } catch {}
             this._showNode(this.currentNode.next);
         }
     }
@@ -347,9 +353,26 @@ export class DialogueEngine {
         let charIndex = 0;
         const baseDelay = Math.max(5, this.settings.textSpeed || 35);
         const interval = alreadyRead && this.settings.skipRead ? 0 : baseDelay;
+        // 打字机音效节流：根据文本速度与最小时间间隔决定触发频率
+        let lastTickTime = 0;
+        const MIN_TICK_GAP = 45; // ms 最小间隔（可调整）
+        const CHAR_STEP = 2;     // 每隔多少字符尝试播放一次
         this.typingInterval = setInterval(() => {
             if (charIndex < text.length) {
                 this.dialogueText.textContent += text.charAt(charIndex);
+                // 播放打字机音效（节流）
+                try {
+                    if (charIndex % CHAR_STEP === 0) {
+                        const now = performance.now();
+                        if (now - lastTickTime >= MIN_TICK_GAP) {
+                            // 如果存在变体 (text_tick_1, text_tick_2, ...)，优先随机；否则回退基础 key
+                            // 允许在未解锁前尝试（多数浏览器会静默忽略，但解锁后立即生效）
+                            const opts = { volume: 0.9, allowBeforeUnlock: true };
+                            this.gameApp?.audio?.playVariant?.('text_tick', 4, opts) || this.gameApp?.audio?.play('text_tick', opts);
+                            lastTickTime = now;
+                        }
+                    }
+                } catch {}
                 charIndex++;
             } else { this._skipTyping(); }
         }, interval);

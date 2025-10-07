@@ -1,4 +1,10 @@
-import { SaveLoadManager, MAX_SLOTS } from './js/engine/SaveLoadManager.js';
+// 修正：原先路径写成 ./js/engine/xxx 实际位于同级 engine 目录
+import { SaveLoadManager, MAX_SLOTS } from './engine/SaveLoadManager.js';
+import { AudioManager } from './engine/AudioManager.js';
+
+// 独立窗口自身也提供基础点击音效（不依赖父窗口注入）。
+const __localAudio = new AudioManager({ basePath: 'assets/audio/' });
+try { const s = JSON.parse(localStorage.getItem('groupOutsiderSettings')||'{}'); __localAudio.setVolumes({ master:(s.volMaster??80)/100, amb:(s.volAmb??60)/100 }); } catch {}
 
 const params = new URLSearchParams(location.search);
 const mode = params.get('mode') === 'load' ? 'load' : 'save';
@@ -37,6 +43,7 @@ function buildSlotCard(slot){
     // 单击保存 / 读取
     card.querySelector('.small').addEventListener('click', (e)=>{
         e.stopPropagation();
+        __localAudio.play('ui_click', { allowBeforeUnlock:true });
         runAction(slot,false);
     });
 
@@ -47,12 +54,13 @@ function buildSlotCard(slot){
             e.stopPropagation();
             if(confirm(`确定删除槽位 ${slot} 吗?`)){
                 mgr.delete(slot); refresh(); showToast('已删除');
+                __localAudio.play('ui_click', { allowBeforeUnlock:true });
             }
         });
     }
 
     // 卡片点击 = 行为
-    card.addEventListener('click', ()=> runAction(slot,false));
+    card.addEventListener('click', ()=> { __localAudio.play('ui_click', { allowBeforeUnlock:true }); runAction(slot,false); });
     // 双击直接执行且不确认
     card.addEventListener('dblclick', ()=> runAction(slot,true));
 
@@ -82,7 +90,7 @@ function refresh(){
     for(let i=1;i<=MAX_SLOTS;i++) slotsEl.appendChild(buildSlotCard(i));
 }
 
-document.getElementById('refresh-btn').addEventListener('click', refresh);
-document.getElementById('close-btn').addEventListener('click', ()=> window.close());
+document.getElementById('refresh-btn').addEventListener('click', ()=>{ __localAudio.play('ui_click', { allowBeforeUnlock:true }); refresh(); });
+document.getElementById('close-btn').addEventListener('click', ()=> { __localAudio.play('ui_click', { allowBeforeUnlock:true }); window.close(); });
 
 refresh();

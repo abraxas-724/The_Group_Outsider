@@ -1,5 +1,18 @@
 // Extracted from settings.html
 (function(){
+  // 若 global-audio-init 未注入，则做一个最小兜底：
+  if (!window.__globalAudio && window.AudioManager) {
+    try {
+      window.__globalAudio = new window.AudioManager({ basePath: 'assets/audio/' });
+    } catch {}
+  }
+  const audio = window.__globalAudio;
+  if (audio && !window.__settingsUiDelegated) {
+    window.__settingsUiDelegated = true;
+    const selector = 'button, .btn, .sl-btn, [data-sfx]';
+    document.addEventListener('click', e=>{ const el = e.target.closest(selector); if(!el) return; if(el.dataset.sfx==='none') return; audio.play(el.dataset.sfx||'ui_click'); });
+    document.addEventListener('mouseover', e=>{ const el = e.target.closest(selector); if(!el) return; if(el.dataset.sfxHover==='none') return; audio.play(el.dataset.sfxHover||'ui_hover'); }, { passive:true });
+  }
   // 背景动画复用
   (function(){
     const c = document.getElementById('bg-canvas'); if(!c) return; const ctx = c.getContext('2d');

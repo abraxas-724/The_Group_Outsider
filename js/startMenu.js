@@ -1,5 +1,6 @@
 import { SaveLoadManager } from './engine/SaveLoadManager.js';
 import { AchievementManager } from './engine/AchievementManager.js';
+import { AudioManager } from './engine/AudioManager.js';
 import { getCurrentUser, nsKey } from './engine/UserContext.js';
 
 const MINI_GAMES = [
@@ -59,6 +60,8 @@ class StartMenuApp {
         // 在开始菜单也复用成就系统（仅用于展示当前解锁状态）
         this.achManager = new AchievementManager(null);
         this.achManager.init();
+        // 音频管理器：开始菜单单独实例（与游戏内分开，减少依赖）
+        this.audio = new AudioManager({ basePath: 'assets/audio/' });
 
         // 获取所有需要操作的HTML元素
         this.startNewGameButton = document.getElementById('start-new-game');
@@ -78,6 +81,10 @@ class StartMenuApp {
 
         // 绑定所有按钮的点击事件
         this._bindEvents();
+        this._bindGlobalUiSounds();
+        this._applyStoredVolumes();
+        // 菜单背景音乐（如果文件存在）
+        this.audio.playLoop('bgm_main');
     }
 
     _bindEvents() {
@@ -148,6 +155,13 @@ class StartMenuApp {
             this._buildMiniGameList();
             this._miniListBuilt = true;
         }
+    // 默认使用 large 尺寸（可后续加入切换按钮）
+    this.miniGameOverlay.classList.remove('fullscreen');
+    const panel = this.miniGameOverlay.querySelector('.mini-panel');
+    if (panel) {
+        panel.classList.remove('size-compact','size-normal');
+        panel.classList.add('size-large');
+    }
         this.miniGameOverlay.classList.remove('sl-hidden');
         this.miniGameOverlay.setAttribute('aria-hidden', 'false');
         setTimeout(() => {
@@ -160,6 +174,11 @@ class StartMenuApp {
             return;
         }
         this.miniGameOverlay.classList.add('sl-hidden');
+    this.miniGameOverlay.classList.remove('fullscreen');
+    const panel = this.miniGameOverlay.querySelector('.mini-panel');
+    if (panel) {
+        panel.classList.remove('size-compact','size-normal','size-large');
+    }
         this.miniGameOverlay.setAttribute('aria-hidden', 'true');
     }
 
@@ -214,6 +233,12 @@ class StartMenuApp {
 
             this.miniGameList.appendChild(card);
         });
+        // 根据数量添加特殊布局类：5 个游戏 => 第一行 3 个 第二行 2 个并居中对称
+        if (MINI_GAMES.length === 5) {
+            this.miniGameList.classList.add('layout-5');
+        } else {
+            this.miniGameList.classList.remove('layout-5');
+        }
     }
 
     _launchMiniGame(game, newTab = false) {
@@ -311,6 +336,7 @@ class StartMenuApp {
         };
         localStorage.setItem('groupOutsiderSettings', JSON.stringify(s));
         if (s.theme) document.body.setAttribute('data-theme', s.theme);
+        this.audio.setVolumes({ master: s.volMaster / 100, amb: s.volAmb / 100 });
     }
     _syncSettingsControls() {
         const s = this._loadSettingsObj();
@@ -321,6 +347,7 @@ class StartMenuApp {
         if (this.stCtrls.volMaster) this.stCtrls.volMaster.value = s.volMaster ?? 80;
         if (this.stCtrls.volAmb) this.stCtrls.volAmb.value = s.volAmb ?? 60;
         // 主题控件已移除，保持 body 现有 data-theme
+        this.audio.setVolumes({ master: (s.volMaster ?? 80) / 100, amb: (s.volAmb ?? 60) / 100 });
     }
     closeSettingsOverlay() {
         this.settingsOverlay?.classList.add('sl-hidden');
@@ -379,14 +406,53 @@ class StartMenuApp {
         if (!target.dataset.slot) return;
         const slot = target.dataset.slot;
         if (target.classList.contains('load-btn')) {
+            this.audio.play('load');
             sessionStorage.setItem(LOAD_FROM_SLOT_KEY, slot);
             window.location.href = 'game.html';
         } else if (target.classList.contains('delete-btn')) {
             if (confirm(`确定要永久删除存档槽位 ${slot} 吗？此操作无法撤销。`)) {
                 this.saveLoadManager.delete(slot);
+                this.audio.play('error');
                 this._populateSlots();
             }
         }
+    }
+
+    _bindGlobalUiSounds() {
+        const selector = 'button, .sl-btn, [data-sfx]';
+        document.addEventListener('click', (e) => {
+            const el = e.target.closest(selector);
+            if (!el) return;
+            if (el.dataset.sfx === 'none') return;
+            const key = el.dataset.sfx || 'ui_click';
+            this.audio.play(key);
+        });
+        // 悬停音效
+        let lastHoverEl = null;
+        document.addEventListener('mouseover', (e) => {
+            const el = e.target.closest(selector);
+            if (!el) return;
+            if (el === lastHoverEl) return;
+            lastHoverEl = el;
+            if (el.dataset.sfxHover === 'none') return;
+            const hk = el.dataset.sfxHover || 'ui_hover';
+            this.audio.play(hk);
+        }, { passive: true });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const el = document.activeElement;
+                if (el && (el.matches?.('button') || el.getAttribute?.('role') === 'button')) {
+                    this.audio.play('ui_confirm');
+                }
+            } else if (e.key === 'Escape') {
+                this.audio.play('ui_cancel');
+            }
+        });
+    }
+
+    _applyStoredVolumes() {
+        const s = this._loadSettingsObj();
+        this.audio.setVolumes({ master: (s.volMaster ?? 80) / 100, amb: (s.volAmb ?? 60) / 100 });
     }
 }
 

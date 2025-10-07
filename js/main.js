@@ -1,6 +1,7 @@
 import { SaveLoadManager, SAVE_GAME_PREFIX, MAX_SLOTS } from './engine/SaveLoadManager.js';
 import { DialogueEngine } from './engine/DialogueEngine.js';
 import { AchievementManager } from './engine/AchievementManager.js';
+import { AudioManager } from './engine/AudioManager.js';
 import { nsKey } from './engine/UserContext.js';
 
 const LOAD_FROM_SLOT_KEY = 'groupOutsiderLoadFromSlot';
@@ -58,8 +59,10 @@ class GameApp {
             logic_mending: { url: 'minigames/logic-mending/index.html', title: '逻辑修复 (Logic Mending)', mode: 'iframe' }
         };
 
-        // **【修复】实例化成就系统**
-        this.achievements = new AchievementManager(this);
+    // **【修复】实例化成就系统**
+    this.achievements = new AchievementManager(this);
+    // 音频管理器（统一 UI / 操作 / BGM / 环境音效）
+    this.audio = new AudioManager({ basePath: 'assets/audio/' });
 
         // 异步预加载角色立绘，不阻塞游戏启动
         setTimeout(() => this.preloadCharacterImages(), 100);
@@ -152,6 +155,7 @@ class GameApp {
             this._listenSettingsChanges();
             this._wireInlineSettings();
             this._initMobileOrientationGuard();
+            this._initGlobalSfx();
 
             console.log("✅ 游戏核心初始化完成！");
 
@@ -520,6 +524,7 @@ class GameApp {
             // 成就打点
             this.achievements.onQuickSaved();
             this.achievements.onSaved();
+            // 统一按钮点击音：不再播放特定 save 音效
         }
     }
 
@@ -527,6 +532,7 @@ class GameApp {
         const d = this.saveLoadManager.load(1);
         if (!d) { alert('槽位1为空'); return; }
         this.loadGame(1);
+        // 统一按钮点击音：不再播放特定 load 音效
     }
 
     /* ================== 设置集成 ================== */
@@ -552,6 +558,8 @@ class GameApp {
         // 示例: 若背景音乐 audio 元素存在
         const bgm = document.getElementById('bgm-audio');
         if (bgm) { bgm.volume = this.masterVolume; }
+        // 同步给音频管理器
+        this.audio?.setVolumes({ master: this.masterVolume, amb: this.ambVolume });
     }
 
     _applyDialogueOpacity(s) {
@@ -639,6 +647,7 @@ class GameApp {
         console.log('进入探索模式', node);
         this.explorationMode = true;
         this.explorationConfig = node;
+        this.audio?.play('explore_enter');
         // 缺省后续节点兼容：优先 node.next，其次 explorationNext，再次固定示例
         this.explorationNext = node.next || node.explorationNext || 'ACT1_SCENE3_START';
         // 提示层
@@ -703,6 +712,7 @@ class GameApp {
                     if (hs.setFlag) { this.dialogueEngine.gameState[hs.setFlag] = true; this.achievements.markFlag(hs.setFlag); }
                     // 成就：任意热点交互
                     this.achievements.markHotspotClick();
+                    this.audio?.play('hotspot');
                     // once：点击后禁用
                     if (hs.once) { el.style.pointerEvents = 'none'; el.style.opacity = '.35'; }
                     // 进入后续
@@ -749,6 +759,7 @@ class GameApp {
         if (!this.explorationMode) return;
         console.log('结束探索模式，进入节点', gotoNodeId || this.explorationNext);
         this.explorationMode = false;
+        this.audio?.play('explore_exit');
         if (this.exploreOverlay) { this.exploreOverlay.classList.add('hidden'); }
         if (this.exploreOverlay) { this.exploreOverlay.style.pointerEvents = 'none'; }
         this._exploreClickHandler = null;
@@ -1173,6 +1184,8 @@ class GameApp {
     // **【修复】确保 _notify 方法存在，用于显示弹窗**
     _notify(msg) {
         try {
+            // 通知出现沿用统一 ui_click，不单独区分成就音
+            this.audio?.play('ui_click');
             let cont = document.getElementById('toast-container');
             if (!cont) {
                 cont = document.createElement('div');
@@ -1222,6 +1235,46 @@ class GameApp {
         });
 
         console.log(`📦 预加载队列: ${availableCharacters.length} 个角色`);
+    }
+
+    // ====== 全局 UI 点击/键盘 音效绑定 ======
+    _initGlobalSfx() {
+        if (this._sfxBound) return; this._sfxBound = true;
+    const clickSelector = 'button, .sl-btn, .dlg-sl-btn, .hotspot, [data-sfx]';
+        // 使用捕获阶段监听，避免目标元素或其专用处理里使用 e.stopPropagation() 阻断冒泡，
+        // 之前保存/读取/快速存读/行为记录/设置按钮都调用了 stopPropagation 导致无声。
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest(clickSelector);
+            if (!target) return;
+            // 若元素明确标记 data-sfx="none" 则跳过
+            if (target.dataset.sfx === 'none') return;
+            const key = target.dataset.sfx || 'ui_click';
+            this.audio?.play(key);
+        }, true); // capture=true 确保在 stopPropagation 之前执行
+        // 悬停音效：data-sfx-hover 优先；未指定则使用 ui_hover
+        const hoverSelector = clickSelector;
+        let lastHoverEl = null;
+        document.addEventListener('mouseover', (e) => {
+            const el = e.target.closest(hoverSelector);
+            if (!el) return;
+            if (el === lastHoverEl) return; // 避免同一元素重复
+            lastHoverEl = el;
+            if (el.dataset.sfxHover === 'none') return;
+            const hk = el.dataset.sfxHover || 'ui_hover';
+            this.audio?.play(hk);
+        }, { passive: true });
+        // 键盘交互（Enter / Space 触发按钮）
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const el = document.activeElement;
+                if (el && (el.matches?.('button, .sl-btn') || el.getAttribute?.('role') === 'button')) {
+                    this.audio?.play(el.dataset.sfx || 'ui_confirm');
+                }
+            }
+            if (e.key === 'Escape') {
+                this.audio?.play('ui_cancel');
+            }
+        });
     }
 }
 
