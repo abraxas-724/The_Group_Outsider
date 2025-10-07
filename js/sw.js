@@ -6,7 +6,9 @@
   Note: This file is imported by a root-level sw.js stub to preserve root scope.
 */
 
-const CACHE_NAME = 'tgo-v14';
+// 缓存版本：每次需要强制客户端更新（包括音效文件、脚本）时递增
+// 建议语义：tgo-v<number>
+const CACHE_VERSION = 'tgo-v17';
 const CORE_CACHE = `${CACHE_VERSION}-core`;
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
