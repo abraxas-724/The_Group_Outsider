@@ -1092,7 +1092,7 @@
       "id": "ACT1_SCENE2_WHITEBOARD_08",
       "type": "dialogue",
       "character": "YANG",
-      "text": "！就是…呃…‘梦想’怎么在回收站里？",
+      "text": "就是…呃…‘梦想’怎么在回收站里？",
       "next": "ACT1_SCENE2_WHITEBOARD_09"
     },
     {
@@ -1535,6 +1535,12 @@
       "id": "ACT1_SCENE3_FINAL_LIN_HIDES",
       "type": "hideCharacter",
       "charId": "LIN",
+      "next": "ACT1_SCENE3_FINAL_MO_HIDES"
+    },
+    {
+      "id": "ACT1_SCENE3_FINAL_MO_HIDES",
+      "type": "hideCharacter",
+      "charId": "MO",
       "next": "ACT1_SCENE3_BRANCH_C_06"
     },
     {
@@ -1637,7 +1643,7 @@
           "label": "冯·诺依曼结构图",
           "tooltip": "高效的系统",
           "next": "ACT1_PAGE_01",
-          "once": true,
+          "once": false,
           "setFlag": "seen_page"
         },
         {
@@ -1648,7 +1654,7 @@
           "label": "书架",
           "tooltip": "一种秩序",
           "next": "ACT1_BOOKSHELF_01",
-          "once": true,
+          "once": false,
           "setFlag": "seen_shelf"
         },
         {
@@ -1659,7 +1665,7 @@
           "label": "默的电脑",
           "tooltip": "执行任务",
           "next": "ACT1_MO_PC_01",
-          "once": true,
+          "once": false,
           "setFlag": "seen_mo_pc"
         }
       ]
@@ -1725,7 +1731,19 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "在开始执行“任务”之前，你决定先进行一项“仪式”。",
-      "next": "ACT1_MO_PC_04"
+      "next": "ACT1_MO_PC_MINIGAME_CZG"
+    },
+    {
+      "id": "ACT1_MO_PC_MINIGAME_CZG",
+      "type": "minigame",
+      "gameId": "code_zen_garden",
+      "title": "代码禅院",
+      "skippable": true,
+      "comment": "在这里插入代码禅院小游戏，结束后继续剧情",
+      "next": "ACT1_MO_PC_04",
+      "params": {
+        "difficulty": 1
+      }
     },
     {
       "id": "ACT1_MO_PC_04",
