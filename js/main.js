@@ -1421,6 +1421,24 @@ function showNode(nodeId) {
     switch (node.type) {
         // ...existing code...
 
+            // 小游戏节点（统一处理两种写法）
+            case 'minigame':
+            case 'startMinigame': {
+                // 进入小游戏时，关闭对话点击推进，等待小游戏完成回调再进入 next
+                try {
+                    app.startMinigame(node, () => {
+                        const nextId = node.next || node.goto;
+                        if (nextId) showNode(nextId); // 完成后进入后续
+                    });
+                    return; // 暂停常规节点展示
+                } catch (e) {
+                    console.error('启动小游戏失败:', e);
+                    const fallback = node.next || node.goto;
+                    if (fallback) { showNode(fallback); return; }
+                }
+                break;
+            }
+
         // 新增：纯“成就节点”，只做解锁/标记后跳转，不展示对白
         case 'achievement': {
             try {
