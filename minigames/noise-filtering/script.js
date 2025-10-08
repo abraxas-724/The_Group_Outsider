@@ -11,7 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('overlay');
     const overlayTitle = document.getElementById('overlayTitle');
     const overlayMessage = document.getElementById('overlayMessage');
+    const ratingBlock = document.getElementById('ratingBlock');
+    const ratingBadge = document.getElementById('ratingBadge');
+    const ratingTitle = document.getElementById('ratingTitle');
+    const ratingComment = document.getElementById('ratingComment');
     const returnButton = document.getElementById('returnButton');
+    const confirmButton = document.getElementById('confirmButton');
     const exitButton = document.getElementById('exitButton');
 
     const isFile = window.location.protocol === 'file:' || window.location.origin === 'null';
@@ -286,6 +291,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // 游戏结束
+    // 读取评分配置（懒加载一次）
+    let ratingConfigPromise = null;
+    const loadRatingConfig = () => {
+        if (ratingConfigPromise) return ratingConfigPromise;
+        ratingConfigPromise = fetch('rating-config.json')
+            .then(r => r.json())
+            .catch(() => ({ tiers: [{ min: 0, label: '?', title: '未知', comment: '未找到配置。' }] }));
+        return ratingConfigPromise;
+    };
+
+    const computeRating = async (score) => {
+        const cfg = await loadRatingConfig();
+        const tiers = (cfg && Array.isArray(cfg.tiers)) ? cfg.tiers : [];
+        if (!tiers.length) return { label: '?', title: '未知', comment: '无评分数据。' };
+        // 按 min 降序找到第一档
+        tiers.sort((a, b) => b.min - a.min);
+        return tiers.find(t => score >= t.min) || tiers[tiers.length - 1];
+    };
+
     const endGame = () => {
         isGameRunning = false;
         clearInterval(timer);
@@ -293,12 +317,23 @@ document.addEventListener('DOMContentLoaded', () => {
         overlayTitle.textContent = "游戏结束";
         overlayMessage.textContent = `你的最终分数是: ${score} 分。`;
         startButton.textContent = "重新开始";
-        // 显示返回剧情按钮
-        if (returnButton) {
-            returnButton.classList.remove('hidden');
-        }
-        // 通知父窗口：可选择在此直接上报完成
-        postToParent({ type: 'minigame:complete', payload: { score } });
+        // 先隐藏 rating 再异步填充
+        ratingBlock?.classList.add('hidden');
+        confirmButton?.classList.add('hidden');
+        // 延迟一点点再计算（给视觉一点呼吸）
+        setTimeout(async () => {
+            const tier = await computeRating(score);
+            if (ratingBadge) {
+                ratingBadge.textContent = tier.label;
+                ratingBadge.className = `rating-badge tier-${tier.label}`;
+            }
+            if (ratingTitle) ratingTitle.textContent = tier.title;
+            if (ratingComment) ratingComment.textContent = tier.comment;
+            ratingBlock?.classList.remove('hidden');
+            confirmButton?.classList.remove('hidden');
+        }, 260);
+        // 返回按钮仍显示，但用户可以选择“确定”向父场景回传
+        if (returnButton) returnButton.classList.remove('hidden');
     };
 
     // 绑定开始按钮事件
@@ -309,6 +344,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 返回剧情：显式退出（不计完成），父页面会关闭覆盖层
     if (returnButton) {
         returnButton.addEventListener('click', () => {
+            exitToMenu();
+        });
+    }
+
+    if (confirmButton) {
+        confirmButton.addEventListener('click', () => {
+            // 明确确认后再通知父窗口，并关闭
+            postToParent({ type: 'minigame:complete', payload: { score } });
             exitToMenu();
         });
     }

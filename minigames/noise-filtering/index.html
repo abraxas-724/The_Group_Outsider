@@ -51,8 +51,13 @@
         <div class="overlay-card">
             <h2 id="overlayTitle">游戏开始</h2>
             <p id="overlayMessage">将技术词汇拖到左侧，感性词汇拖到右侧。</p>
+            <div id="ratingBlock" class="rating-block hidden" aria-live="polite">
+                <p class="rating-line"><span id="ratingBadge" class="rating-badge"></span><span id="ratingTitle"></span></p>
+                <p id="ratingComment" class="rating-comment"></p>
+            </div>
             <div class="overlay-actions">
                 <button id="startButton" type="button" class="primary">开始</button>
+                <button id="confirmButton" type="button" class="primary hidden">确定</button>
                 <button id="returnButton" type="button" class="secondary hidden">返回主菜单</button>
             </div>
         </div>
