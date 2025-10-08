@@ -59,10 +59,10 @@ class GameApp {
             logic_mending: { url: 'minigames/logic-mending/index.html', title: '逻辑修复 (Logic Mending)', mode: 'iframe' }
         };
 
-    // **【修复】实例化成就系统**
-    this.achievements = new AchievementManager(this);
-    // 音频管理器（统一 UI / 操作 / BGM / 环境音效）
-    this.audio = new AudioManager({ basePath: 'assets/audio/' });
+        // **【修复】实例化成就系统**
+        this.achievements = new AchievementManager(this);
+        // 音频管理器（统一 UI / 操作 / BGM / 环境音效）
+        this.audio = new AudioManager({ basePath: 'assets/audio/' });
 
         // 异步预加载角色立绘，不阻塞游戏启动
         setTimeout(() => this.preloadCharacterImages(), 100);
@@ -147,6 +147,9 @@ class GameApp {
                 console.log('✅ 设置默认起始背景: black.png');
             }
 
+            // 初始化屏幕淡入淡出层（若页面中已添加 #screen-fader）
+            this._initScreenFader();
+
             this.dialogueEngine.start();
             this._wireInlineSaveLoad();
             this._wireQuickKeys();
@@ -178,6 +181,8 @@ class GameApp {
                 if (scriptReady && nodeReady) {
                     this._deferredLoadSlot = null;
                     console.log('开始执行延迟加载');
+                    // 初始化全局屏幕淡入层（如果存在 #screen-fader）
+                    this._initScreenFader();
                     this.loadGame(slot);
                 } else {
                     setTimeout(tryLoad, 60);
@@ -251,7 +256,6 @@ class GameApp {
                 e.stopPropagation();
                 const sm = document.getElementById('sl-mini');
                 if (!sm || !sm.classList.contains('show')) return; // 未展开时忽略点击
-                this.openInlinePanel('load');
                 this._hideMiniSL();
             });
         } else { console.warn('未找到读取按钮'); }
@@ -310,31 +314,9 @@ class GameApp {
         if (!this.settingsOverlay) return;
         this.settingsOverlay.classList.remove('sl-hidden');
         this.dialoguePaused = true;
-        // 初始化控件值
         this._syncSettingsControls();
-        // 如果存在扩展按钮(静音/重置/清除全部/主题 swatch)绑定一次
-        if (!this._settingsExtendedBound) {
-            const muteBtn = document.getElementById('st-audio-mute');
-            muteBtn && muteBtn.addEventListener('click', () => {
-                const s = this.currentSettings || {}; s.volMaster = 0; s.volAmb = 0; localStorage.setItem('groupOutsiderSettings', JSON.stringify(s)); this._loadSettings(); this._syncSettingsControls();
-            });
-            const resetBtn = document.getElementById('st-reset-default');
-            resetBtn && resetBtn.addEventListener('click', () => {
-                if (confirm('恢复默认设置?')) { const s = { textSpeed: 35, skipRead: false, autoMode: false, autoInterval: 1800, volMaster: 80, volAmb: 60, theme: 'default' }; localStorage.setItem('groupOutsiderSettings', JSON.stringify(s)); this._loadSettings(); this._syncSettingsControls(); }
-            });
-            const clearAllBtn = document.getElementById('st-clear-all');
-            clearAllBtn && clearAllBtn.addEventListener('click', () => {
-                if (confirm('清除当前账号的存档/成就/已读?')) {
-                    for (let i = 1; i <= 6; i++) localStorage.removeItem(nsKey('groupOutsiderSave_' + i));
-                    localStorage.removeItem(nsKey('achievements'));
-                    localStorage.removeItem(nsKey('readNodes'));
-                    // 设置仍为全局；如需每用户设置，可迁移为 nsKey('settings')
-                    this._loadSettings(); this._syncSettingsControls(); alert('已清除当前账号的数据');
-                }
-            });
-            this._settingsExtendedBound = true;
-        }
     }
+
     closeSettingsOverlay() {
         if (!this.settingsOverlay) return;
         this.settingsOverlay.classList.add('sl-hidden');
@@ -349,13 +331,12 @@ class GameApp {
             skipRead: g('st-skip-read'),
             autoMode: g('st-auto-mode'),
             autoInterval: g('st-auto-interval'),
-            // 补充自动间隔显示数值的引用，避免后续事件中访问未定义
             autoIntervalVal: g('st-auto-interval-val'),
-            // 新增：对话框透明度
             dlgOpacity: g('st-dlg-opacity'),
             dlgOpacityVal: g('st-dlg-opacity-val'),
             volMaster: g('st-vol-master'),
             volAmb: g('st-vol-amb'),
+            theme: g('st-theme'),
             clearRead: g('st-clear-read'),
             return: g('st-return')
         };
@@ -367,17 +348,8 @@ class GameApp {
         if (this.ctrl.dlgOpacity) this.ctrl.dlgOpacity.addEventListener('input', () => { if (this.ctrl.dlgOpacityVal) this.ctrl.dlgOpacityVal.textContent = this.ctrl.dlgOpacity.value; saveNow(); });
         if (this.ctrl.volMaster) this.ctrl.volMaster.addEventListener('input', saveNow);
         if (this.ctrl.volAmb) this.ctrl.volAmb.addEventListener('input', saveNow);
-        if (this.ctrl.return) this.ctrl.return.addEventListener('click', () => {
-            try { sessionStorage.removeItem(LOAD_FROM_SLOT_KEY); } catch { }
-            window.location.href = 'start.html';
-        });
-        // 主题控件已删除，无需事件
-        if (this.ctrl.clearRead) this.ctrl.clearRead.addEventListener('click', () => {
-            if (confirm('清除已读节点标记?')) {
-                localStorage.removeItem('groupOutsiderReadNodes');
-                alert('已清除已读标记');
-            }
-        });
+        if (this.ctrl.return) this.ctrl.return.addEventListener('click', () => { try { sessionStorage.removeItem(LOAD_FROM_SLOT_KEY); } catch { } window.location.href = 'start.html'; });
+        if (this.ctrl.clearRead) this.ctrl.clearRead.addEventListener('click', () => { if (confirm('清除已读节点标记?')) { localStorage.removeItem('groupOutsiderReadNodes'); alert('已清除已读标记'); } });
     }
 
     _syncSettingsControls() {
@@ -390,23 +362,23 @@ class GameApp {
         if (this.ctrl.dlgOpacity) { const v = (typeof s.dlgOpacity === 'number' ? s.dlgOpacity : 0.8); this.ctrl.dlgOpacity.value = String(v); if (this.ctrl.dlgOpacityVal) this.ctrl.dlgOpacityVal.textContent = String(v); }
         if (this.ctrl.volMaster) this.ctrl.volMaster.value = s.volMaster ?? 80;
         if (this.ctrl.volAmb) this.ctrl.volAmb.value = s.volAmb ?? 60;
-        // 主题控件已删除
+        if (this.ctrl.theme) this.ctrl.theme.value = s.theme || 'default';
     }
 
     _persistInlineSettings() {
+        if (!this.ctrl) return;
         const s = {
-            textSpeed: parseInt(this.ctrl.textSpeed.value, 10),
-            skipRead: this.ctrl.skipRead.checked,
-            autoMode: this.ctrl.autoMode.checked,
-            autoInterval: parseInt(this.ctrl.autoInterval.value, 10),
-            dlgOpacity: this.ctrl.dlgOpacity ? parseFloat(this.ctrl.dlgOpacity.value) : (this.currentSettings?.dlgOpacity ?? 0.8),
-            volMaster: parseInt(this.ctrl.volMaster.value, 10),
-            volAmb: parseInt(this.ctrl.volAmb.value, 10),
-            theme: this.ctrl.theme ? this.ctrl.theme.value : (this.currentSettings?.theme || 'default')
+            textSpeed: parseInt(this.ctrl.textSpeed?.value || '35', 10),
+            skipRead: !!this.ctrl.skipRead?.checked,
+            autoMode: !!this.ctrl.autoMode?.checked,
+            autoInterval: parseInt(this.ctrl.autoInterval?.value || '1800', 10),
+            dlgOpacity: parseFloat(this.ctrl.dlgOpacity?.value || '0.8'),
+            volMaster: parseInt(this.ctrl.volMaster?.value || '80', 10),
+            volAmb: parseInt(this.ctrl.volAmb?.value || '60', 10),
+            theme: (this.ctrl.theme && this.ctrl.theme.value) || 'default'
         };
-        this.currentSettings = s;
         localStorage.setItem('groupOutsiderSettings', JSON.stringify(s));
-        // 立即应用
+        this.currentSettings = s;
         this.dialogueEngine.applySettings({
             textSpeed: s.textSpeed,
             skipRead: s.skipRead,
@@ -415,8 +387,10 @@ class GameApp {
         });
         this._applyVolumes(s);
         this._applyDialogueOpacity(s);
-        if (this.ctrl.theme) document.body.setAttribute('data-theme', s.theme); // 兼容旧数据
+        if (this.ctrl.theme) document.body.setAttribute('data-theme', s.theme);
     }
+
+    // （上方已插入新的 设置相关方法实现）
 
     _renderSlots() {
         if (!this.slotsContainer) return;
@@ -586,59 +560,17 @@ class GameApp {
 
     changeBackground(node) {
         try {
-            console.log('🖼️ 正在更换背景为:', node.imagePath);
-
-            if (!this.backgroundEl) {
-                console.error('❌ backgroundEl 未找到!');
-                return;
-            }
-
-            console.log('✅ backgroundEl 存在:', this.backgroundEl);
-
-            // 场景切换前隐藏上一个场景所有角色（支持未来通过 node.keepCharacters 控制保留）
+            if (!node || !node.imagePath) return;
             if (!node.keepCharacters) {
                 for (const id in this.characters) {
                     const el = this.characters[id];
                     if (el) el.classList.add('hidden');
                 }
             }
-            // 规范化为绝对 URL，避免在不同 base 下解析异常
-            const base = (typeof document !== 'undefined' && document.baseURI) ? document.baseURI : window.location.href;
-            let url = node.imagePath;
-            console.log('🔗 解析前路径:', url);
-            console.log('🔗 Base URL:', base);
-            try { url = new URL(node.imagePath, base).toString(); } catch (e) {
-                console.warn('URL 解析失败，使用原路径:', e);
-            }
-            console.log('🔗 解析后URL:', url);
-
-            // 渐隐旧背景
-            this.backgroundEl.style.opacity = '0.3';
-            console.log('🎭 设置背景透明度为 0.3');
-
-            // 预加载后再切换，确保显示正确图片
-            const probe = new Image();
-            probe.onload = () => {
-                console.log('✅ 背景图加载成功，设置src:', url);
-                this.backgroundEl.src = url;
-                this.backgroundEl.style.opacity = '1';
-                console.log('🎭 背景设置完成，透明度已恢复为 1');
-            };
-            probe.onerror = (e) => {
-                console.error('❌ 背景图片加载失败:', url, e);
-                // 即使加载失败也要尝试显示，可能是缓存问题
-                this.backgroundEl.src = url;
-                this.backgroundEl.style.opacity = '1';
-                console.log('⚠️ 强制设置背景，即使加载失败');
-            };
-            probe.src = url;
-            console.log('🔄 开始预加载背景图片:', url);
+            this.setBackgroundWithFade(node.imagePath);
         } catch (e) {
-            console.error('❌ 切换背景异常:', e);
-            if (this.backgroundEl) {
-                this.backgroundEl.src = node?.imagePath || '';
-                this.backgroundEl.style.opacity = '1';
-            }
+            console.error('切换背景失败:', e);
+            if (this.backgroundEl) this.backgroundEl.src = node?.imagePath || '';
         }
     }
 
@@ -692,6 +624,10 @@ class GameApp {
 
             // 渲染热点（支持百分比坐标）
             node.hotspots.forEach(hs => {
+                // 如果配置 once 且曾设置过对应 flag（或自建 seen 标记），直接跳过生成
+                if (hs.once && hs.setFlag && this.dialogueEngine?.gameState?.[hs.setFlag]) {
+                    return; // 不再渲染该热点
+                }
                 const el = document.createElement('div');
                 el.className = 'hotspot';
                 // 先记录源数据，具体定位延后统一计算（便于窗口变化时重排）
@@ -858,8 +794,14 @@ class GameApp {
             if (params) { Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, String(v))); }
             return u.toString();
         };
-        // 打开遮罩
-        ov.classList.add('show');
+        const proceedOpen = () => {
+            ov.classList.add('show');
+        };
+        if (this._screenFaderEl) {
+            this.fadeOutScreen(220).then(() => { proceedOpen(); this.fadeInScreen(260); });
+        } else {
+            proceedOpen();
+        }
         if (preface && descEl && startBtn && bodyEl) {
             // 填充说明文案：优先 node.params，其次 def.desc，最后默认
             const customDesc = (params && (params.desc || params.description)) || def.desc || '准备开始小游戏。';
@@ -960,6 +902,8 @@ class GameApp {
             try { this.achievements.markMinigameComplete(this._currentMinigameId, result?.payload); } catch { }
         }
         cb && cb(result);
+        // 小游戏退出后轻微淡入，提升衔接感
+        this._screenFaderEl && this.fadeInScreen(360);
     }
 
     /* ================= 渐隐到黑 ================= */
@@ -1149,14 +1093,21 @@ class GameApp {
         const data = this.saveLoadManager.load(slot);
         if (!data) { alert('槽位为空'); return false; }
         if (!data.currentNodeId) { alert('存档损坏'); return false; }
-        this.backgroundEl.src = data.currentBackground || '';
-        this.characterLayer.innerHTML = '';
-        this.characters = {};
-        (data.charactersOnScreen || []).forEach(cd => this.showCharacter(cd));
-        this.dialogueEngine.gameState = data.gameStateFlags || {};
-        if (data.settingsSnapshot) { this.dialogueEngine.applySettings(data.settingsSnapshot); }
-        this.dialogueEngine._showNode(data.currentNodeId);
-        alert(`已读取槽位 ${slot}`);
+        const core = () => {
+            this.setBackgroundImmediate(data.currentBackground || '');
+            this.characterLayer.innerHTML = '';
+            this.characters = {};
+            (data.charactersOnScreen || []).forEach(cd => this.showCharacter(cd));
+            this.dialogueEngine.gameState = data.gameStateFlags || {};
+            if (data.settingsSnapshot) { this.dialogueEngine.applySettings(data.settingsSnapshot); }
+            this.dialogueEngine._showNode(data.currentNodeId);
+        };
+        if (this._screenFaderEl) {
+            this.runScreenTransition(core, { fadeOut: 420, fadeIn: 480 }).then(() => alert(`已读取槽位 ${slot}`));
+        } else {
+            core();
+            alert(`已读取槽位 ${slot}`);
+        }
         return true;
     }
 
@@ -1240,7 +1191,7 @@ class GameApp {
     // ====== 全局 UI 点击/键盘 音效绑定 ======
     _initGlobalSfx() {
         if (this._sfxBound) return; this._sfxBound = true;
-    const clickSelector = 'button, .sl-btn, .dlg-sl-btn, .hotspot, [data-sfx]';
+        const clickSelector = 'button, .sl-btn, .dlg-sl-btn, .hotspot, [data-sfx]';
         // 使用捕获阶段监听，避免目标元素或其专用处理里使用 e.stopPropagation() 阻断冒泡，
         // 之前保存/读取/快速存读/行为记录/设置按钮都调用了 stopPropagation 导致无声。
         document.addEventListener('click', (e) => {
@@ -1274,6 +1225,96 @@ class GameApp {
             if (e.key === 'Escape') {
                 this.audio?.play('ui_cancel');
             }
+        });
+    }
+
+    /* ====================== 屏幕淡入淡出 & 背景交叉淡化 ====================== */
+    _initScreenFader() {
+        if (this._screenFaderInited) return;
+        const el = document.getElementById('screen-fader');
+        if (!el) return;
+        this._screenFaderEl = el;
+        el.style.opacity = '1'; // 初始黑
+        el.style.transition = 'opacity .45s ease';
+        requestAnimationFrame(() => { el.style.opacity = '0'; }); // 进入时淡入场景
+        this._screenFaderInited = true;
+    }
+
+    fadeOutScreen(duration = 400) {
+        return new Promise(res => {
+            if (!this._screenFaderEl) return res();
+            this._screenFaderEl.style.transition = `opacity ${duration}ms ease`;
+            this._screenFaderEl.style.opacity = '1';
+            setTimeout(res, duration + 34);
+        });
+    }
+
+    fadeInScreen(duration = 400) {
+        return new Promise(res => {
+            if (!this._screenFaderEl) return res();
+            this._screenFaderEl.style.transition = `opacity ${duration}ms ease`;
+            this._screenFaderEl.style.opacity = '0';
+            setTimeout(res, duration + 34);
+        });
+    }
+
+    runScreenTransition(action, opts = {}) {
+        const { fadeOut = 400, hold = 0, fadeIn = 420 } = opts;
+        if (!this._screenFaderEl) { action && action(); return Promise.resolve(); }
+        if (this._transitionLock) return Promise.resolve();
+        this._transitionLock = true;
+        return this.fadeOutScreen(fadeOut)
+            .then(() => { action && action(); return new Promise(r => setTimeout(r, hold)); })
+            .then(() => this.fadeInScreen(fadeIn))
+            .finally(() => { this._transitionLock = false; });
+    }
+
+    setBackgroundImmediate(url) {
+        if (!this.backgroundEl) return;
+        const base = (typeof document !== 'undefined' && document.baseURI) ? document.baseURI : window.location.href;
+        try { url = new URL(url, base).toString(); } catch { }
+        this.backgroundEl.src = url;
+    }
+
+    setBackgroundWithFade(url) {
+        if (!this.backgroundEl) return this.setBackgroundImmediate(url);
+        if (this._bgTransitionRunning) { // 若正在过渡，直接替换
+            return this.setBackgroundImmediate(url);
+        }
+        this._bgTransitionRunning = true;
+        const base = (typeof document !== 'undefined' && document.baseURI) ? document.baseURI : window.location.href;
+        try { url = new URL(url, base).toString(); } catch { }
+        const parent = this.backgroundEl.parentNode;
+        if (!parent) { this.setBackgroundImmediate(url); this._bgTransitionRunning = false; return; }
+        const temp = document.createElement('img');
+        temp.src = url;
+        temp.alt = 'bg-temp';
+        Object.assign(temp.style, {
+            position: 'absolute', inset: '0', width: '100%', height: '100%', objectFit: 'cover', opacity: '0', transition: 'opacity .6s ease', zIndex: '1'
+        });
+        parent.appendChild(temp);
+        const old = this.backgroundEl;
+        old.style.transition = 'opacity .6s ease';
+        old.style.opacity = '1';
+        temp.addEventListener('load', () => {
+            requestAnimationFrame(() => {
+                temp.style.opacity = '1';
+                old.style.opacity = '0';
+                setTimeout(() => {
+                    // 交换: 用新图替换旧节点 src，然后移除 temp
+                    // 关键：先禁用过渡再恢复不再触发第二次淡入
+                    old.style.transition = 'none';
+                    old.src = url;
+                    old.style.opacity = '1'; // 立即显示（无过渡）
+                    try { temp.remove(); } catch { }
+                    this._bgTransitionRunning = false;
+                }, 620);
+            });
+        });
+        temp.addEventListener('error', () => {
+            old.src = url;
+            try { temp.remove(); } catch { }
+            this._bgTransitionRunning = false;
         });
     }
 }
