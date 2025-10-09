@@ -64,7 +64,7 @@ body {
 
 #scene-background {
     object-fit: cover;
-    transition: opacity 0.8s ease-in-out;
+    /* 移除直接的 opacity 过渡，避免与 JS 双缓冲交叉淡入造成二次淡入视觉感受 */
     z-index: 1;
 }
 
@@ -84,6 +84,13 @@ body {
     bottom: 0;
     transform: translateX(-50%);
     transition: all 0.4s ease-in-out, filter 0.3s ease-in-out;
+}
+
+/* 当前说话者：高亮 + 轻微放大，强化存在感（不过度夸张） */
+.character.active {
+    transform: translateX(-50%) scale(1.06);
+    filter: brightness(1) saturate(1.05);
+    z-index: 3;
 }
 
 .pos-left {
@@ -511,4 +518,43 @@ textarea *,
     #dialogue-text {
         font-size: clamp(11px, 3.2vw, 13px);
     }
+}
+
+/* ================= 全局屏幕淡入淡出遮罩 ================= */
+#screen-fader {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 500;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity .75s ease-in-out;
+}
+
+#screen-fader.fade-out {
+    opacity: 0;
+}
+
+#screen-fader.hidden {
+    display: none;
+}
+
+#screen-fader.preload {
+    opacity: 1;
+}
+
+/* 背景双缓冲层：主背景 #scene-background 已存在，新增交叉淡入类 */
+#scene-background.crossfade-out {
+    opacity: 0;
+}
+
+#scene-background.crossfade-in {
+    opacity: 1;
+}
+
+/* 角色淡出补充（已有 hidden 处理出现，但隐藏改为平滑） */
+.character.fade-out {
+    opacity: 0 !important;
+    filter: brightness(.4);
+    transition: opacity .4s ease, filter .4s ease;
 }

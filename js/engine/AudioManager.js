@@ -53,6 +53,7 @@ export class AudioManager {
       // 新增：对话系统相关
       text_tick: 'text_tick.mp3',       // 文本逐字打印的轻微打字机音（节流播放）
       dialogue_advance: 'dialogue_advance.mp3', // 对话推进到下一句/节点
+      bgm_start: 'bgm_start.mp3',
       bgm_main: 'bgm_main.mp3',
       amb_loop: 'amb_loop.mp3'
     }, opts.customMapping || {});
@@ -63,6 +64,11 @@ export class AudioManager {
       this.unlocked = true;
       // 尝试预热一个空的短音频（部分浏览器不需要）
       this._tryResumeContext();
+      try {
+        // 广播一个解锁事件，便于外部在真正解锁后再触发播放，避免监听顺序竞争
+        const evt = new CustomEvent('audio_unlocked');
+        window.dispatchEvent(evt);
+      } catch { }
       window.removeEventListener('pointerdown', unlockHandler);
       window.removeEventListener('keydown', unlockHandler);
     };
@@ -75,30 +81,45 @@ export class AudioManager {
   }
 
   setVolumes({ master, amb }) {
-    if (typeof master === 'number') this.masterVolume = Math.max(0, Math.min(1, master));
-    if (typeof amb === 'number') this.ambVolume = Math.max(0, Math.min(1, amb));
+    if (typeof master === 'number') {
+      this.masterVolume = Math.max(0, Math.min(1, master));
+    }
+    if (typeof amb === 'number') {
+      this.ambVolume = Math.max(0, Math.min(1, amb));
+    }
     // 同步所有已经存在的音频
     this.cache.forEach((audio, key) => {
-      if (key.startsWith('amb_') || key === 'amb_loop') audio.volume = this.masterVolume * this.ambVolume;
-      else if (key.startsWith('bgm_') || key === 'bgm_main') audio.volume = this.masterVolume; // 可单独做 BGM 比例
-      else audio.volume = this.masterVolume; // SFX
+      if (key.startsWith('amb_') || key === 'amb_loop') {
+        audio.volume = this.masterVolume * this.ambVolume;
+      } else if (key.startsWith('bgm_') || key === 'bgm_main') {
+        audio.volume = this.masterVolume; // 可单独做 BGM 比例
+      } else {
+        audio.volume = this.masterVolume; // SFX
+      }
     });
     this.looping.forEach((audio, key) => {
-      if (key.startsWith('amb_') || key === 'amb_loop') audio.volume = this.masterVolume * this.ambVolume;
-      else audio.volume = this.masterVolume;
+      if (key.startsWith('amb_') || key === 'amb_loop') {
+        audio.volume = this.masterVolume * this.ambVolume;
+      } else {
+        audio.volume = this.masterVolume;
+      }
     });
   }
 
   // 播放一次（短音效）
   play(key, { volume = 1, allowBeforeUnlock = false } = {}) {
-    if (!allowBeforeUnlock && !this.unlocked) return; // 未解锁前忽略
+    if (!allowBeforeUnlock && !this.unlocked) {
+      return; // 未解锁前忽略
+    }
     const audio = this._getAudioElement(key, false);
-    if (!audio) return;
+    if (!audio) {
+      return;
+    }
     try {
       audio.currentTime = 0;
       audio.volume = this._calcVolume(key) * volume;
-      audio.play().catch(() => {});
-    } catch {}
+      audio.play().catch(() => { });
+    } catch { }
   }
 
   /**
@@ -107,7 +128,9 @@ export class AudioManager {
    * 用法：audio.playVariant('text_tick', 4)  // 在 text_tick_1..4 中随机一个；若不存在则回退 text_tick
    */
   playVariant(baseKey, maxVariants, { volume = 1, allowBeforeUnlock = false } = {}) {
-    if (!allowBeforeUnlock && !this.unlocked) return;
+    if (!allowBeforeUnlock && !this.unlocked) {
+      return;
+    }
     const n = parseInt(maxVariants, 10);
     if (!Number.isFinite(n) || n <= 1) {
       return this.play(baseKey, { volume, allowBeforeUnlock });
@@ -116,7 +139,9 @@ export class AudioManager {
     const candidates = [];
     for (let i = 1; i <= n; i++) {
       const k = `${baseKey}_${i}`;
-      if (this.mapping[k]) candidates.push(k);
+      if (this.mapping[k]) {
+        candidates.push(k);
+      }
     }
     // 若 mapping 中无显式列出变体，仍尝试文件是否存在（懒加载失败会被忽略）
     if (candidates.length === 0) {
@@ -130,34 +155,151 @@ export class AudioManager {
   // 播放循环音频（如 BGM / 环境）
   playLoop(key) {
     const audio = this._getAudioElement(key, true);
-    if (!audio) return;
+    if (!audio) {
+      return;
+    }
     try {
       audio.loop = true;
       audio.volume = this._calcVolume(key);
-      audio.play().catch(() => {});
+      audio.play().catch(() => { });
       this.looping.set(key, audio);
-    } catch {}
+    } catch { }
   }
 
   stop(key) {
     const audio = this.cache.get(key);
     if (audio) {
-      try { audio.pause(); } catch {}
+      try { audio.pause(); } catch { }
     }
   }
 
   stopAllLoops() {
-    this.looping.forEach(a => { try { a.pause(); } catch {} });
+    this.looping.forEach(a => { try { a.pause(); } catch { } });
     this.looping.clear();
   }
 
+  /**
+   * 淡出并停止当前 BGM（若存在）。
+   * @param {object} opts
+   * @param {number} [opts.fadeOut=900] - 淡出时长(ms)
+   */
+  stopBgm({ fadeOut = 900 } = {}) {
+    try {
+      const prevKey = this._currentBgmKey;
+      if (!prevKey) return;
+      const old = this.cache.get(prevKey);
+      if (!old) {
+        this._currentBgmKey = null;
+        if (this.looping.has(prevKey)) this.looping.delete(prevKey);
+        return;
+      }
+      this._fade(old, old.volume, 0, fadeOut, () => {
+        try { old.pause(); } catch { }
+        if (this.looping.has(prevKey)) this.looping.delete(prevKey);
+        this._currentBgmKey = null;
+      });
+    } catch { }
+  }
+
+  /**
+   * 高级：播放（或切换）BGM，带淡入淡出。避免多个 BGM 叠加。
+   * @param {string} key - 目标 BGM key (需在 mapping 中映射文件) 如 'bgm_start'
+   * @param {object} opts
+   * @param {number} [opts.fadeIn=1200] - 淡入时长(ms)
+   * @param {number} [opts.fadeOut=900] - 之前 BGM 淡出时长(ms)
+   * @param {string} [opts.fallback] - 如果 key 不存在则使用的后备 key
+   * @param {boolean} [opts.loop=true] - 是否循环
+   * @param {number} [opts.targetVolume=1] - 在 master 基础上的相对倍数 0~1
+   */
+  playBgm(key, { fadeIn = 1200, fadeOut = 900, fallback, loop = true, targetVolume = 1 } = {}) {
+    if (!this.unlocked) {
+      // 未解锁：记录一个待播操作；在 unlockHandler 后由外部再次调用更加简单，这里直接静默返回
+      return;
+    }
+    if (!this.mapping[key]) {
+      if (fallback && this.mapping[fallback]) {
+        key = fallback;
+      } else {
+        return;
+      }
+    }
+    if (this._currentBgmKey === key) {
+      return; // 已经在播
+    }
+
+    const prevKey = this._currentBgmKey;
+    this._currentBgmKey = key;
+    const newAudio = this._getAudioElement(key, true);
+    if (!newAudio) {
+      return;
+    }
+    try {
+      newAudio.loop = !!loop;
+      const baseVol = this._calcVolume(key) * targetVolume;
+      newAudio.volume = 0; // 先置 0 做淡入
+      newAudio.play().catch(() => { });
+      this.looping.set(key, newAudio);
+      // 淡出旧的
+      if (prevKey && prevKey !== key) {
+        const old = this.cache.get(prevKey);
+        if (old) {
+          this._fade(old, old.volume, 0, fadeOut, () => {
+            try { old.pause(); } catch { }
+            if (this.looping.has(prevKey)) {
+              this.looping.delete(prevKey);
+            }
+          });
+        }
+      }
+      // 保险：淡出停止其他遗留的 BGM（key 以 'bgm' 开头且不是当前 key）
+      try {
+        this.looping.forEach((a, k) => {
+          if (k !== key && /^bgm/i.test(k)) {
+            const from = a.volume;
+            this._fade(a, from, 0, Math.min(fadeOut, 900), () => { try { a.pause(); } catch { } this.looping.delete(k); });
+          }
+        });
+      } catch { }
+      // 淡入新的
+      this._fade(newAudio, 0, baseVol, fadeIn);
+    } catch { }
+  }
+
+  /** 内部淡入淡出工具 */
+  _fade(audioEl, from, to, duration = 1000, onDone) {
+    try {
+      const start = performance.now();
+      const delta = to - from;
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        // 使用 easeInOutQuad 使曲线更柔顺
+        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        audioEl.volume = Math.max(0, Math.min(1, from + delta * eased));
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else if (onDone) {
+          onDone();
+        }
+      };
+      requestAnimationFrame(step);
+    } catch {
+      if (onDone) {
+        onDone();
+      }
+    }
+  }
+
   _calcVolume(key) {
-    if (key.startsWith('amb_') || key === 'amb_loop') return this.masterVolume * this.ambVolume;
+    if (key.startsWith('amb_') || key === 'amb_loop') {
+      return this.masterVolume * this.ambVolume;
+    }
     return this.masterVolume; // 其他按主音量
   }
 
   _getAudioElement(key, loop) {
-    if (!this.mapping[key]) return null;
+    if (!this.mapping[key]) {
+      return null;
+    }
     if (!this.cache.has(key)) {
       const src = this.basePath + this.mapping[key];
       const audio = new Audio(src);

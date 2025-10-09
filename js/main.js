@@ -116,6 +116,112 @@ class GameApp {
                     if (this._deferredLoadSlot) {
                         return; // 抑制开场节点，避免覆盖即将加载的存档节点
                     }
+                    // 在进入原始显示逻辑前，基于节点数据触发 BGM（无需引擎新增节点类型）
+                    try {
+                        const script = this.dialogueEngine && Array.isArray(this.dialogueEngine.script)
+                            ? this.dialogueEngine.script : null;
+                        const node = script ? script.find(n => n.id === nodeId) : null;
+                        if (node) {
+                            const audio = this.audio;
+                            // 优先：如果场景切换节点要求停止上一场景 BGM，则先执行淡出停止
+                            try {
+                                if (node.type === 'changeBackground' && (node.stopBgm || node.stopPrevBgm)) {
+                                    const fadeOut = (typeof node.fadeOutBgm === 'number') ? node.fadeOutBgm : (typeof node.fadeOut === 'number' ? node.fadeOut : 900);
+                                    audio?.stopBgm?.({ fadeOut });
+                                }
+                            } catch { }
+                            const buildOpts = (src) => ({
+                                fadeIn: (typeof src?.fadeIn === 'number') ? src.fadeIn : undefined,
+                                fadeOut: (typeof src?.fadeOut === 'number') ? src.fadeOut : undefined,
+                                loop: (src?.loop === undefined ? true : !!src.loop),
+                                targetVolume: (typeof src?.targetVolume === 'number') ? src.targetVolume :
+                                    ((typeof src?.volume === 'number') ? src.volume : undefined),
+                                fallback: src?.fallback || src?.bgmFallback,
+                            });
+                            const ensurePlayBgm = (key, opts) => {
+                                try {
+                                    if (audio?.unlocked) {
+                                        audio.playBgm?.(key, opts);
+                                    } else {
+                                        const once = () => {
+                                            try { audio.playBgm?.(key, opts); } catch { }
+                                            window.removeEventListener('pointerdown', once);
+                                            window.removeEventListener('keydown', once);
+                                        };
+                                        window.addEventListener('pointerdown', once, { once: true, passive: true });
+                                        window.addEventListener('keydown', once, { once: true, passive: true });
+                                    }
+                                } catch { }
+                            };
+                            const playFromKey = (key, opts) => { ensurePlayBgm(key, opts); };
+                            const playFromPath = (path, opts, dynKey) => {
+                                try {
+                                    let rel = String(path);
+                                    const base = audio?.basePath || '';
+                                    if (rel.startsWith(base)) {
+                                        rel = rel.slice(base.length);
+                                        if (rel.startsWith('/') || rel.startsWith('\\')) { rel = rel.slice(1); }
+                                    } else if (rel.startsWith('assets/audio/')) {
+                                        rel = rel.slice('assets/audio/'.length);
+                                    }
+                                    const key = dynKey || (`bgm_${node.id || 'custom'}`);
+                                    if (!audio?.mapping || audio.mapping[key] !== rel) {
+                                        audio?.addMapping?.(key, rel);
+                                    }
+                                    ensurePlayBgm(key, opts);
+                                } catch { }
+                            };
+
+                            // 兼容：若剧本节点本身声明为 { type: 'bgm', ... }，在这里直接处理并跳转到 next
+                            if (node.type === 'bgm') {
+                                const opts = buildOpts(node);
+                                if (node.key) { playFromKey(node.key, opts); }
+                                else if (node.audioPath) { playFromPath(node.audioPath, opts, node.keyName); }
+                                const nextId = node.next;
+                                if (nextId) { return __origShowNode(nextId); }
+                                return; // 无 next 则停在此（UI 会被原逻辑隐藏）
+                            }
+
+                            // 新增：视频节点（无需改引擎）：{ type: 'video', src, controls, autoCloseOnEnd, stopBgm, fadeOutBgm, next }
+                            if (node.type === 'video' || node.type === 'startVideo') {
+                                this.startVideo(node, () => {
+                                    if (node.next) __origShowNode(node.next);
+                                });
+                                return;
+                            }
+
+                            // 新增：立绘更新（无需改引擎）：{ type: 'setCharacter'|'updateCharacter', charId, expression|variant|pose, imagePath?, position?, next }
+                            if (node.type === 'setCharacter' || node.type === 'updateCharacter') {
+                                // 处理当前 setCharacter/updateCharacter，继续“吞掉”紧跟其后的同类节点，最后再把控制权交回拦截器本身
+                                try { this.updateCharacter(node); } catch { }
+                                let nextId = node.next;
+                                while (nextId) {
+                                    const nextNode = script ? script.find(n => n.id === nextId) : null;
+                                    if (!nextNode) break;
+                                    if (nextNode.type === 'setCharacter' || nextNode.type === 'updateCharacter') {
+                                        try { this.updateCharacter(nextNode); } catch { }
+                                        nextId = nextNode.next;
+                                        continue;
+                                    }
+                                    // 对于非 setCharacter 节点，重新走拦截器，确保 BGM / 视频 等逻辑仍然生效
+                                    return this.dialogueEngine._showNode(nextId);
+                                }
+                                if (nextId) { return this.dialogueEngine._showNode(nextId); }
+                                return;
+                            }
+
+                            // 通用：在任意节点上支持声明 bgm 切换（不改变节点类型）
+                            // - bgmKey 或 bgm: 作为映射 key 使用
+                            // - bgmAudioPath: 直接给出音频路径
+                            const bgmKey = node.bgmKey || node.bgm;
+                            const bgmAudioPath = node.bgmAudioPath; // 避免误将其它 audioPath 识别为 BGM
+                            if (bgmKey) {
+                                playFromKey(bgmKey, buildOpts(node));
+                            } else if (bgmAudioPath) {
+                                playFromPath(bgmAudioPath, buildOpts(node));
+                            }
+                        }
+                    } catch { }
                     // 每次显示节点，都通知成就系统
                     this.achievements?.onNodeShown?.(nodeId);
                     // 执行原始的显示逻辑
@@ -256,6 +362,7 @@ class GameApp {
                 e.stopPropagation();
                 const sm = document.getElementById('sl-mini');
                 if (!sm || !sm.classList.contains('show')) return; // 未展开时忽略点击
+                this.openInlinePanel('load');
                 this._hideMiniSL();
             });
         } else { console.warn('未找到读取按钮'); }
@@ -957,22 +1064,79 @@ class GameApp {
             this.characters[node.charId] = charEl;
         }
 
-        // 使用预加载的图片或直接设置src
-        const imagePath = `assets/images/characters/${node.charId.toLowerCase()}-neutral.png`;
-        if (this.preloadedImages.has(imagePath)) {
-            // 使用预加载的图片，避免重新加载
-            charEl.src = this.preloadedImages.get(imagePath).src;
+        // 1) 解析使用的贴图路径：优先 node.imagePath；否则根据 expression/variant 推导；最后回退 neutral
+        const resolvedPath = node.imagePath || this._resolveCharacterImage(node.charId, node.expression || node.variant || node.pose);
+        // 绑定失败回退 neutral
+        charEl.onerror = () => {
+            const fallback = this._resolveCharacterImage(node.charId, null);
+            if (charEl.src !== fallback) { charEl.src = fallback; }
+        };
+        if (this.preloadedImages.has(resolvedPath)) {
+            charEl.src = this.preloadedImages.get(resolvedPath).src;
         } else {
-            // 如果没有预加载，直接设置src（会重新加载）
-            charEl.src = imagePath;
+            charEl.src = resolvedPath;
+        }
+        // 记录当前表情（用于存档）
+        if (node.expression || node.variant || node.pose) {
+            charEl.dataset.expression = String(node.expression || node.variant || node.pose);
+        } else {
+            delete charEl.dataset.expression;
         }
 
+        // 2) 位置
         charEl.classList.remove('pos-left', 'pos-center', 'pos-right');
         if (node.position) {
             charEl.classList.add(node.position);
         }
 
         setTimeout(() => charEl.classList.remove('hidden'), 50);
+    }
+
+    /**
+     * 更新已有角色的立绘（不重新创建元素）：可切换表情/姿势与位置
+     * node: { charId, expression|variant|pose, imagePath?, position? }
+     */
+    updateCharacter(node) {
+        const charEl = this.characters[node.charId];
+        if (!charEl) {
+            // 若未在场，则等价于显示
+            return this.showCharacter(node);
+        }
+        // 切换贴图
+        const resolvedPath = node.imagePath || this._resolveCharacterImage(node.charId, node.expression || node.variant || node.pose, charEl.dataset.expression);
+        if (resolvedPath) {
+            charEl.onerror = () => {
+                const fallback = this._resolveCharacterImage(node.charId, null);
+                if (charEl.src !== fallback) { charEl.src = fallback; }
+            };
+            if (this.preloadedImages.has(resolvedPath)) {
+                charEl.src = this.preloadedImages.get(resolvedPath).src;
+            } else {
+                charEl.src = resolvedPath;
+            }
+        }
+        // 记录/更新当前表情标记
+        if (node.expression || node.variant || node.pose) {
+            charEl.dataset.expression = String(node.expression || node.variant || node.pose);
+        }
+        // 切换位置（若提供）
+        if (node.position) {
+            charEl.classList.remove('pos-left', 'pos-center', 'pos-right');
+            charEl.classList.add(node.position);
+        }
+        // 确保可见
+        charEl.classList.remove('hidden');
+    }
+
+    /**
+     * 依据命名约定解析立绘路径：
+     * - 默认: assets/images/characters/<char>-neutral.png
+     * - 若提供 variant/expression: assets/images/characters/<char>-<variant>.png
+     */
+    _resolveCharacterImage(charId, variant) {
+        const base = `assets/images/characters/${String(charId).toLowerCase()}`;
+        if (variant) return `${base}-${String(variant).toLowerCase()}.png`;
+        return `${base}-neutral.png`;
     }
 
     hideCharacter(node) {
@@ -1033,6 +1197,131 @@ class GameApp {
         this._edgeOv = null;
     }
 
+    // ========== 在游戏中播放视频（全屏覆盖） ==========
+    startVideo(node, onDone) {
+        // node: { src, poster, controls, muted, autoplay, loop, stopBgm, fadeOutBgm, clickToSkip, autoCloseOnEnd }
+        // 1) 可选：先停掉当前 BGM（淡出）
+        try {
+            if (node.stopBgm || node.fadeOutBgm) {
+                const fadeOut = (typeof node.fadeOutBgm === 'number') ? node.fadeOutBgm : 900;
+                this.audio?.stopBgm?.({ fadeOut });
+            }
+        } catch { }
+        // 2) 构建覆盖层
+        let ov = document.getElementById('video-overlay');
+        if (!ov) {
+            ov = document.createElement('div');
+            ov.id = 'video-overlay';
+            ov.innerHTML = `
+                <div class="sl-panel" style="background:transparent;border:none;box-shadow:none;padding:0;display:flex;align-items:center;justify-content:center;max-width:inherit;max-height:inherit;width:100%;height:100%">
+                    <video id="game-video" playsinline style="max-width:100%;max-height:100%;outline:none;border:none;display:block;background:#000"></video>
+                    <button id="video-close" class="sl-btn sl-ghost" style="position:absolute;top:16px;right:16px;z-index:5;opacity:.9">跳过</button>
+                </div>`;
+            ov.style.position = 'fixed';
+            ov.style.inset = '0';
+            ov.style.zIndex = '6000';
+            ov.style.background = 'rgba(0,0,0,1)';
+            ov.style.display = 'flex';
+            document.body.appendChild(ov);
+        } else {
+            ov.style.display = 'flex';
+        }
+        const video = ov.querySelector('#game-video');
+        const btnClose = ov.querySelector('#video-close');
+        // 3) 配置 video 属性
+        if (node.poster) video.setAttribute('poster', node.poster); else video.removeAttribute('poster');
+        video.src = node.src || '';
+        video.muted = !!node.muted;
+        video.loop = !!node.loop;
+        if (!!node.controls) video.setAttribute('controls', ''); else video.removeAttribute('controls');
+
+        // 4) 事件：结束自动关闭；ESC 或按钮关闭；可选点击任意处跳过
+        const cleanup = () => {
+            try { video.pause(); } catch { }
+            video.src = '';
+            ov.style.display = 'none';
+            document.removeEventListener('keydown', onEsc);
+            if (node.clickToSkip) { ov.removeEventListener('click', onOvClick); }
+            btnClose.removeEventListener('click', onBtnClose);
+        };
+        const finish = () => {
+            // 在关闭视频叠层前/后，尝试预先触发“下一节点”的 BGM，避免需要再点一次才开始
+            try {
+                const nextId = node.next;
+                const de = this.dialogueEngine;
+                const audio = this.audio;
+                if (nextId && de && Array.isArray(de.script) && audio) {
+                    const nextNode = de.script.find(n => n.id === nextId);
+                    if (nextNode) {
+                        const bgmKey = nextNode.bgmKey || nextNode.bgm;
+                        const bgmAudioPath = nextNode.bgmAudioPath;
+                        const opts = {
+                            fadeIn: (typeof nextNode.fadeIn === 'number') ? nextNode.fadeIn : undefined,
+                            fadeOut: (typeof nextNode.fadeOut === 'number') ? nextNode.fadeOut : undefined,
+                            loop: (nextNode.loop === undefined ? true : !!nextNode.loop),
+                            targetVolume: (typeof nextNode.targetVolume === 'number') ? nextNode.targetVolume :
+                                ((typeof nextNode.volume === 'number') ? nextNode.volume : undefined),
+                            fallback: nextNode.fallback || nextNode.bgmFallback,
+                        };
+                        const ensureNowOrOnUnlock = (keyToPlay) => {
+                            try {
+                                if (audio.unlocked) {
+                                    audio.playBgm?.(keyToPlay, opts);
+                                } else {
+                                    const once = () => {
+                                        try { audio.playBgm?.(keyToPlay, opts); } catch { };
+                                        window.removeEventListener('pointerdown', once);
+                                        window.removeEventListener('keydown', once);
+                                    };
+                                    window.addEventListener('pointerdown', once, { once: true, passive: true });
+                                    window.addEventListener('keydown', once, { once: true, passive: true });
+                                }
+                            } catch { }
+                        };
+                        if (bgmKey) {
+                            ensureNowOrOnUnlock(bgmKey);
+                        } else if (bgmAudioPath) {
+                            try {
+                                let rel = String(bgmAudioPath);
+                                const base = audio?.basePath || '';
+                                if (rel.startsWith(base)) {
+                                    rel = rel.slice(base.length);
+                                    if (rel.startsWith('/') || rel.startsWith('\\')) { rel = rel.slice(1); }
+                                } else if (rel.startsWith('assets/audio/')) {
+                                    rel = rel.slice('assets/audio/'.length);
+                                }
+                                const dynKey = `bgm_${nextNode.id || 'custom'}`;
+                                if (!audio?.mapping || audio.mapping[dynKey] !== rel) {
+                                    audio?.addMapping?.(dynKey, rel);
+                                }
+                                ensureNowOrOnUnlock(dynKey);
+                            } catch { }
+                        }
+                    }
+                }
+            } catch { }
+            cleanup();
+            try { onDone && onDone(); } catch { }
+        };
+        const onEnded = () => { if (node.autoCloseOnEnd !== false) finish(); };
+        const onEsc = (e) => { if (e.key === 'Escape') finish(); };
+        const onBtnClose = () => finish();
+        const onOvClick = (e) => { if (e.target === ov) finish(); };
+        video.addEventListener('ended', onEnded, { once: true });
+        document.addEventListener('keydown', onEsc);
+        btnClose.addEventListener('click', onBtnClose);
+        if (node.clickToSkip) ov.addEventListener('click', onOvClick);
+
+        // 5) 开始播放（受浏览器策略限制，可能需要一次点击；这里兜底：下次点击播放）
+        const tryPlay = () => { try { video.play().catch(() => { }); } catch { } };
+        tryPlay();
+        if (video.paused) {
+            const once = () => { tryPlay(); window.removeEventListener('pointerdown', once); window.removeEventListener('keydown', once); };
+            window.addEventListener('pointerdown', once, { once: true, passive: true });
+            window.addEventListener('keydown', once, { once: true, passive: true });
+        }
+    }
+
 
     setActiveCharacter(activeCharId) {
         // 遍历所有当前在场上的角色
@@ -1043,10 +1332,12 @@ class GameApp {
                 if (charId === activeCharId) {
                     // 移除 .inactive 类，让他“点亮”
                     charEl.classList.remove('inactive');
+                    charEl.classList.add('active');
                 } else {
                     // 如果不是说话者
                     // 添加 .inactive 类，让他“变暗”
                     charEl.classList.add('inactive');
+                    charEl.classList.remove('active');
                 }
             }
         }
@@ -1060,6 +1351,16 @@ class GameApp {
             gameStateFlags: this.dialogueEngine.gameState,
             settingsSnapshot: this.dialogueEngine.settings,
             currentBackground: this.backgroundEl?.src || '',
+            currentBgmKey: (this.audio && this.audio._currentBgmKey) ? this.audio._currentBgmKey : null,
+            currentBgmFile: (() => {
+                try {
+                    const k = this.audio?._currentBgmKey;
+                    if (k && this.audio?.mapping && this.audio.mapping[k]) {
+                        return this.audio.mapping[k];
+                    }
+                } catch { }
+                return null;
+            })(),
             charactersOnScreen: []
         };
         for (const charId in this.characters) {
@@ -1068,7 +1369,10 @@ class GameApp {
                 let position = 'pos-center';
                 if (el.classList.contains('pos-left')) position = 'pos-left';
                 if (el.classList.contains('pos-right')) position = 'pos-right';
-                d.charactersOnScreen.push({ charId, position });
+                const expression = el.dataset.expression || null;
+                // 尝试保留自定义 imagePath（若非按约定可忽略）
+                const imagePath = el.getAttribute('src') || undefined;
+                d.charactersOnScreen.push({ charId, position, expression, imagePath });
             }
         }
         return d;
@@ -1098,9 +1402,65 @@ class GameApp {
             this.characterLayer.innerHTML = '';
             this.characters = {};
             (data.charactersOnScreen || []).forEach(cd => this.showCharacter(cd));
+            // 先停止当前正在播放的 BGM，避免沿用读档前的场景音乐
+            try {
+                if (this.audio?._currentBgmKey) {
+                    this.audio.stopBgm?.({ fadeOut: 400 });
+                }
+            } catch { }
+            // 恢复或推断 BGM：优先按当前背景的剧本声明处理（包括停止/切换），若未声明则回退到存档中的 BGM key
+            try {
+                const ensurePlay = (key, opts) => {
+                    if (this.audio.unlocked) {
+                        this.audio.playBgm?.(key, opts);
+                    } else {
+                        let fired = false;
+                        const play = () => { if (fired) return; fired = true; try { this.audio.playBgm?.(key, opts); } catch { } };
+                        const off = () => {
+                            window.removeEventListener('pointerdown', onPD);
+                            window.removeEventListener('keydown', onKD);
+                            window.removeEventListener('audio_unlocked', onAU);
+                        };
+                        const onPD = () => { play(); off(); };
+                        const onKD = () => { play(); off(); };
+                        const onAU = () => { play(); off(); };
+                        window.addEventListener('pointerdown', onPD, { once: true, passive: true });
+                        window.addEventListener('keydown', onKD, { once: true, passive: true });
+                        window.addEventListener('audio_unlocked', onAU, { once: true });
+                        // 若当前是在存读弹窗中点击的，主窗口未收到手势，这里给出一次性提示
+                        this._showAudioResumePrompt?.();
+                    }
+                };
+                // 1) 先按背景节点声明处理（若有）
+                let handled = false;
+                if (data.currentBackground) {
+                    handled = !!this._ensureBgmForBackground(data.currentBackground);
+                }
+                // 2) 如背景未声明 BGM/停止，再回退到存档中的 BGM key
+                if (!handled && data.currentBgmKey) {
+                    const key = data.currentBgmKey;
+                    // 若 key 映射丢失，则用存档中的文件名补充映射
+                    const hasMap = !!(this.audio?.mapping && this.audio.mapping[key]);
+                    if (!hasMap && data.currentBgmFile) {
+                        try { this.audio.addMapping?.(key, data.currentBgmFile); } catch { }
+                    }
+                    if (this.audio?.mapping && this.audio.mapping[key]) {
+                        ensurePlay(key, { fadeIn: 800, fadeOut: 600, loop: true });
+                    } else if (data.currentBackground) {
+                        // 仍无法恢复：退回按背景推断
+                        this._ensureBgmForBackground(data.currentBackground);
+                    }
+                } else if (!handled && data.currentBackground) {
+                    this._ensureBgmForBackground(data.currentBackground);
+                }
+            } catch { }
             this.dialogueEngine.gameState = data.gameStateFlags || {};
             if (data.settingsSnapshot) { this.dialogueEngine.applySettings(data.settingsSnapshot); }
             this.dialogueEngine._showNode(data.currentNodeId);
+            // 兜底：如果仍未解锁音频，提示用户在“主窗口”点击以恢复 BGM
+            if (!this.audio?.unlocked) {
+                this._showAudioResumePrompt?.();
+            }
         };
         if (this._screenFaderEl) {
             this.runScreenTransition(core, { fadeOut: 420, fadeIn: 480 }).then(() => alert(`已读取槽位 ${slot}`));
@@ -1109,6 +1469,97 @@ class GameApp {
             alert(`已读取槽位 ${slot}`);
         }
         return true;
+    }
+
+    /**
+     * 根据背景图推断并播放对应的场景 BGM（遍历剧本中的 changeBackground 节点匹配 imagePath）。
+     */
+    _ensureBgmForBackground(bgSrc) {
+        try {
+            const de = this.dialogueEngine;
+            const audio = this.audio;
+            if (!de || !Array.isArray(de.script) || !audio) return false;
+            const norm = (p) => {
+                if (!p) return '';
+                let s = String(p);
+                try {
+                    const origin = window.location.origin;
+                    if (s.startsWith(origin)) s = s.slice(origin.length);
+                } catch { }
+                // 统一斜杠
+                s = s.replace(/\\/g, '/');
+                if (s.startsWith('/')) s = s.slice(1);
+                // 试图解码 URL 编码（针对含中文路径）
+                try { s = decodeURI(s); } catch { }
+                try { s = decodeURIComponent(s); } catch { }
+                return s;
+            };
+            const target = norm(bgSrc);
+            const targetName = target.split('/').pop();
+            // 找到第一个匹配该背景的 changeBackground 节点（优先全路径相等，否则按文件名匹配）
+            let node = de.script.find(n => n && n.type === 'changeBackground' && norm(n.imagePath) === target);
+            if (!node) {
+                node = de.script.find(n => n && n.type === 'changeBackground' && (() => { const np = norm(n.imagePath); return np.split('/').pop() === targetName; })());
+            }
+            if (!node) return false;
+            // 若该背景节点声明需要停止上一段 BGM，则按需淡出
+            if ((node.stopBgm || node.stopPrevBgm || typeof node.fadeOutBgm === 'number') && !(node.bgmKey || node.bgm || node.bgmAudioPath)) {
+                const fadeOut = (typeof node.fadeOutBgm === 'number') ? node.fadeOutBgm : 600;
+                try { audio.stopBgm?.({ fadeOut }); } catch { }
+                return true;
+            }
+            if (!(node.bgmKey || node.bgm || node.bgmAudioPath)) return false; // 该背景不播放 BGM
+            const opts = {
+                fadeIn: (typeof node.fadeIn === 'number') ? node.fadeIn : 800,
+                fadeOut: (typeof node.fadeOut === 'number') ? node.fadeOut : 600,
+                loop: (node.loop === undefined ? true : !!node.loop),
+                targetVolume: (typeof node.targetVolume === 'number') ? node.targetVolume : ((typeof node.volume === 'number') ? node.volume : undefined),
+                fallback: node.fallback || node.bgmFallback,
+            };
+            const ensureNowOrOnUnlock = (key) => {
+                if (audio.unlocked) {
+                    audio.playBgm?.(key, opts);
+                } else {
+                    let fired = false;
+                    const play = () => { if (fired) return; fired = true; try { audio.playBgm?.(key, opts); } catch { } };
+                    const off = () => {
+                        window.removeEventListener('pointerdown', onPD);
+                        window.removeEventListener('keydown', onKD);
+                        window.removeEventListener('audio_unlocked', onAU);
+                    };
+                    const onPD = () => { play(); off(); };
+                    const onKD = () => { play(); off(); };
+                    const onAU = () => { play(); off(); };
+                    window.addEventListener('pointerdown', onPD, { once: true, passive: true });
+                    window.addEventListener('keydown', onKD, { once: true, passive: true });
+                    window.addEventListener('audio_unlocked', onAU, { once: true });
+                }
+            };
+            const bgmKey = node.bgmKey || node.bgm;
+            const bgmAudioPath = node.bgmAudioPath;
+            if (bgmKey) {
+                ensureNowOrOnUnlock(bgmKey);
+                return true;
+            } else if (bgmAudioPath) {
+                let rel = String(bgmAudioPath);
+                const base = audio?.basePath || '';
+                if (rel.startsWith(base)) {
+                    rel = rel.slice(base.length);
+                    if (rel.startsWith('/') || rel.startsWith('\\')) { rel = rel.slice(1); }
+                } else if (rel.startsWith('assets/audio/')) {
+                    rel = rel.slice('assets/audio/'.length);
+                }
+                // 使用稳定 key：基于背景文件名，避免时间戳导致并行播放多个不同 key
+                const fname = rel.split('/').pop().replace(/\.[a-z0-9]+$/i, '');
+                const dynKey = `bgm_bg_${fname}`;
+                if (!audio.mapping[dynKey] || audio.mapping[dynKey] !== rel) {
+                    audio.addMapping?.(dynKey, rel);
+                }
+                ensureNowOrOnUnlock(dynKey);
+                return true;
+            }
+            return false;
+        } catch { }
     }
 
     getSaveData(slot) {
@@ -1154,6 +1605,35 @@ class GameApp {
         } catch (e) {
             console.log(msg); // 降级处理
         }
+    }
+
+    // 读档后若主窗口音频未解锁，给出一个轻提示，引导用户在“主窗口”点击以恢复 BGM
+    _showAudioResumePrompt() {
+        try {
+            if (this.audio?.unlocked) return; // 已解锁则不显示
+            let bar = document.getElementById('audio-resume-prompt');
+            if (!bar) {
+                bar = document.createElement('div');
+                bar.id = 'audio-resume-prompt';
+                bar.textContent = '音频已暂停：请在此窗口任意点击以恢复BGM';
+                // 简单内联样式，避免依赖额外CSS
+                Object.assign(bar.style, {
+                    position: 'fixed', left: '50%', bottom: '18px', transform: 'translateX(-50%)',
+                    background: 'rgba(0,0,0,0.75)', color: '#fff', padding: '10px 14px',
+                    borderRadius: '8px', fontSize: '14px', zIndex: 5000,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.35)', cursor: 'pointer',
+                    userSelect: 'none'
+                });
+                document.body.appendChild(bar);
+                const hide = () => { try { bar.remove(); } catch { } };
+                const once = () => { hide(); window.removeEventListener('pointerdown', once); window.removeEventListener('keydown', once); };
+                // 当用户在主窗口点击/按键，即会隐藏提示，同时触发上面挂载的 ensurePlay()
+                window.addEventListener('pointerdown', once, { once: true, passive: true });
+                window.addEventListener('keydown', once, { once: true, passive: true });
+                // 点击提示条本身也可立即隐藏
+                bar.addEventListener('click', hide, { once: true });
+            }
+        } catch { }
     }
 
     // 预加载角色立绘（异步、非阻塞）
@@ -1420,24 +1900,6 @@ function showNode(nodeId) {
     // 先处理特殊类型节点
     switch (node.type) {
         // ...existing code...
-
-            // 小游戏节点（统一处理两种写法）
-            case 'minigame':
-            case 'startMinigame': {
-                // 进入小游戏时，关闭对话点击推进，等待小游戏完成回调再进入 next
-                try {
-                    app.startMinigame(node, () => {
-                        const nextId = node.next || node.goto;
-                        if (nextId) showNode(nextId); // 完成后进入后续
-                    });
-                    return; // 暂停常规节点展示
-                } catch (e) {
-                    console.error('启动小游戏失败:', e);
-                    const fallback = node.next || node.goto;
-                    if (fallback) { showNode(fallback); return; }
-                }
-                break;
-            }
 
         // 新增：纯“成就节点”，只做解锁/标记后跳转，不展示对白
         case 'achievement': {

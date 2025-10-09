@@ -4,7 +4,7 @@ import { AudioManager } from './engine/AudioManager.js';
 
 // 独立窗口自身也提供基础点击音效（不依赖父窗口注入）。
 const __localAudio = new AudioManager({ basePath: 'assets/audio/' });
-try { const s = JSON.parse(localStorage.getItem('groupOutsiderSettings')||'{}'); __localAudio.setVolumes({ master:(s.volMaster??80)/100, amb:(s.volAmb??60)/100 }); } catch {}
+try { const s = JSON.parse(localStorage.getItem('groupOutsiderSettings') || '{}'); __localAudio.setVolumes({ master: (s.volMaster ?? 80) / 100, amb: (s.volAmb ?? 60) / 100 }); } catch { }
 
 const params = new URLSearchParams(location.search);
 const mode = params.get('mode') === 'load' ? 'load' : 'save';
@@ -15,82 +15,88 @@ const badge = document.getElementById('modeBadge');
 badge.textContent = mode.toUpperCase();
 badge.className = 'mode-badge ' + (mode === 'load' ? 'mode-load' : 'mode-save');
 
-function fmtTime(ts){
-    if(!ts) return '---';
-    const d = new Date(ts); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+function fmtTime(ts) {
+    if (!ts) return '---';
+    const d = new Date(ts); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
-function showToast(msg){
+function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'),2000);
+    setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-function buildSlotCard(slot){
+function buildSlotCard(slot) {
     const data = mgr.load(slot);
     const card = document.createElement('div');
     card.className = 'slot';
     card.dataset.slot = slot;
-    if(!data) card.dataset.empty = 'true';
+    if (!data) card.dataset.empty = 'true';
     card.innerHTML = `
-        <h2>槽位 ${slot} <span class="time">${data?fmtTime(data.saveTime):'空'}</span></h2>
-        <div class="node">${data?('节点: '+data.currentNodeId):'没有存档'}</div>
+        <h2>槽位 ${slot} <span class="time">${data ? fmtTime(data.saveTime) : '空'}</span></h2>
+        <div class="node">${data ? ('节点: ' + data.currentNodeId) : '没有存档'}</div>
         <div class="slot-actions">
-            ${mode==='save'?'<button class="small">保存</button>':'<button class="small">读取</button>'}
-            ${data?'<button class="small delete" title="删除此槽位">删除</button>':''}
+            ${mode === 'save' ? '<button class="small">保存</button>' : '<button class="small">读取</button>'}
+            ${data ? '<button class="small delete" title="删除此槽位">删除</button>' : ''}
         </div>`;
 
     // 单击保存 / 读取
-    card.querySelector('.small').addEventListener('click', (e)=>{
+    card.querySelector('.small').addEventListener('click', (e) => {
         e.stopPropagation();
-        __localAudio.play('ui_click', { allowBeforeUnlock:true });
-        runAction(slot,false);
+        __localAudio.play('ui_click', { allowBeforeUnlock: true });
+        runAction(slot, false);
     });
 
     // 删除按钮
-    if(data){
+    if (data) {
         const delBtn = card.querySelector('.delete');
-        delBtn.addEventListener('click', (e)=>{
+        delBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if(confirm(`确定删除槽位 ${slot} 吗?`)){
+            if (confirm(`确定删除槽位 ${slot} 吗?`)) {
                 mgr.delete(slot); refresh(); showToast('已删除');
-                __localAudio.play('ui_click', { allowBeforeUnlock:true });
+                __localAudio.play('ui_click', { allowBeforeUnlock: true });
             }
         });
     }
 
     // 卡片点击 = 行为
-    card.addEventListener('click', ()=> { __localAudio.play('ui_click', { allowBeforeUnlock:true }); runAction(slot,false); });
+    card.addEventListener('click', () => { __localAudio.play('ui_click', { allowBeforeUnlock: true }); runAction(slot, false); });
     // 双击直接执行且不确认
-    card.addEventListener('dblclick', ()=> runAction(slot,true));
+    card.addEventListener('dblclick', () => runAction(slot, true));
 
     return card;
 }
 
-function runAction(slot,force){
-    if(!window.opener || !window.opener.app){
+function runAction(slot, force) {
+    if (!window.opener || !window.opener.app) {
         alert('未检测到主游戏窗口。'); return;
     }
-    if(mode==='save'){
-        if(!force && mgr.load(slot) && !confirm('覆盖该槽位?')) return; 
+    if (mode === 'save') {
+        if (!force && mgr.load(slot) && !confirm('覆盖该槽位?')) return;
         const data = window.opener.app.buildSaveData();
-        if(!data){ showToast('当前无可保存进度'); return; }
-        const ok = mgr.save(slot,data);
-        if(ok){ showToast(`已保存到槽位 ${slot}`); refresh(); }
-    }else{
+        if (!data) { showToast('当前无可保存进度'); return; }
+        const ok = mgr.save(slot, data);
+        if (ok) { showToast(`已保存到槽位 ${slot}`); refresh(); }
+    } else {
         const data = mgr.load(slot);
-        if(!data){ showToast('槽位为空'); return; }
-        if(!force && !confirm('读取该槽位并覆盖当前进度?')) return;
+        if (!data) { showToast('槽位为空'); return; }
+        if (!force && !confirm('读取该槽位并覆盖当前进度?')) return;
         window.opener.app.loadGame(slot); // 内部已有提示
+        try {
+            // 读档操作完成后，尽量把焦点切回主窗口，方便用户直接点击以解锁音频
+            window.opener.focus();
+        } catch { }
+        // 可选：自动关闭窗口（避免挡住主窗口）。如需保留请注释掉下一行
+        // setTimeout(()=>{ try{ window.close(); }catch{} }, 100);
     }
 }
 
-function refresh(){
-    slotsEl.innerHTML='';
-    for(let i=1;i<=MAX_SLOTS;i++) slotsEl.appendChild(buildSlotCard(i));
+function refresh() {
+    slotsEl.innerHTML = '';
+    for (let i = 1; i <= MAX_SLOTS; i++) slotsEl.appendChild(buildSlotCard(i));
 }
 
-document.getElementById('refresh-btn').addEventListener('click', ()=>{ __localAudio.play('ui_click', { allowBeforeUnlock:true }); refresh(); });
-document.getElementById('close-btn').addEventListener('click', ()=> { __localAudio.play('ui_click', { allowBeforeUnlock:true }); window.close(); });
+document.getElementById('refresh-btn').addEventListener('click', () => { __localAudio.play('ui_click', { allowBeforeUnlock: true }); refresh(); });
+document.getElementById('close-btn').addEventListener('click', () => { __localAudio.play('ui_click', { allowBeforeUnlock: true }); window.close(); });
 
 refresh();

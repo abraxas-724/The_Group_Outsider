@@ -50,14 +50,14 @@ export class DialogueEngine {
     advance() {
         // 若游戏被标记为暂停（例如打开存/读档面板），则不推进
         if (this.gameApp && this.gameApp.dialoguePaused) return;
-        if (this.isTyping) { 
+        if (this.isTyping) {
             // 正在打字时点击：先完整显示本句（不播放推进音）
-            this._skipTyping(); 
-            return; 
+            this._skipTyping();
+            return;
         }
         if (this.currentNode && this.currentNode.type === 'dialogue' && this.currentNode.next) {
             // 对话从当前句推进到下一节点前播放推进音效（避免在 autoMode 内频繁触发：仍然允许，体验更明确）
-            try { this.gameApp?.audio?.play('dialogue_advance'); } catch {}
+            try { this.gameApp?.audio?.play('dialogue_advance'); } catch { }
             this._showNode(this.currentNode.next);
         }
     }
@@ -117,6 +117,26 @@ export class DialogueEngine {
                 }
                 break;
             }
+            case 'pause': {
+                // 纯空白暂停节点：不改变画面，仅根据 waitForClick/delay 决定何时进入 next
+                this.dialogueBox.classList.add('hidden');
+                this.centeredChoices.classList.add('hidden');
+                const waitForClick = !!node.waitForClick;
+                const delay = typeof node.delay === 'number' ? node.delay : 0;
+                if (waitForClick) {
+                    const advance = () => {
+                        try { this.gameApp?.hideClickContinueHint?.(); } catch { }
+                        if (node.next) this._showNode(node.next);
+                    };
+                    try { this.gameApp?.showClickContinueHint?.(node.clickHint || '点击继续'); } catch { }
+                    const target = (this.gameApp && this.gameApp.backgroundEl) ? this.gameApp.backgroundEl : document.body;
+                    target.addEventListener('click', advance, { once: true });
+                } else if (node.next) {
+                    if (delay > 0) setTimeout(() => this._showNode(node.next), delay);
+                    else this._showNode(node.next);
+                }
+                break;
+            }
             case 'startExploration':
                 // 进入探索模式：隐藏全部对话 / 选项，交给 GameApp 管理交互点
                 this.dialogueBox.classList.add('hidden');
@@ -166,6 +186,8 @@ export class DialogueEngine {
     }
 
     _handleDialogueNode(node) {
+        // 清理上一个对话节点可能挂起的延时/点击推进钩子
+        this._clearDialogueAdvanceHooks?.();
         this.centeredChoices.classList.add('hidden');
         this.centeredChoices.innerHTML = '';
         this.dialogueBox.classList.remove('hidden');
@@ -184,10 +206,9 @@ export class DialogueEngine {
         }
         const alreadyRead = this.readNodes.has(node.id);
         if (alreadyRead && this.settings.skipRead) {
+            // 直接跳过打字效果，并交由 _skipTyping 内部根据
+            // waitForClick / delay / autoMode 决定推进方式
             this._skipTyping();
-            this.dialogueText.textContent = node.text;
-            this.isTyping = false;
-            this._queueAutoAdvance();
         } else {
             this._typewriter(node.text, alreadyRead);
         }
@@ -196,6 +217,22 @@ export class DialogueEngine {
         if (this.gameApp && typeof this.gameApp.setActiveCharacter === 'function') {
             this.gameApp.setActiveCharacter(node.character);
         }
+    }
+
+    // 清理本引擎为 dialogue 节点设置的推进钩子
+    _clearDialogueAdvanceHooks() {
+        if (this._dialogueDelayTimer) {
+            clearTimeout(this._dialogueDelayTimer);
+            this._dialogueDelayTimer = null;
+        }
+        if (this._dialogueClickHandler) {
+            try {
+                const target = this.dialogueBox || document.body;
+                target.removeEventListener('click', this._dialogueClickHandler, { once: true });
+            } catch { }
+            this._dialogueClickHandler = null;
+        }
+        try { this.gameApp?.hideClickContinueHint?.(); } catch { }
     }
 
     _handleChoiceNode(node) {
@@ -372,7 +409,7 @@ export class DialogueEngine {
                             lastTickTime = now;
                         }
                     }
-                } catch {}
+                } catch { }
                 charIndex++;
             } else { this._skipTyping(); }
         }, interval);
@@ -385,7 +422,33 @@ export class DialogueEngine {
             if (this.currentNode && this.currentNode.type === 'dialogue') {
                 this.dialogueText.textContent = this.currentNode.text;
             }
-            // 打字完成后如果自动模式开启则排队
+            // 对话节点支持：waitForClick / delay；否则按自动模式推进
+            const node = this.currentNode;
+            if (node && node.type === 'dialogue') {
+                // 先清理旧钩子，避免重复绑定
+                this._clearDialogueAdvanceHooks();
+                const waitForClick = !!node.waitForClick;
+                const delay = typeof node.delay === 'number' ? node.delay : 0;
+                if (waitForClick) {
+                    // 显示点击继续提示，并在对话框上绑定一次性点击推进
+                    try { this.gameApp?.showClickContinueHint?.(node.clickHint || '点击继续'); } catch { }
+                    const target = this.dialogueBox || document.body;
+                    this._dialogueClickHandler = () => {
+                        try { this.gameApp?.hideClickContinueHint?.(); } catch { }
+                        this._dialogueClickHandler = null;
+                        this.advance();
+                    };
+                    target.addEventListener('click', this._dialogueClickHandler, { once: true });
+                    return;
+                } else if (delay > 0) {
+                    this._dialogueDelayTimer = setTimeout(() => {
+                        this._dialogueDelayTimer = null;
+                        this.advance();
+                    }, delay);
+                    return;
+                }
+            }
+            // 否则：打字完成后如果自动模式开启则排队
             this._queueAutoAdvance();
         }
     }

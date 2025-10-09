@@ -83,8 +83,8 @@ class StartMenuApp {
         this._bindEvents();
         this._bindGlobalUiSounds();
         this._applyStoredVolumes();
-        // 菜单背景音乐（如果文件存在）
-        this.audio.playLoop('bgm_main');
+        // 菜单背景音乐：等待用户首次交互后淡入播放，优先使用 bgm_start (可选)
+        this._setupMenuBgm();
     }
 
     _bindEvents() {
@@ -155,13 +155,13 @@ class StartMenuApp {
             this._buildMiniGameList();
             this._miniListBuilt = true;
         }
-    // 默认使用 large 尺寸（可后续加入切换按钮）
-    this.miniGameOverlay.classList.remove('fullscreen');
-    const panel = this.miniGameOverlay.querySelector('.mini-panel');
-    if (panel) {
-        panel.classList.remove('size-compact','size-normal');
-        panel.classList.add('size-large');
-    }
+        // 默认使用 large 尺寸（可后续加入切换按钮）
+        this.miniGameOverlay.classList.remove('fullscreen');
+        const panel = this.miniGameOverlay.querySelector('.mini-panel');
+        if (panel) {
+            panel.classList.remove('size-compact', 'size-normal');
+            panel.classList.add('size-large');
+        }
         this.miniGameOverlay.classList.remove('sl-hidden');
         this.miniGameOverlay.setAttribute('aria-hidden', 'false');
         setTimeout(() => {
@@ -174,11 +174,11 @@ class StartMenuApp {
             return;
         }
         this.miniGameOverlay.classList.add('sl-hidden');
-    this.miniGameOverlay.classList.remove('fullscreen');
-    const panel = this.miniGameOverlay.querySelector('.mini-panel');
-    if (panel) {
-        panel.classList.remove('size-compact','size-normal','size-large');
-    }
+        this.miniGameOverlay.classList.remove('fullscreen');
+        const panel = this.miniGameOverlay.querySelector('.mini-panel');
+        if (panel) {
+            panel.classList.remove('size-compact', 'size-normal', 'size-large');
+        }
         this.miniGameOverlay.setAttribute('aria-hidden', 'true');
     }
 
@@ -453,6 +453,41 @@ class StartMenuApp {
     _applyStoredVolumes() {
         const s = this._loadSettingsObj();
         this.audio.setVolumes({ master: (s.volMaster ?? 80) / 100, amb: (s.volAmb ?? 60) / 100 });
+    }
+
+    _setupMenuBgm() {
+        // 如果已经解锁（极少数浏览器场景）直接尝试播放
+        const tryPlay = () => {
+            this.audio.playBgm('bgm_start', { fallback: 'bgm_main', fadeIn: 1600, fadeOut: 1000 });
+        };
+        if (this.audio.unlocked) {
+            tryPlay();
+            return;
+        }
+        // 显示一次性提示小窗；点击后触发播放并隐藏
+        const prompt = document.getElementById('audio-unlock-prompt');
+        const btn = document.getElementById('audio-unlock-confirm');
+        if (prompt && btn) {
+            prompt.classList.remove('sl-hidden');
+            prompt.setAttribute('aria-hidden', 'false');
+            const onConfirm = () => {
+                // 用户点击按钮视为手势解锁
+                tryPlay();
+                prompt.classList.add('sl-hidden');
+                prompt.setAttribute('aria-hidden', 'true');
+                btn.removeEventListener('click', onConfirm);
+            };
+            btn.addEventListener('click', onConfirm, { once: true });
+        }
+        // 兜底：若用户未点击小窗而点击了页面其它处，也能触发播放
+        const once = () => {
+            window.removeEventListener('pointerdown', once);
+            window.removeEventListener('keydown', once);
+            setTimeout(tryPlay, 20);
+            if (prompt) { prompt.classList.add('sl-hidden'); prompt.setAttribute('aria-hidden', 'true'); }
+        };
+        window.addEventListener('pointerdown', once, { once: true, passive: true });
+        window.addEventListener('keydown', once, { once: true, passive: true });
     }
 }
 
