@@ -53,6 +53,7 @@ export class AudioManager {
       // 新增：对话系统相关
       text_tick: 'text_tick.mp3',       // 文本逐字打印的轻微打字机音（节流播放）
       dialogue_advance: 'dialogue_advance.mp3', // 对话推进到下一句/节点
+      sfx_keyboard: 'sfx_keyboard.mp3', // 键盘敲击声（一次性）
       bgm_start: 'bgm_start.mp3',
       bgm_main: 'bgm_main.mp3',
       amb_loop: 'amb_loop.mp3'
@@ -120,6 +121,68 @@ export class AudioManager {
       audio.volume = this._calcVolume(key) * volume;
       audio.play().catch(() => { });
     } catch { }
+  }
+
+  /**
+   * 播放一次性音效，并在播放期间临时降低当前 BGM 音量（duck），结束后恢复。
+   * @param {string} key - SFX 的映射 key
+   * @param {object} opts
+   * @param {number} [opts.volume=1] - SFX 音量（相对 master）
+   * @param {boolean} [opts.allowBeforeUnlock=false] - 未解锁时是否强行播放（通常保持 false）
+   * @param {number} [opts.duckBy=0.6] - 将 BGM 音量按比例降低到原来的 duckBy（0~1）
+   * @param {number} [opts.duckTo] - 将 BGM 直调到该绝对值（0~1）。若提供优先生效。
+   * @param {number} [opts.duckMs=120] - BGM 淡出到 duck 音量的时长（ms）
+   * @param {number} [opts.restoreMs=240] - BGM 恢复到原音量的时长（ms）
+   * @param {number} [opts.minMs=300] - 若无法可靠获取 SFX 时长，最短维持 duck 的时长（ms）
+   */
+  playWithDuck(key, { volume = 1, allowBeforeUnlock = false, duckBy = 0.6, duckTo, duckMs = 120, restoreMs = 240, minMs = 300 } = {}) {
+    if (!allowBeforeUnlock && !this.unlocked) {
+      return; // 与 play 一致：未解锁前不做
+    }
+    // 获取当前 BGM
+    const bgmKey = this._currentBgmKey;
+    const bgmAudio = bgmKey ? this.cache.get(bgmKey) : null;
+    const bgmOrigVol = bgmAudio ? bgmAudio.volume : 0;
+    let restoreTimer = null;
+    try {
+      if (bgmAudio) {
+        const target = (typeof duckTo === 'number') ? Math.max(0, Math.min(1, duckTo)) : Math.max(0, Math.min(1, bgmOrigVol * duckBy));
+        if (target < bgmOrigVol) {
+          this._fade(bgmAudio, bgmOrigVol, target, duckMs);
+        }
+      }
+    } catch { }
+
+    // 播放 SFX（独立一次性）
+    const sfx = this._getAudioElement(key, false);
+    if (!sfx) {
+      // 如果没有音源，尽量恢复 BGM
+      if (bgmAudio && bgmOrigVol != null) this._fade(bgmAudio, bgmAudio.volume, bgmOrigVol, restoreMs);
+      return;
+    }
+    try {
+      sfx.currentTime = 0;
+      sfx.volume = Math.max(0, Math.min(1, this._calcVolume(key) * volume));
+      const onEnded = () => {
+        try { sfx.removeEventListener('ended', onEnded); } catch { }
+        if (restoreTimer) { clearTimeout(restoreTimer); restoreTimer = null; }
+        if (bgmAudio && bgmOrigVol != null) {
+          this._fade(bgmAudio, bgmAudio.volume, bgmOrigVol, restoreMs);
+        }
+      };
+      sfx.addEventListener('ended', onEnded, { once: true });
+      // 双保险：极短 SFX 或无法触发 ended 时，按最短时长恢复
+      restoreTimer = setTimeout(() => {
+        try { sfx.removeEventListener('ended', onEnded); } catch { }
+        if (bgmAudio && bgmOrigVol != null) {
+          this._fade(bgmAudio, bgmAudio.volume, bgmOrigVol, restoreMs);
+        }
+      }, Math.max(0, minMs));
+      sfx.play().catch(() => { onEnded(); });
+    } catch {
+      // 失败时也恢复 BGM
+      if (bgmAudio && bgmOrigVol != null) this._fade(bgmAudio, bgmAudio.volume, bgmOrigVol, restoreMs);
+    }
   }
 
   /**

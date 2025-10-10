@@ -1951,6 +1951,8 @@
       "id": "ACT1_SCENE4_06",
       "type": "dialogue",
       "character": "SYS",
+      "sfx": "assets/audio/sfx_keyboard.mp3",
+      "sfxVolume": 0.7,
       "text": "键盘的敲击声在安静的房间里响起，清脆、规律，像一台精准的节拍器。",
       "next": "ACT1_SCENE4_07"
     },
@@ -1973,12 +1975,16 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "……",
+      "stopAudioKey": "assets/audio/sfx_keyboard.mp3",
       "next": "ACT2_SCENE1_SETUP_01"
     },
     {
       "id": "ACT2_SCENE1_SETUP_01",
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/2.1深夜实验室.png",
+      "bgmAudioPath": "assets/audio/bgm_实验室.mp3",
+      "volume": 0.5,
+      "stopBgm": true,
       "comment": "设置实验室场景",
       "next": "ACT2_SCENE1_SETUP_02",
       "delay": 2000

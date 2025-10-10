@@ -123,6 +123,50 @@ class GameApp {
                         const node = script ? script.find(n => n.id === nodeId) : null;
                         if (node) {
                             const audio = this.audio;
+                            // 通用：在任意节点上允许声明 stopBgm/stopPrevBgm 来停止当前 BGM（不再仅限于 changeBackground）
+                            try {
+                                if (node.type !== 'changeBackground' && (node.stopBgm || node.stopPrevBgm)) {
+                                    const fadeOut = (typeof node.fadeOutBgm === 'number') ? node.fadeOutBgm : (typeof node.fadeOut === 'number' ? node.fadeOut : 900);
+                                    audio?.stopBgm?.({ fadeOut });
+                                }
+                            } catch { }
+
+                            // 通用：在任意节点上支持停止指定音频（一次性或循环），用于“在该节点停止音效”
+                            // 字段：stopAudioKeys | stopSfxKeys | stopAudioKey | stopSfxKey
+                            // 传入值可以是 key 或完整路径（会自动映射为 key）
+                            try {
+                                const looksLikePath = (str) => typeof str === 'string' && (/[\\/]/.test(str) || /\.(mp3|wav|ogg|m4a|aac|flac)$/i.test(str));
+                                const ensureMappedFromPath = (pathStr) => {
+                                    try {
+                                        let rel = String(pathStr);
+                                        const base = audio?.basePath || '';
+                                        if (rel.startsWith(base)) {
+                                            rel = rel.slice(base.length);
+                                            if (rel.startsWith('/') || rel.startsWith('\\')) rel = rel.slice(1);
+                                        } else if (rel.startsWith('assets/audio/')) {
+                                            rel = rel.slice('assets/audio/'.length);
+                                        }
+                                        const fname = (rel.split('/').pop() || '').replace(/\.[a-z0-9]+$/i, '');
+                                        const key = (/^bgm_/i.test(fname) ? fname : `sfx_${fname}`); // 尝试保留 bgm_ 前缀，否则归为 sfx_
+                                        if (!audio?.mapping || audio.mapping[key] !== rel) {
+                                            audio?.addMapping?.(key, rel);
+                                        }
+                                        return key;
+                                    } catch { return null; }
+                                };
+                                let stopList = node.stopAudioKeys || node.stopSfxKeys || node.stopAudioKey || node.stopSfxKey;
+                                if (typeof stopList === 'string') stopList = [stopList];
+                                if (Array.isArray(stopList) && stopList.length) {
+                                    stopList.forEach(item => {
+                                        let key = null;
+                                        if (looksLikePath(item)) key = ensureMappedFromPath(item);
+                                        else key = String(item);
+                                        if (key) {
+                                            try { audio.stop?.(key); } catch { }
+                                        }
+                                    });
+                                }
+                            } catch { }
                             // 优先：如果场景切换节点要求停止上一场景 BGM，则先执行淡出停止
                             try {
                                 if (node.type === 'changeBackground' && (node.stopBgm || node.stopPrevBgm)) {
@@ -219,6 +263,73 @@ class GameApp {
                                 playFromKey(bgmKey, buildOpts(node));
                             } else if (bgmAudioPath) {
                                 playFromPath(bgmAudioPath, buildOpts(node));
+                            }
+
+                            // 对话开始时的一次性音效（可在 scripts.json 的具体 dialogue 节点上声明）
+                            // 支持字段：sfxKey 或 sfx（映射键）、sfxAudioPath（直链）、sfxVolume（0~1）
+                            if (node.type === 'dialogue') {
+                                const { sfx, sfxKey, sfxAudioPath, sfxVolume, sfxDuck, sfxDuckBy, sfxDuckTo, sfxDuckMs, sfxRestoreMs } = node;
+                                let usedKey = null;
+                                const looksLikePath = (str) => typeof str === 'string' && (/[\\/]/.test(str) || /\.(mp3|wav|ogg|m4a|aac|flac)$/i.test(str));
+                                const ensureMappedFromPath = (pathStr) => {
+                                    try {
+                                        let rel = String(pathStr);
+                                        const base = audio?.basePath || '';
+                                        if (rel.startsWith(base)) {
+                                            rel = rel.slice(base.length);
+                                            if (rel.startsWith('/') || rel.startsWith('\\')) rel = rel.slice(1);
+                                        } else if (rel.startsWith('assets/audio/')) {
+                                            rel = rel.slice('assets/audio/'.length);
+                                        }
+                                        const fname = (rel.split('/').pop() || '').replace(/\.[a-z0-9]+$/i, '');
+                                        const key = `sfx_${fname}`;
+                                        if (!audio?.mapping || audio.mapping[key] !== rel) {
+                                            audio?.addMapping?.(key, rel);
+                                        }
+                                        return key;
+                                    } catch { return null; }
+                                };
+                                if (sfxKey) {
+                                    usedKey = sfxKey;
+                                } else if (sfx && looksLikePath(sfx)) {
+                                    usedKey = ensureMappedFromPath(sfx);
+                                } else if (sfx) {
+                                    // 认为是一个已有映射 key
+                                    usedKey = sfx;
+                                } else if (sfxAudioPath) {
+                                    usedKey = ensureMappedFromPath(sfxAudioPath);
+                                }
+                                if (usedKey) {
+                                    const vol = typeof sfxVolume === 'number' ? sfxVolume : 1;
+                                    const useDuck = (typeof sfxDuck === 'boolean') ? sfxDuck : true; // 默认开启 duck
+                                    const duckOpts = { duckBy: sfxDuckBy, duckTo: sfxDuckTo, duckMs: sfxDuckMs, restoreMs: sfxRestoreMs };
+                                    const playNow = () => {
+                                        try {
+                                            if (useDuck && typeof this.audio.playWithDuck === 'function') {
+                                                this.audio.playWithDuck(usedKey, { volume: vol, allowBeforeUnlock: false, ...duckOpts });
+                                            } else {
+                                                this.audio.play?.(usedKey, { volume: vol, allowBeforeUnlock: false });
+                                            }
+                                        } catch { }
+                                    };
+                                    if (audio?.unlocked) {
+                                        playNow();
+                                    } else {
+                                        let fired = false;
+                                        const doPlay = () => { if (fired) return; fired = true; playNow(); };
+                                        const off = () => {
+                                            window.removeEventListener('pointerdown', onPD);
+                                            window.removeEventListener('keydown', onKD);
+                                            window.removeEventListener('audio_unlocked', onAU);
+                                        };
+                                        const onPD = () => { doPlay(); off(); };
+                                        const onKD = () => { doPlay(); off(); };
+                                        const onAU = () => { doPlay(); off(); };
+                                        window.addEventListener('pointerdown', onPD, { once: true, passive: true });
+                                        window.addEventListener('keydown', onKD, { once: true, passive: true });
+                                        window.addEventListener('audio_unlocked', onAU, { once: true });
+                                    }
+                                }
                             }
                         }
                     } catch { }
