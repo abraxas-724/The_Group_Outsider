@@ -4110,6 +4110,8 @@
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/3.1答辩大厅.png",
       "comment": "答辩大厅",
+      "bgmAudioPath": "assets/audio/bgm_答辩大厅.mp3",
+      "bgmVolume": 0.2,
       "next": "ACT3_SCENE4_CHEN_APPEARS"
     },
     {
@@ -4151,7 +4153,7 @@
       "id": "ACT3_SCENE4_05",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你站在最旁边，看着这一切，内心毫无波澜。",
+      "text": "你站在最旁边，看着这一切，内心茫然。",
       "next": "ACT3_SCENE4_06"
     },
     {
@@ -4222,7 +4224,8 @@
       "type": "dialogue",
       "character": "CHEN",
       "text": "你的技术能力，我看过你的作业，是顶尖的。但现在我需要一个解释。",
-      "next": "ACT3_SCENE4_16"
+      "next": "ACT3_SCENE4_16",
+      "delay": 1000
     },
     {
       "id": "ACT3_SCENE4_16",
@@ -4271,6 +4274,7 @@
       "type": "showCharacter",
       "charId": "YANG",
       "position": "pos-left",
+      "expression": "angry",
       "next": "ACT3_SCENE4_20"
     },
     {
@@ -4473,6 +4477,7 @@
       "id": "ACT3_SCENE4_HUI_APPEARS",
       "type": "showCharacter",
       "charId": "HUI",
+      "expression": "hurry",
       "position": "pos-left",
       "next": "ACT3_SCENE4_28"
     },
@@ -4501,7 +4506,14 @@
       "id": "ACT3_SCENE4_31",
       "type": "dialogue",
       "character": "HUI",
-      "text": "当我们因为Bug而焦虑不安的时候，他平静得…就像一个没有感情的机器。这让人害怕。",
+      "text": "当我们因为Bug而焦虑不安的时候，他平静得…",
+      "next": "ACT3_SCENE4_32"
+    },
+    {
+      "id": "ACT3_SCENE4_31",
+      "type": "dialogue",
+      "character": "HUI",
+      "text": "就像一个没有感情的机器。这让人害怕。",
       "next": "ACT3_SCENE4_HUI_HIDES"
     },
     {
@@ -4515,6 +4527,7 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-left",
+      "expression": "disappointed",
       "next": "ACT3_SCENE4_32"
     },
     {
@@ -4610,20 +4623,21 @@
       "type": "dialogue",
       "character": "LIN",
       "text": "我感觉，我和他之间隔着一堵人性的墙，永远无法穿透。",
-      "next": "ACT3_SCENE4_YANG_APPEARS_AGAIN"
+      "next": "ACT3_SCENE4_LIN_HIDES"
     },
     {
       "id": "ACT3_SCENE4_YANG_APPEARS_AGAIN",
       "type": "showCharacter",
       "charId": "YANG",
       "position": "pos-left",
-      "next": "ACT3_SCENE4_LIN_HIDES"
+      "expression": "angry",
+      "next": "ACT3_SCENE4_34"
     },
     {
       "id": "ACT3_SCENE4_LIN_HIDES",
       "type": "hideCharacter",
       "charId": "LIN",
-      "next": "ACT3_SCENE4_34"
+      "next": "ACT3_SCENE4_YANG_APPEARS_AGAIN"
     },
     {
       "id": "ACT3_SCENE4_34",
@@ -4663,32 +4677,46 @@
       "id": "ACT3_SCENE4_38",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你的每一次理性分析，每一次沉默，每一次不合群，都变成了呈堂证供，证明你是一个潜藏在团队中的“异类”。",
+      "text": "你的每一次理性分析，每一次沉默，每一次不合群，都变成了呈堂证供。证明你是一个潜藏在团队中的“异类”。",
       "next": "ACT3_SCENE4_39"
     },
     {
       "id": "ACT3_SCENE4_39",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你的罪行不再是那次git push --force，而是你的“存在”本身。",
+      "text": "证明你是一个潜藏在团队中的“异类”。",
       "next": "ACT3_SCENE4_40"
-    },
+    }，
     {
       "id": "ACT3_SCENE4_40",
       "type": "dialogue",
-      "character": "CHEN",
-      "text": "好吧，那我们换个问题。",
+      "character": "SYS",
+      "text": "你的罪行不再是那次git push --force，而是你的“存在”本身。",
       "next": "ACT3_SCENE4_41"
     },
     {
       "id": "ACT3_SCENE4_41",
       "type": "dialogue",
       "character": "CHEN",
-      "text": "默……他们说的，你听到了吗？对于他们的指控，对于你是一个‘组外人’的这个‘判决’...",
+      "text": "而是你的“存在”本身。",
       "next": "ACT3_SCENE4_42"
     },
     {
       "id": "ACT3_SCENE4_42",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "好吧，那我们换个问题。",
+      "next": "ACT3_SCENE4_43"
+    },
+    {
+      "id": "ACT3_SCENE4_43",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "默……他们说的，你听到了吗？对于他们的指控，对于你是一个‘组外人’的这个‘判决’...",
+      "next": "ACT3_SCENE4_44"
+    },
+    {
+      "id": "ACT3_SCENE4_44",
       "type": "dialogue",
       "character": "CHEN",
       "text": "你……你感到后悔吗？",
@@ -4698,21 +4726,43 @@
       "id": "ACT3_SCENE4_FINAL_CHEN_HIDES",
       "type": "hideCharacter",
       "charId": "CHEN",
-      "next": "ACT3_SCENE4_43"
+      "next": "ACT3_SCENE4_45"
     },
     {
-      "id": "ACT3_SCENE4_43",
+      "id": "ACT3_SCENE4_45",
       "type": "dialogue",
       "character": "SYS",
       "text": "画面从回忆中被拉扯回现实。",
-      "next": "ACT3_SCENE4_44"
+      "next": "ACT3_SCENE4_46"
     },
     {
-      "id": "ACT3_SCENE4_44",
+      "id": "ACT3_SCENE4_46",
       "type": "dialogue",
       "character": "SYS",
-      "text": "整个世界都安静了下来。阳、琳、绘都抬起头看着你。背景中，只有投影仪散热风扇发出的、永恒不变的嗡鸣声。那声音，像是宇宙的呼吸。冷漠，而又公平。它不在乎你的答案。它只是存在着。",
-      "next": "ACT3_SCENE4_CHOICE_FINAL"
+      "sfxAudioPath": "assets/audio/sfx_computer_fan.mp3",
+      "text": "整个世界都安静了下来。阳、琳、绘都抬起头看着你。",
+      "next": "ACT3_SCENE4_47"
+    },
+    {
+      "id": "ACT3_SCENE4_47",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "背景中，只有投影仪散热风扇发出的、永恒不变的嗡鸣声。",
+      "next": "ACT3_SCENE4_48"
+    },
+    {
+      "id": "ACT3_SCENE4_48",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "那声音，像是宇宙的呼吸。冷漠，而又公平。",
+      "next": "ACT3_SCENE4_49"
+    },
+    {
+      "id": "ACT3_SCENE4_49",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "它不在乎你的答案。它只是存在着。",
+      "next": "ACT3_SCENE4_FINAL"
     },
     {
       "id": "ACT3_SCENE4_FINAL",
@@ -4850,15 +4900,23 @@
     {
       "id": "TRUE_END_SETUP",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/black.png",
-      "comment": "走廊复用",
-      "next": "TRUE_END_07"
+      "imagePath": "assets/images/scenes/答辩大厅外走廊.png",
+      "bgmAudioPath": "assets/audio/bgm_答辩大厅外走廊.mp3",
+      "comment": "走廊",
+      "next": "TRUE_END_07_1"
     },
     {
-      "id": "TRUE_END_07",
+      "id": "TRUE_END_07_1",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你们走出了答辩大厅。阳没有看你，他径直走过去，狠狠一拳砸在墙上。绘的眼泪终于决堤，琳扶着她，两个人互相支撑着离开。",
+      "text": "你们走出了答辩大厅。阳没有看你，他径直走过去，狠狠一拳砸在墙上。",
+      "next": "TRUE_END_07_2"
+    },
+    {
+      "id": "TRUE_END_07_2",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "绘的眼泪终于决堤，琳扶着她，两个人互相支撑着离开。",
       "next": "TRUE_END_LIN_APPEARS"
     },
     {
@@ -4866,6 +4924,7 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-center",
+      "expression": "disappointed",
       "next": "TRUE_END_08"
     },
     {
@@ -4879,13 +4938,20 @@
       "id": "TRUE_END_LIN_HIDES",
       "type": "hideCharacter",
       "charId": "LIN",
-      "next": "TRUE_END_09"
+      "next": "TRUE_END_09_1"
     },
     {
-      "id": "TRUE_END_09",
+      "id": "TRUE_END_09_1",
       "type": "dialogue",
       "character": "SYS",
-      "text": "她说完，也走了。你独自一人站在走廊里。阳光从窗户里照进来，空气中的尘埃在光柱里缓缓飞舞。",
+      "text": "她说完，也走了。你独自一人站在走廊里。",
+      "next": "TRUE_END_09_2"
+    },
+    {
+      "id": "TRUE_END_09_2",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "阳光从窗户里照进来，空气中的尘埃在光柱里缓缓飞舞。",
       "next": "TRUE_END_10"
     },
     {
@@ -4903,17 +4969,59 @@
       "next": "TRUE_END_12"
     },
     {
-      "id": "TRUE_END_11",
-      "type": "dialogue",
-      "character": "SYS",
-      "text": "项目失败了。团队决裂了。你被所有人抛弃了。但你也自由了。你从那些无意义的社交规则、集体情感、和虚无的成败中，彻底解脱了出来。你坦然地接受了这个世界的荒诞与冷漠，如同接受一个‘return 0;‘的程序终点。",
-      "next": "TRUE_END_12"
-    },
-    {
       "id": "TRUE_END_12",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你打开自己的笔记本电脑，屏幕亮起。在这温柔而冷酷的宇宙中，你准备开始构建一个只属于自己的、没有任何杂质的、完美的世界。",
+      "text": "项目失败了,团队决裂了,你被所有人抛弃了。但你也自由了。",
+      "next": "TRUE_END_13"
+    },
+    {
+      "id": "TRUE_END_13",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你从那些无意义的社交规则、集体情感、和虚无的成败中，彻底解脱了出来。",
+      "next": "TRUE_END_14"
+    },
+    {
+      "id": "TRUE_END_14",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你坦然地接受了这个世界的荒诞与冷漠，如同接受一个‘return 0;‘的程序终点。",
+      "next": "TRUE_END_15"
+    },
+    {
+      "id": "TRUE_END_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你打开自己的笔记本电脑，屏幕亮起。",
+      "next": "TRUE_END_16"
+    },
+    {
+      "id": "TRUE_END_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "在这温柔而冷酷的宇宙中，你准备开始构建一个只属于自己的、没有任何杂质的、完美的世界。",
+      "next": "TRUE_END_16"
+    },
+    {
+      "id": "TRUE_END_16",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "不过孤独在所难免。",
+      "next": "TRUE_END_17"
+    },
+    {
+      "id": "TRUE_END_17",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "不过孤独有时确难以忍受。",
+      "next": "TRUE_END_18"
+    },
+    {
+      "id": "TRUE_END_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "...",
       "next": "THE_END_SCREEN"
     },
     {
@@ -4935,13 +5043,20 @@
       "type": "dialogue",
       "character": "MO",
       "text": "如果说，我的行为伤害了你们，那我后悔。",
-      "next": "HAPPY_END_02"
+      "next": "HAPPY_END_02_1"
     },
     {
-      "id": "HAPPY_END_02",
+      "id": "HAPPY_END_02_1",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你尝试使用他们的语言。你并不真正理解“后悔”，但你观察到了这个词语在特定情境下的功用。",
+      "text": "你尝试使用他们的语言。",
+      "next": "HAPPY_END_02_2"
+    },
+    {
+      "id": "HAPPY_END_02_2",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你并不真正理解“后悔”。但你观察到了这个词语在特定情境下的功用。",
       "next": "HAPPY_END_03"
     },
     {
@@ -4970,20 +5085,34 @@
       "type": "dialogue",
       "character": "CHEN",
       "text": "……影响。这是一个很客观的词。",
-      "next": "HAPPY_END_07"
+      "next": "HAPPY_END_07_1"
     },
     {
-      "id": "HAPPY_END_07",
+      "id": "HAPPY_END_07_1",
       "type": "dialogue",
       "character": "CHEN",
-      "text": "默，记住，代码是人写的，为人服务的。你永远无法脱离“人”去谈论技术。这是我给你的最后一课。",
+      "text": "默，记住，代码是人写的，为人服务的。",
+      "next": "HAPPY_END_07_2"
+    },
+    {
+      "id": "HAPPY_END_07_2",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "你永远无法脱离“人”去谈论技术。这是我给你的最后一课。",
       "next": "HAPPY_END_08"
     },
     {
       "id": "HAPPY_END_08",
       "type": "dialogue",
       "character": "CHEN",
-      "text": "你们这组，项目不合格。但考虑到你们的坦诚……我会给你们一次重做的机会。最终成绩，视重做结果而定。",
+      "text": "你们这组，项目不合格。但考虑到你们的坦诚……",
+      "next": "HAPPY_END_08_2"
+    },
+    {
+      "id": "HAPPY_END_08_2",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "我会给你们一次重做的机会。最终成绩，视重做结果而定。",
       "next": "HAPPY_END_CHEN_HIDES"
     },
     {
@@ -4995,8 +5124,8 @@
     {
       "id": "HAPPY_END_SETUP",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/black.png",
-      "comment": "走廊复用",
+      "imagePath": "assets/images/scenes/答辩大厅外走廊.png",
+      "comment": "走廊",
       "next": "HAPPY_END_YANG_APPEARS"
     },
     {
