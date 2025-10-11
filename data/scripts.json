@@ -796,6 +796,9 @@
       "id": "ACT1_SCENE1_BRANCH_D_01",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": "assets/audio/sfx_cheers.mp3",
+      "sfxVolume": 0.5,
+      "sfxLoops": false,
       "text": "你执行了一个'social.interact()'函数。你拿起冰冷的罐子，模仿他们的动作，轻轻碰了一下。罐子发出“砰”的一声。",
       "next": "ACT1_SCENE1_BRANCH_D_02"
     },
@@ -933,6 +936,9 @@
       "id": "ACT1_SCENE1_BRANCH_E_08",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": "assets/audio/sfx_cheers.mp3",
+      "sfxVolume": 0.3,
+      "sfxLoops": false,
       "text": "你点了点头，转身离开。身后传来他们略显沉闷的碰杯声。",
       "next": "ACT1_SCENE1_BRANCH_E_FINAL_HUI_HIDES"
     },
@@ -2102,7 +2108,7 @@
       "type": "showCharacter",
       "charId": "HUI",
       "position": "pos-right",
-      "expression": "tired",
+      "expression": "supertired",
       "next": "ACT2_SCENE1_05"
     },
     {
@@ -2799,7 +2805,7 @@
       "id": "ACT2_SCENE1_BRANCH_B_LIN_LAUGH",
       "type": "setCharacter",
       "charId": "LIN",
-      "expression": "laugh",
+      "expression": "happy",
       "next": "ACT2_SCENE1_BRANCH_B_10"
     },
     {
@@ -3005,7 +3011,6 @@
       "id": "ACT2_SCENE3_START_03",
       "type": "dialogue",
       "character": "SYS",
-      "stopAudioKey": "assets/audio/sfx_computer_fan.mp3",
       "text": "当你的手指敲下某个指令后，你的意识仿佛被抽离，进入了一个由代码构成的虚拟空间。",
       "next": "ACT2_SCENE3_SETUP"
     },
@@ -3013,6 +3018,7 @@
       "id": "ACT2_SCENE3_SETUP",
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/2.3代码库的深渊.png",
+      "stopAudioKey": "assets/audio/sfx_computer_fan.mp3",
       "comment": "设置代码库的深渊场景",
       "bgmAudioPath": "assets/audio/bgm_代码空间.mp3",
       "bgmVolume": 0.5,
@@ -3141,6 +3147,7 @@
       "id": "ACT2_SCENE3_BACK",
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/2.1深夜实验室.png",
+      "stopBgm": true,
       "comment": "设置实验室场景",
       "next": "ACT2_SCENE3_10",
       "delay": 1000
@@ -3238,6 +3245,7 @@
       "id": "ACT2_SCENE3_BLACK",
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/black.png",
+      "stopBgm": true,
       "comment": "黑屏",
       "next": "ACT3_SCENE1_SETUP",
       "delay": 5000
@@ -3330,7 +3338,7 @@
       "next": "ACT3_SCENE1_CHEN_APPEARS"
     },
     {
-      "id": "ACT1_SCENE1_CHEN_APPEARS",
+      "id": "ACT3_SCENE1_CHEN_APPEARS",
       "type": "showCharacter",
       "charId": "CHEN",
       "position": "pos-center",
@@ -3348,7 +3356,6 @@
       "type": "dialogue",
       "character": "CHEN",
       "text": "你感到后悔吗？",
-      "stopAudioKey": "assets/audio/sfx_hum.mp3",
       "next": "ACT3_SCENE1_13"
     },
     {
@@ -3383,6 +3390,7 @@
       "id": "ACT3_SCENE1_BLACK",
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/black.png",
+      "stopAudioKey": "assets/audio/sfx_hum.mp3",
       "bgmAudioPath": "assets/audio/bgm_读取日志.mp3",
       "bgmVolume": 0.5,
       "comment": "黑屏",
@@ -3409,6 +3417,9 @@
       "comment": "白天实验室",
       "bgmAudioPath": "assets/audio/bgm_清晨实验室.mp3",
       "bgmVolume": 0.5,
+      "sfxAudioPath": "assets/audio/sfx_computer_fan.mp3",
+      "sfxVolume": 0.1,
+      "sfxLoops": true,
       "next": "ACT3_SCENE2_01",
       "delay": 2000
     },
@@ -3560,13 +3571,13 @@
       "type": "dialogue",
       "character": "LIN",
       "text": "（声音开始颤抖）……怎么会……所有的函数接口……全都不对了……",
-      "next": "ACT3_SCENE2_YANG_WORRIED"
+      "next": "ACT3_SCENE2_YANG_EXCITED"
     },
     {
-      "id": "ACT3_SCENE2_YANG_WORRIED",
+      "id": "ACT3_SCENE2_YANG_EXCITED",
       "type": "setCharacter",
       "charId": "YANG",
-      "expression": "worried",
+      "expression": "excited",
       "next": "ACT3_SCENE2_17"
     },
     {
@@ -3587,13 +3598,17 @@
       "id": "ACT3_SCENE2_19",
       "type": "dialogue",
       "character": "LIN",
-      "text": "（手指在键盘上飞快操作，调出了gitlog提交记录。然后，她的所有动作都停住了。",
+      "sfxAudioPath": "assets/audio/sfx_keyboard.mp3",
+      "sfxVolume": 0.3,
+      "sfxLoops": true,
+      "text": "（手指在键盘上飞快操作，调出了gitlog提交记录。然后，她的所有动作都停住了。)",
       "next": "ACT3_SCENE2_20"
     },
     {
       "id": "ACT3_SCENE2_20",
       "type": "dialogue",
       "character": "SYS",
+      "stopAudioKey": "assets/audio/sfx_keyboard.mp3",
       "text": "屏幕上，最新、也是唯一的一条提交记录，静静地躺在那里。",
       "next": "ACT3_SCENE2_21"
     },
@@ -3630,7 +3645,6 @@
       "id": "ACT3_SCENE2_22",
       "type": "dialogue",
       "character": "SYS",
-      "sfxAudioPath": "assets/audio/sfx_computer_fan.mp3",
       "text": "时间仿佛凝固了。实验室里只剩下服务器风扇单调的嗡鸣声。",
       "next": "ACT3_SCENE2_23"
     },
@@ -3961,7 +3975,7 @@
       "type": "dialogue",
       "character": "SYS",
       "text": " 琳，团队中逻辑最清晰的人，也无法理解你的行为。",
-      "next": "ACT3_SCENE3_BRANCH_07"
+      "next": "ACT3_SCENE3_BRANCH_B_07"
     },
     {
       "id": "ACT3_SCENE3_BRANCH_B_07",
@@ -3974,7 +3988,7 @@
       "id": "ACT3_SCENE3_BRANCH_C_01",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你选择不回应。。",
+      "text": "你选择不回应。",
       "next": "ACT3_SCENE3_BRANCH_C_02"
     },
     {
