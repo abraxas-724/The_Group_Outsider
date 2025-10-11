@@ -2934,6 +2934,7 @@
         "assets/audio/sfx_drawing_sound.mp3",
         "assets/audio/sfx_hum.mp3"
       ],
+      "stopBgm": true,
       "text": "你需要秩序。你需要专注。你需要一个……节拍器。",
       "next": "ACT2_SCENE2_CODEBEAT"
     },
@@ -2953,6 +2954,8 @@
       "id": "ACT2_SCENE2_12",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": "assets/audio/sfx_computer_fan.mp3",
+      "sfxVolume": 0.3,
       "text": "时间定格在03:14。",
       "next": "ACT2_SCENE2_13"
     },
@@ -3002,14 +3005,17 @@
       "id": "ACT2_SCENE3_START_03",
       "type": "dialogue",
       "character": "SYS",
+      "stopAudioKey": "assets/audio/sfx_computer_fan.mp3",
       "text": "当你的手指敲下某个指令后，你的意识仿佛被抽离，进入了一个由代码构成的虚拟空间。",
       "next": "ACT2_SCENE3_SETUP"
     },
     {
       "id": "ACT2_SCENE3_SETUP",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/2.3代码库的深渊.jpeg",
+      "imagePath": "assets/images/scenes/2.3代码库的深渊.png",
       "comment": "设置代码库的深渊场景",
+      "bgmAudioPath": "assets/audio/bgm_代码空间.mp3",
+      "bgmVolume": 0.5,
       "next": "ACT2_SCENE3_01",
       "delay": 3000
     },
@@ -3066,13 +3072,6 @@
       "id": "ACT2_SCENE3_08",
       "type": "dialogue",
       "character": "SYS",
-      "text": "背景音是不和谐的低沉嗡鸣，仿佛整个世界在痛苦低语：不洁。冗余。错误。",
-      "next": "ACT2_SCENE3_09"
-    },
-    {
-      "id": "ACT2_SCENE3_09",
-      "type": "dialogue",
-      "character": "SYS",
       "text": "它在你的眼前尖叫，恳求被净化。这不是一个选择，而是一种责任——将混乱改写为秩序的物理定律。",
       "next": "ACT2_SCENE3_REFACTOR_MINIGAME"
     },
@@ -3086,6 +3085,13 @@
         "duration": "≈ 3 分钟",
         "controls": "鼠标拖拽 / 点击 / 键盘回车"
       },
+      "next": "ACT2_SCENE3_AFTER_SCENE"
+    },
+    {
+      "id": "ACT2_SCENE3_AFTER_SCENE",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/2.3修正后的代码库.png",
+      "comment": "设置修正后的代码库场景",
       "next": "ACT2_SCENE3_AFTER_01"
     },
     {
@@ -3128,7 +3134,8 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "这才是世界应有的样子。你感到前所未有的平静。",
-      "next": "ACT2_SCENE3_BACK"
+      "next": "ACT2_SCENE3_BACK",
+      "delay": 3000
     },
     {
       "id": "ACT2_SCENE3_BACK",
@@ -3136,12 +3143,13 @@
       "imagePath": "assets/images/scenes/2.1深夜实验室.png",
       "comment": "设置实验室场景",
       "next": "ACT2_SCENE3_10",
-      "delay": 3000
+      "delay": 1000
     },
     {
       "id": "ACT2_SCENE3_10",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": "assets/audio/sfx_heart_beat.mp3",
       "text": "你的意识回到现实，你依然坐在电脑前。",
       "next": "ACT2_SCENE3_11"
     },
@@ -3170,6 +3178,7 @@
       "id": "ACT2_SCENE3_14",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": "assets/audio/sfx_keyboard.mp3",
       "text": "你知道该做什么。你抬起手，手指在键盘上敲击。",
       "next": "ACT2_SCENE3_15"
     },
@@ -3184,6 +3193,8 @@
       "id": "ACT2_SCENE3_16",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": "assets/audio/sfx_enter-button1.mp3",
+      "sfxLoops": false,
       "text": "'git commit-m' Refactor: Purify the core logic（按下回车，日志滚动）",
       "next": "ACT2_SCENE3_17"
     },
@@ -3191,6 +3202,12 @@
       "id": "ACT2_SCENE3_17",
       "type": "dialogue",
       "character": "SYS",
+      "stopAudioKeys": [
+        "assets/audio/sfx_keyboard.mp3",
+        "assets/audio/sfx_enter-button1.mp3"
+      ],
+      "sfxAudioPath": "assets/audio/sfx_enter-button2.mp3",
+      "sfxLoops": false,
       "text": "'git push–force'（按下回车）",
       "next": "ACT2_SCENE3_18"
     },
@@ -3198,6 +3215,7 @@
       "id": "ACT2_SCENE3_18",
       "type": "dialogue",
       "character": "SYS",
+      "stopAudioKey": "assets/audio/sfx_enter-button2.mp3",
       "text": "屏幕上，上传的进度条在无声地前进。",
       "next": "ACT2_SCENE3_19"
     },
@@ -3213,6 +3231,7 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "'Done.'",
+      "stopAudioKey": "assets/audio/sfx_heart_beat.mp3",
       "next": "ACT2_SCENE3_BLACK"
     },
     {
@@ -3226,14 +3245,16 @@
     {
       "id": "ACT3_SCENE1_SETUP",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/black.png",
-      "comment": "答辩大厅",
+      "imagePath": "assets/images/scenes/3.1模糊答辩大厅.png",
+      "comment": "模糊答辩大厅",
       "next": "ACT3_SCENE1_01"
     },
     {
       "id": "ACT3_SCENE1_01",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": "assets/audio/sfx_hum.mp3",
+      "sfxVolume": 0.5,
       "text": "光线强度逐渐减弱，轮廓开始出现。",
       "next": "ACT3_SCENE1_02"
     },
@@ -3270,7 +3291,15 @@
       "type": "dialogue",
       "character": "CHEN",
       "text": "…对于你的行为所造成的后果——你的项目失败了，你的队友的努力付诸东流——对于这一切…",
-      "next": "ACT3_SCENE1_07"
+      "next": "ACT3_SCENE1_CLEAR_VISION"
+    },
+    {
+      "id": "ACT3_SCENE1_CLEAR_VISION",
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/3.1答辩大厅.png",
+      "comment": "答辩大厅（清晰视点）",
+      "next": "ACT3_SCENE1_07",
+      "delay": 1000
     },
     {
       "id": "ACT3_SCENE1_07",
@@ -3298,10 +3327,10 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "他的声音再次响起，像是对一个程序执行最后的指令。",
-      "next": "ACT3_SCENE1_CHENAPPEARS"
+      "next": "ACT3_SCENE1_CHEN_APPEARS"
     },
     {
-      "id": "ACT1_SCENE1_CHENAPPEARS",
+      "id": "ACT1_SCENE1_CHEN_APPEARS",
       "type": "showCharacter",
       "charId": "CHEN",
       "position": "pos-center",
@@ -3319,6 +3348,7 @@
       "type": "dialogue",
       "character": "CHEN",
       "text": "你感到后悔吗？",
+      "stopAudioKey": "assets/audio/sfx_hum.mp3",
       "next": "ACT3_SCENE1_13"
     },
     {
@@ -3353,6 +3383,8 @@
       "id": "ACT3_SCENE1_BLACK",
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/black.png",
+      "bgmAudioPath": "assets/audio/bgm_读取日志.mp3",
+      "bgmVolume": 0.5,
       "comment": "黑屏",
       "next": "ACT3_SCENE1_17"
     },
@@ -3375,6 +3407,8 @@
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/2.1深夜实验室.png",
       "comment": "白天实验室",
+      "bgmAudioPath": "assets/audio/bgm_清晨实验室.mp3",
+      "bgmVolume": 0.5,
       "next": "ACT3_SCENE2_01",
       "delay": 2000
     },
