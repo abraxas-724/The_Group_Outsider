@@ -286,6 +286,24 @@ class GameApp {
                             // - sfxDuckMode: 'first' | 'all' | 'none'（默认 'first'，仅第一个触发 duck）
                             // - sfxDuckBy / sfxDuckTo / sfxDuckMs / sfxRestoreMs：duck 细节参数
                             if (node.type === 'dialogue') {
+                                // 立绘抖动（对白进入时）：
+                                // charShake/shake: true 表示抖动当前说话者；
+                                // shakeCharacter/shakeCharacters: 指定一个或多个角色ID抖动；
+                                // charShakeMs/shakeMs: 持续时长(ms, 默认600)；
+                                // charShakeInt/shakeInt: 强度(像素, 默认6)
+                                try {
+                                    const toArr = (v) => (v == null ? [] : (Array.isArray(v) ? v : [v]));
+                                    const wantShakeSpeaker = (node.charShake === true || node.shake === true) && node.character;
+                                    const targets = [];
+                                    if (wantShakeSpeaker) targets.push(String(node.character));
+                                    toArr(node.shakeCharacter || node.shakeCharacters).forEach(c => { if (c) targets.push(String(c)); });
+                                    if (targets.length) {
+                                        const dur = (typeof node.charShakeMs === 'number') ? node.charShakeMs : (typeof node.shakeMs === 'number' ? node.shakeMs : 600);
+                                        const intensity = (typeof node.charShakeInt === 'number') ? node.charShakeInt : (typeof node.shakeInt === 'number' ? node.shakeInt : 6);
+                                        targets.forEach(cid => { try { this._shakeCharacter(cid, { duration: dur, intensity }); } catch { } });
+                                    }
+                                } catch { }
+
                                 const { sfx, sfxKey, sfxAudioPath } = node;
                                 const looksLikePath = (str) => typeof str === 'string' && (/[\\/]/.test(str) || /\.(mp3|wav|ogg|m4a|aac|flac)$/i.test(str));
                                 const ensureMappedFromPath = (pathStr) => {
@@ -1314,6 +1332,36 @@ class GameApp {
         if (charEl) {
             charEl.classList.add('hidden');
         }
+    }
+
+    // ====== 立绘抖动效果（轻量，无需额外 CSS） ======
+    _shakeCharacter(charId, opts = {}) {
+        try {
+            const id = `char-${String(charId).toLowerCase()}`;
+            const el = document.getElementById(id);
+            if (!el) return;
+            const duration = (typeof opts.duration === 'number') ? opts.duration : 600;
+            const intensity = (typeof opts.intensity === 'number') ? opts.intensity : 6; // px
+            // 若已有抖动在进行，先取消
+            if (el._shakeRaf) { try { cancelAnimationFrame(el._shakeRaf); } catch { } el._shakeRaf = null; }
+            const origTransform = el.style.transform || '';
+            const start = performance.now();
+            const step = (now) => {
+                const t = now - start;
+                if (t >= duration) {
+                    el.style.transform = origTransform;
+                    el._shakeRaf = null;
+                    return;
+                }
+                const leftMs = duration - t;
+                const factor = Math.max(0.2, leftMs / duration); // 0.2~1 线性衰减
+                const dx = (Math.random() * 2 - 1) * intensity * factor;
+                const dy = (Math.random() * 2 - 1) * intensity * factor;
+                el.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px)`;
+                el._shakeRaf = requestAnimationFrame(step);
+            };
+            el._shakeRaf = requestAnimationFrame(step);
+        } catch { }
     }
 
     // ======= 特效：边缘模糊 + 轻微晃动（点击进入隐藏分支） =======

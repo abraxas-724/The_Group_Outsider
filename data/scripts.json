@@ -3459,6 +3459,7 @@
       "type": "showCharacter",
       "charId": "YANG",
       "position": "pos-left",
+      "expression": "supertired",
       "next": "ACT3_SCENE2_LIN_APPEARS"
     },
     {
@@ -3466,6 +3467,7 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-center",
+      "expression": "supertired",
       "next": "ACT3_SCENE2_HUI_APPEARS"
     },
     {
@@ -3473,6 +3475,7 @@
       "type": "showCharacter",
       "charId": "HUI",
       "position": "pos-right",
+      "expression": "supertired",
       "next": "ACT3_SCENE2_07"
     },
     {
@@ -3487,6 +3490,13 @@
       "type": "dialogue",
       "character": "YANG",
       "text": "我们再过一遍流程，把PPT最后顺一下，然后就去……",
+      "next": "ACT3_SCENE2_HUI_WORRIED"
+    },
+    {
+      "id": "ACT3_SCENE2_HUI_WORRIED",
+      "type": "setCharacter",
+      "charId": "HUI",
+      "expression": "worried",
       "next": "ACT3_SCENE2_09"
     },
     {
@@ -3508,6 +3518,13 @@
       "type": "dialogue",
       "character": "HUI",
       "text": "（她慌乱地点击着鼠标。）接口报错？昨天……昨天还是好的啊！",
+      "next": "ACT3_SCENE2_LIN_WORRIED"
+    },
+    {
+      "id": "ACT3_SCENE2_LIN_WORRIED",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "worried",
       "next": "ACT3_SCENE2_11"
     },
     {
@@ -3543,6 +3560,13 @@
       "type": "dialogue",
       "character": "LIN",
       "text": "（声音开始颤抖）……怎么会……所有的函数接口……全都不对了……",
+      "next": "ACT3_SCENE2_YANG_WORRIED"
+    },
+    {
+      "id": "ACT3_SCENE2_YANG_WORRIED",
+      "type": "setCharacter",
+      "charId": "YANG",
+      "expression": "worried",
       "next": "ACT3_SCENE2_17"
     },
     {
@@ -3577,13 +3601,36 @@
       "id": "ACT3_SCENE2_21",
       "type": "dialogue",
       "character": "SYS",
+      "stopBgm": true,
       "text": "'commit [a1b2c3d4e5f6] (HEAD-> master)'   'Author: Mo.'   'Date: Tue Aug 26 03:15:17 2025 +0800'   'Refactor: Purify the core logic.'",
+      "next": "ACT3_SCENE2_YANG_UNEXPECTED"
+    },
+    {
+      "id": "ACT3_SCENE2_YANG_UNEXPECTED",
+      "type": "setCharacter",
+      "charId": "YANG",
+      "expression": "unexpected",
+      "next": "ACT3_SCENE2_HUI_UNEXPECTED"
+    },
+    {
+      "id": "ACT3_SCENE2_HUI_UNEXPECTED",
+      "type": "setCharacter",
+      "charId": "HUI",
+      "expression": "unexpected",
+      "next": "ACT3_SCENE2_LIN_UNEXPECTED"
+    },
+    {
+      "id": "ACT3_SCENE2_LIN_UNEXPECTED",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "unexpected",
       "next": "ACT3_SCENE2_22"
     },
     {
       "id": "ACT3_SCENE2_22",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": "assets/audio/sfx_computer_fan.mp3",
       "text": "时间仿佛凝固了。实验室里只剩下服务器风扇单调的嗡鸣声。",
       "next": "ACT3_SCENE2_23"
     },
@@ -3605,6 +3652,9 @@
       "id": "ACT3_SCENE2_25",
       "type": "dialogue",
       "character": "YANG",
+      "stopAudioKey": "assets/audio/sfx_computer_fan.mp3",
+      "bgmAudioPath": "assets/audio/bgm_清晨实验室.mp3",
+      "bgmVolume": 0.5,
       "text": "（第一个开口，声音嘶哑得像是砂纸在摩擦）",
       "next": "ACT3_SCENE2_26"
     },
@@ -3702,6 +3752,13 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-right",
+      "next": "ACT3_SCENE3_LIN_DESPERATE"
+    },
+    {
+      "id": "ACT3_SCENE3_LIN_DESPERATE",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "desperate",
       "next": "ACT3_SCENE3_10"
     },
     {
@@ -3716,6 +3773,13 @@
       "type": "dialogue",
       "character": "LIN",
       "text": "他……用他自己的版本，替换了我们所有人的工作。",
+      "next": "ACT3_SCENE3_YANG_ANGRY"
+    },
+    {
+      "id": "ACT3_SCENE3_YANG_ANGRY",
+      "type": "setCharacter",
+      "charId": "YANG",
+      "expression": "angry",
       "next": "ACT3_SCENE3_12"
     },
     {
@@ -3775,6 +3839,7 @@
       "type": "showCharacter",
       "charId": "HUI",
       "position": "pos-right",
+      "expression": "hurry",
       "next": "ACT3_SCENE3_BRANCH_A_01"
     },
     {
@@ -3803,6 +3868,9 @@
       "type": "dialogue",
       "character": "YANG",
       "text": "（被你的回答气得发抖）你……我们跟你说的不是一回事！",
+      "charShake": true,
+      "charShakeMs": 800,
+      "charShakeInt": 7,
       "next": "ACT3_SCENE3_BRANCH_A_05"
     },
     {
@@ -3851,6 +3919,13 @@
       "type": "dialogue",
       "character": "MO",
       "text": "一个混乱的、不可维护的项目，无法长期存续。我从根本上解决了它的结构性风险。",
+      "next": "ACT3_SCENE3_BRANCH_B_LIN_QUESTION"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_B_LIN_QUESTION",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "question",
       "next": "ACT3_SCENE3_BRANCH_B_03"
     },
     {
@@ -3900,6 +3975,13 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "无法解析的输入，最佳策略是忽略。",
+      "next": "ACT3_SCENE3_BRANCH_C_YANG_ANGRY"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_C_YANG_ANGRY",
+      "type": "setCharacter",
+      "charId": "YANG",
+      "expression": "angry",
       "next": "ACT3_SCENE3_BRANCH_C_03"
     },
     {
@@ -3907,6 +3989,13 @@
       "type": "dialogue",
       "character": "YANG",
       "text": "（你的沉默让他更加愤怒）不说话？你现在连一句话都懒得跟我们说了是吗？你是不是觉得我们都是傻子！",
+      "next": "ACT3_SCENE3_BRANCH_C_LIN_DISAPPOINTED"
+    },
+    {
+      "id": "ACT3_SCENE3_BRANCH_C_LIN_DISAPPOINTED",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "disappointed",
       "next": "ACT3_SCENE3_BRANCH_C_04"
     },
     {
@@ -3988,7 +4077,14 @@
       "id": "ACT3_SCENE3_21",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你的回答，将决定你与他们之间，最后一丝连接是否会彻底断裂。无论你如何选择，时间都在流逝。去往刑场……不，去往答辩大厅的时间，到了。",
+      "text": "你的回答，将决定你与他们之间，最后一丝连接是否会彻底断裂。无论你如何选择，时间都在流逝。",
+      "next": "ACT3_SCENE3_22"
+    },
+    {
+      "id": "ACT3_SCENE3_22",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "去往刑场……不，去往答辩大厅的时间，到了。",
       "next": "ACT3_SCENE3_FINAL_YANG_HIDES"
     },
     {
@@ -4012,7 +4108,7 @@
     {
       "id": "ACT3_SCENE4_SETUP",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/black.png",
+      "imagePath": "assets/images/scenes/3.1答辩大厅.png",
       "comment": "答辩大厅",
       "next": "ACT3_SCENE4_CHEN_APPEARS"
     },
