@@ -154,9 +154,19 @@ class GameApp {
                                         return key;
                                     } catch { return null; }
                                 };
-                                let stopList = node.stopAudioKeys || node.stopSfxKeys || node.stopAudioKey || node.stopSfxKey;
-                                if (typeof stopList === 'string') stopList = [stopList];
-                                if (Array.isArray(stopList) && stopList.length) {
+                                const normalizeList = (v) => {
+                                    if (v == null) return [];
+                                    if (Array.isArray(v)) return v.flatMap(normalizeList);
+                                    if (typeof v === 'string') return v.split(/[\s,;]+/).map(s => s.trim()).filter(Boolean);
+                                    return [String(v)];
+                                };
+                                const stopList = [
+                                    ...normalizeList(node.stopAudioKeys),
+                                    ...normalizeList(node.stopSfxKeys),
+                                    ...normalizeList(node.stopAudioKey),
+                                    ...normalizeList(node.stopSfxKey)
+                                ];
+                                if (stopList.length) {
                                     stopList.forEach(item => {
                                         let key = null;
                                         if (looksLikePath(item)) key = ensureMappedFromPath(item);
@@ -266,10 +276,17 @@ class GameApp {
                             }
 
                             // 对话开始时的一次性音效（可在 scripts.json 的具体 dialogue 节点上声明）
-                            // 支持字段：sfxKey 或 sfx（映射键）、sfxAudioPath（直链）、sfxVolume（0~1）
+                            // 扩展：支持同时播放多个音效
+                            // 字段：
+                            // - sfx / sfxKey / sfxAudioPath: string | string[]（可混用，顺序依次追加）
+                            // - sfxVolume: number（单个统一音量）
+                            // - sfxVolumes: number | number[]（多音量，优先于 sfxVolume）
+                            // - sfxDelays: number | number[]（每个音效延迟 ms，默认 0）
+                            // - sfxDuck: boolean（默认 true）
+                            // - sfxDuckMode: 'first' | 'all' | 'none'（默认 'first'，仅第一个触发 duck）
+                            // - sfxDuckBy / sfxDuckTo / sfxDuckMs / sfxRestoreMs：duck 细节参数
                             if (node.type === 'dialogue') {
-                                const { sfx, sfxKey, sfxAudioPath, sfxVolume, sfxDuck, sfxDuckBy, sfxDuckTo, sfxDuckMs, sfxRestoreMs } = node;
-                                let usedKey = null;
+                                const { sfx, sfxKey, sfxAudioPath } = node;
                                 const looksLikePath = (str) => typeof str === 'string' && (/[\\/]/.test(str) || /\.(mp3|wav|ogg|m4a|aac|flac)$/i.test(str));
                                 const ensureMappedFromPath = (pathStr) => {
                                     try {
@@ -289,42 +306,83 @@ class GameApp {
                                         return key;
                                     } catch { return null; }
                                 };
-                                if (sfxKey) {
-                                    usedKey = sfxKey;
-                                } else if (sfx && looksLikePath(sfx)) {
-                                    usedKey = ensureMappedFromPath(sfx);
-                                } else if (sfx) {
-                                    // 认为是一个已有映射 key
-                                    usedKey = sfx;
-                                } else if (sfxAudioPath) {
-                                    usedKey = ensureMappedFromPath(sfxAudioPath);
-                                }
-                                if (usedKey) {
-                                    const vol = typeof sfxVolume === 'number' ? sfxVolume : 1;
-                                    const useDuck = (typeof sfxDuck === 'boolean') ? sfxDuck : true; // 默认开启 duck
-                                    const duckOpts = { duckBy: sfxDuckBy, duckTo: sfxDuckTo, duckMs: sfxDuckMs, restoreMs: sfxRestoreMs };
-                                    const playNow = () => {
-                                        try {
-                                            if (useDuck && typeof this.audio.playWithDuck === 'function') {
-                                                this.audio.playWithDuck(usedKey, { volume: vol, allowBeforeUnlock: false, ...duckOpts });
-                                            } else {
-                                                this.audio.play?.(usedKey, { volume: vol, allowBeforeUnlock: false });
-                                            }
-                                        } catch { }
+                                const toArr = (v) => (v == null ? [] : (Array.isArray(v) ? v : [v]));
+                                // 归并 key 列表：sfxKey -> sfx(作为key或路径) -> sfxAudioPath(路径)
+                                const list = [];
+                                toArr(sfxKey).forEach(k => { if (k) list.push(String(k)); });
+                                toArr(sfx).forEach(item => {
+                                    if (!item) return;
+                                    if (looksLikePath(item)) {
+                                        const k = ensureMappedFromPath(item);
+                                        if (k) list.push(k);
+                                    } else {
+                                        list.push(String(item));
+                                    }
+                                });
+                                toArr(sfxAudioPath).forEach(p => {
+                                    if (!p) return;
+                                    const k = ensureMappedFromPath(p);
+                                    if (k) list.push(k);
+                                });
+                                if (list.length) {
+                                    const volSingle = (typeof node.sfxVolumes === 'number') ? node.sfxVolumes : (typeof node.sfxVolume === 'number' ? node.sfxVolume : undefined);
+                                    const vols = Array.isArray(node.sfxVolumes) ? node.sfxVolumes : undefined;
+                                    const delays = Array.isArray(node.sfxDelays) ? node.sfxDelays : (typeof node.sfxDelays === 'number' ? node.sfxDelays : undefined);
+                                    const fadeIns = Array.isArray(node.sfxFadeInMs) ? node.sfxFadeInMs : (
+                                        typeof node.sfxFadeInMs === 'number' ? node.sfxFadeInMs : (
+                                            Array.isArray(node.sfxFadeIn) ? node.sfxFadeIn : (
+                                                typeof node.sfxFadeIn === 'number' ? node.sfxFadeIn : undefined
+                                            )
+                                        )
+                                    );
+                                    const loopFlags = (
+                                        Array.isArray(node.sfxLoops) ? node.sfxLoops :
+                                            Array.isArray(node.sfxloops) ? node.sfxloops :
+                                                (typeof node.sfxLoop === 'boolean' ? node.sfxLoop :
+                                                    (typeof node.sfxloop === 'boolean' ? node.sfxloop : undefined))
+                                    );
+                                    const useDuck = (typeof node.sfxDuck === 'boolean') ? node.sfxDuck : true;
+                                    const duckMode = node.sfxDuckMode || 'first'; // 'first' | 'all' | 'none'
+                                    const duckOpts = { duckBy: node.sfxDuckBy, duckTo: node.sfxDuckTo, duckMs: node.sfxDuckMs, restoreMs: node.sfxRestoreMs };
+
+                                    const scheduleAll = () => {
+                                        list.forEach((key, idx) => {
+                                            const vol = (vols && typeof vols[idx] === 'number') ? vols[idx] : (typeof volSingle === 'number' ? volSingle : 1);
+                                            const delay = (Array.isArray(node.sfxDelays) ? (parseInt(node.sfxDelays[idx], 10) || 0) : (typeof delays === 'number' ? delays : 0));
+                                            const loopThis = (Array.isArray(loopFlags) ? !!loopFlags[idx] : !!loopFlags);
+                                            const shouldDuck = !loopThis && useDuck && (duckMode === 'all' || (duckMode === 'first' && idx === 0));
+                                            const playOne = () => {
+                                                try {
+                                                    if (loopThis) {
+                                                        const fadeInMs = Array.isArray(fadeIns) ? (parseInt(fadeIns[idx], 10) || 0) : (typeof fadeIns === 'number' ? fadeIns : 0);
+                                                        this.audio.playLoop?.(key, { volume: vol, fadeInMs });
+                                                    } else {
+                                                        if (shouldDuck && typeof this.audio.playWithDuck === 'function') {
+                                                            this.audio.playWithDuck(key, { volume: vol, allowBeforeUnlock: false, ...duckOpts });
+                                                        } else {
+                                                            this.audio.play?.(key, { volume: vol, allowBeforeUnlock: false });
+                                                        }
+                                                    }
+                                                } catch { }
+                                            };
+                                            if (delay > 0) setTimeout(playOne, delay);
+                                            else playOne();
+                                        });
                                     };
+
                                     if (audio?.unlocked) {
-                                        playNow();
+                                        scheduleAll();
                                     } else {
                                         let fired = false;
-                                        const doPlay = () => { if (fired) return; fired = true; playNow(); };
+                                        const run = () => { if (fired) return; fired = true; scheduleAll(); };
                                         const off = () => {
                                             window.removeEventListener('pointerdown', onPD);
                                             window.removeEventListener('keydown', onKD);
                                             window.removeEventListener('audio_unlocked', onAU);
                                         };
-                                        const onPD = () => { doPlay(); off(); };
-                                        const onKD = () => { doPlay(); off(); };
-                                        const onAU = () => { doPlay(); off(); };
+                                        const onPD = () => { run(); off(); };
+                                        const onKD = () => { run(); off(); };
+                                        const onAU = () => { run(); off(); };
                                         window.addEventListener('pointerdown', onPD, { once: true, passive: true });
                                         window.addEventListener('keydown', onKD, { once: true, passive: true });
                                         window.addEventListener('audio_unlocked', onAU, { once: true });

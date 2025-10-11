@@ -1993,6 +1993,18 @@
       "id": "ACT2_SCENE1_SETUP_02",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": [
+        "assets/audio/sfx_computer_fan.mp3",
+        "assets/audio/sfx_drawing_sound.mp3"
+      ],
+      "sfxVolumes": [
+        0.1,
+        0.5
+      ],
+      "sfxLoops": [
+        true,
+        true
+      ],
       "text": "时间：一周后。Alpha版提交的前一晚，23:47。",
       "next": "ACT2_SCENE1_SETUP_03"
     },
@@ -2041,6 +2053,10 @@
       "id": "ACT2_SCENE1_01",
       "type": "dialogue",
       "character": "SYS",
+      "stopAudioKey": [
+        "assets/audio/sfx_computer_fan.mp3",
+        "assets/audio/sfx_drawing_sound.mp3"
+      ],
       "text": "熵增。",
       "next": "ACT2_SCENE1_02"
     },
@@ -2070,6 +2086,7 @@
       "type": "showCharacter",
       "charId": "YANG",
       "position": "pos-left",
+      "expression": "excited",
       "next": "ACT2_SCENE1_LIN_APPEARS"
     },
     {
@@ -2077,6 +2094,7 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-center",
+      "expression": "confused",
       "next": "ACT2_SCENE1_HUI_APPEARS"
     },
     {
@@ -2084,6 +2102,7 @@
       "type": "showCharacter",
       "charId": "HUI",
       "position": "pos-right",
+      "expression": "tired",
       "next": "ACT2_SCENE1_05"
     },
     {
@@ -2258,6 +2277,7 @@
       "type": "showCharacter",
       "charId": "YANG",
       "position": "pos-center",
+      "expression": "excited",
       "next": "ACT2_ARGUE_BRANCH_PARAM_HUI_APPEARS"
     },
     {
@@ -2265,6 +2285,7 @@
       "type": "showCharacter",
       "charId": "HUI",
       "position": "pos-right",
+      "expression": "hurry",
       "next": "ACT2_ARGUE_BRANCH_PARAM_00"
     },
     {
@@ -2272,6 +2293,20 @@
       "type": "dialogue",
       "character": "MO",
       "text": "粒子的生存周期和数量应设为可配置参数，而不是固定值。",
+      "next": "ACT2_ARGUE_BRANCH_PARAM_YANG_UNEXPECTED"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_YANG_UNEXPECTED",
+      "type": "setCharacter",
+      "charId": "YANG",
+      "expression": "unexpected",
+      "next": "ACT2_ARGUE_BRANCH_PARAM_HUI_UNEXPECTED"
+    },
+    {
+      "id": "ACT2_ARGUE_BRANCH_PARAM_HUI_UNEXPECTED",
+      "type": "setCharacter",
+      "charId": "HUI",
+      "expression": "unexpected",
       "next": "ACT2_ARGUE_BRANCH_PARAM_01"
     },
     {
@@ -2381,6 +2416,7 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-center",
+      "expression": "confused",
       "next": "ACT2_LIN_PC_01"
     },
     {
@@ -2465,7 +2501,7 @@
       "id": "ACT2_LIN_PC_RESOLVE_05",
       "type": "dialogue",
       "character": "SYS",
-      "text": "提交信息：'fix: Corrected state synchronization logic in UI module.'",
+      "text": "提交信息：'commit: Corrected state synchronization logic in UI module.'",
       "next": "ACT2_SCENE1_14"
     },
     {
@@ -2480,6 +2516,13 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-center",
+      "next": "ACT2_SCENE1_LIN_DEPRESSED"
+    },
+    {
+      "id": "ACT2_SCENE1_LIN_DEPRESSED",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "depressed",
       "next": "ACT2_SCENE1_15"
     },
     {
@@ -2494,6 +2537,13 @@
       "type": "dialogue",
       "character": "LIN",
       "text": "她的话突然停住了。屏幕上，那个顽固的Bug消失了。UI界面流畅得如同丝绸。）",
+      "next": "ACT2_SCENE1_LIN_UNBELIEVABLE"
+    },
+    {
+      "id": "ACT2_SCENE1_LIN_UNBELIEVABLE",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "unbelievable",
       "next": "ACT2_SCENE1_17"
     },
     {
@@ -2529,6 +2579,13 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "'Author: Mo.'琳的目光缓缓从屏幕移开，落在了你的身上。",
+      "next": "ACT2_SCENE1_LIN_NEUTRAL"
+    },
+    {
+      "id": "ACT2_SCENE1_LIN_NEUTRAL",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "neutral",
       "next": "ACT2_SCENE1_22"
     },
     {
@@ -2575,6 +2632,13 @@
       "type": "dialogue",
       "character": "LIN",
       "text": "（深深地吸了一口气，然后露出了一个极其疲惫但真诚的微笑）",
+      "next": "ACT2_SCENE1_BRANCH_A_LIN_HAPPY"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_A_LIN_HAPPY",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "happy",
       "next": "ACT2_SCENE1_BRANCH_A_02"
     },
     {
@@ -2686,7 +2750,7 @@
       "id": "ACT2_SCENE1_BRANCH_B_04",
       "type": "dialogue",
       "character": "LIN",
-      "text": "……原来是“大于”和“大于等于”的区别……天哪……（她用手捂住了脸。）",
+      "text": "……原来是“大于”和“大于等于”的区别……天哪……",
       "next": "ACT2_SCENE1_BRANCH_B_05"
     },
     {
@@ -2694,6 +2758,13 @@
       "type": "dialogue",
       "character": "LIN",
       "text": "这么简单的错误…我居然查了两个小时……脑子已经是一坨浆糊了。",
+      "next": "ACT2_SCENE1_BRANCH_B_LIN_HAPPY"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_LIN_HAPPY",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "happy",
       "next": "ACT2_SCENE1_BRANCH_B_06"
     },
     {
@@ -2722,6 +2793,13 @@
       "type": "dialogue",
       "character": "MO",
       "text": "我关闭了不必要的进程。",
+      "next": "ACT2_SCENE1_BRANCH_B_LIN_LAUGH"
+    },
+    {
+      "id": "ACT2_SCENE1_BRANCH_B_LIN_LAUGH",
+      "type": "setCharacter",
+      "charId": "LIN",
+      "expression": "laugh",
       "next": "ACT2_SCENE1_BRANCH_B_10"
     },
     {
@@ -2789,6 +2867,26 @@
       "id": "ACT2_SCENE2_05",
       "type": "dialogue",
       "character": "SYS",
+      "sfxAudioPath": [
+        "assets/audio/sfx_computer_fan.mp3",
+        "assets/audio/sfx_drawing_sound.mp3",
+        "assets/audio/sfx_hum.mp3"
+      ],
+      "sfxVolumes": [
+        0.6,
+        0.8,
+        0.8
+      ],
+      "sfxFadeInMs": [
+        3000,
+        3000,
+        3000
+      ],
+      "sfxLoops": [
+        true,
+        true,
+        true
+      ],
       "text": "屏幕开始变得越来越亮，越来越刺眼，仿佛显示器过载了一般，你体味着熬夜带来的生理不适感。",
       "next": "ACT2_SCENE2_06"
     },
@@ -2831,6 +2929,11 @@
       "id": "ACT2_SCENE2_11",
       "type": "dialogue",
       "character": "SYS",
+      "stopAudioKey": [
+        "assets/audio/sfx_computer_fan.mp3",
+        "assets/audio/sfx_drawing_sound.mp3",
+        "assets/audio/sfx_hum.mp3"
+      ],
       "text": "你需要秩序。你需要专注。你需要一个……节拍器。",
       "next": "ACT2_SCENE2_CODEBEAT"
     },

@@ -161,3 +161,94 @@ text_tick_4.mp3
 app.audio.playVariant('ui_click', 3);
 // 需要文件: ui_click_1.mp3, ui_click_2.mp3, ui_click_3.mp3
 ```
+
+## 在一个节点同时播放多个音效（对白开始）
+对白节点（`type: 'dialogue'`）支持以下字段来控制一次性音效的同时触发：
+
+- sfx / sfxKey / sfxAudioPath: 可以是 string 或 string[]，可混用；
+   - sfx/sfxKey 作为映射 key；
+   - sfx/sfxAudioPath 若提供路径，会自动映射为稳定的 `sfx_<文件名>` key；
+- sfxVolume: number（单一音量，0~1）；
+- sfxVolumes: number | number[]（针对多音效的分别音量，优先于 sfxVolume）；
+- sfxDelays: number | number[]（每个音效延迟毫秒数，默认 0）；
+- sfxDuck: boolean（默认 true，启用 BGM duck）；
+- sfxDuckMode: 'first' | 'all' | 'none'（默认 'first'，仅第一个音效触发 duck，避免反复起伏）；
+- sfxDuckBy / sfxDuckTo / sfxDuckMs / sfxRestoreMs：细化 duck 逻辑，与单音效相同含义。
+
+示例 1：两个键盘声叠加，第二个稍晚进入
+```
+{
+   "id": "SCENE_X_01",
+   "type": "dialogue",
+   "speaker": "系统",
+   "text": "初始化...",
+   "sfxAudioPath": [
+      "assets/audio/sfx_keyboard.mp3",
+      "assets/audio/sfx_keyboard.mp3"
+   ],
+   "sfxDelays": [0, 120],
+   "sfxVolumes": [1, 0.8],
+   "sfxDuck": true,
+   "sfxDuckMode": "first"
+}
+```
+
+示例 2：混用 key 与路径，并让所有音效都触发 duck（更强压低 BGM）
+```
+{
+   "id": "SCENE_X_02",
+   "type": "dialogue",
+   "speaker": "我",
+   "text": "敲键盘、按回车！",
+   "sfxKey": ["sfx_keyboard", "ui_confirm"],
+   "sfxAudioPath": "assets/audio/custom_click.mp3",
+   "sfxDelays": [0, 200, 320],
+   "sfxVolumes": 0.9,
+   "sfxDuck": true,
+   "sfxDuckMode": "all",
+   "sfxDuckBy": 0.5,
+   "sfxDuckMs": 100,
+   "sfxRestoreMs": 220
+}
+```
+
+说明：
+- 若同时提供了 sfxVolumes 为单值，则所有音效用同一音量；提供数组时按下标对应；
+- sfxDelays 同理可为单值或数组；
+- 仍可搭配“在节点停止音效”的字段（stopAudioKey(s)/stopSfxKey(s)）在后续节点停止任意一个或多个音效。
+
+补充：停止多个音效
+- 现在 `stopAudioKey`/`stopSfxKey` 也支持：
+   - string[] 数组，或
+   - 逗号/分号/空格分隔的字符串（例如 "a,b c;d"）
+与 `stopAudioKeys`/`stopSfxKeys` 等价，任选其一即可。
+
+### 循环播放音效（对白节点）
+你可以让对白节点启动一个或多个循环音效：
+
+- sfxLoop: boolean（为 true 时，让该节点配置的所有 sfx 循环）
+- sfxLoops: boolean[]（逐项是否循环）
+
+循环音效不进行 duck（避免 BGM 来回起伏）。你可以用 `stopAudioKeys` 或 `stopSfxKeys` 在后续节点停止它们（支持 key 或路径）：
+
+示例：
+```
+{
+   "id": "SCENE_LOOP_01",
+   "type": "dialogue",
+   "text": "设备持续运转中...",
+   "sfxAudioPath": ["assets/audio/machine_hum.mp3", "assets/audio/beep.mp3"],
+   "sfxLoops": [true, false],
+   "sfxVolumes": [0.6, 1],
+   "sfxDelays": [0, 300]
+}
+```
+在后续节点停止循环（可使用 key 或原始路径；路径会自动映射）：
+```
+{
+   "id": "SCENE_LOOP_02",
+   "type": "dialogue",
+   "text": "关闭设备。",
+   "stopAudioKeys": ["sfx_machine_hum", "assets/audio/machine_hum.mp3"]
+}
+```

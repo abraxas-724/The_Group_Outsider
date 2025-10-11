@@ -215,17 +215,29 @@ export class AudioManager {
     return this.play(pick, { volume, allowBeforeUnlock });
   }
 
-  // 播放循环音频（如 BGM / 环境）
-  playLoop(key) {
+  // 播放循环音频（如 BGM / 环境 / 循环 SFX）
+  // 支持可选淡入：fadeInMs
+  playLoop(key, { volume, fadeInMs } = {}) {
     const audio = this._getAudioElement(key, true);
     if (!audio) {
       return;
     }
     try {
       audio.loop = true;
-      audio.volume = this._calcVolume(key);
-      audio.play().catch(() => { });
-      this.looping.set(key, audio);
+      const baseVol = this._calcVolume(key);
+      const targetVol = (typeof volume === 'number') ? Math.max(0, Math.min(1, baseVol * volume)) : baseVol;
+      const doPlay = () => { try { audio.play().catch(() => { }); } catch { } };
+      if (typeof fadeInMs === 'number' && fadeInMs > 0) {
+        // 从 0 淡入到目标音量
+        audio.volume = 0;
+        doPlay();
+        this.looping.set(key, audio);
+        this._fade(audio, 0, targetVol, fadeInMs);
+      } else {
+        audio.volume = targetVol;
+        doPlay();
+        this.looping.set(key, audio);
+      }
     } catch { }
   }
 
