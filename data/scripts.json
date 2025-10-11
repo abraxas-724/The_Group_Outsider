@@ -3690,6 +3690,13 @@
       "type": "showCharacter",
       "charId": "MO",
       "position": "pos-center",
+      "next": "ACT3_SCENE3_HUI_SAD"
+    },
+    {
+      "id": "ACT3_SCENE3_HUI_SAD",
+      "type": "setCharacter",
+      "charId": "HUI",
+      "expression": "sad",
       "next": "ACT3_SCENE3_03"
     },
     {
@@ -3839,7 +3846,7 @@
       "type": "showCharacter",
       "charId": "HUI",
       "position": "pos-right",
-      "expression": "hurry",
+      "expression": "sad",
       "next": "ACT3_SCENE3_BRANCH_A_01"
     },
     {
@@ -4477,7 +4484,7 @@
       "id": "ACT3_SCENE4_HUI_APPEARS",
       "type": "showCharacter",
       "charId": "HUI",
-      "expression": "hurry",
+      "expression": "sad",
       "position": "pos-left",
       "next": "ACT3_SCENE4_28"
     },
@@ -4686,7 +4693,7 @@
       "character": "SYS",
       "text": "证明你是一个潜藏在团队中的“异类”。",
       "next": "ACT3_SCENE4_40"
-    }，
+    },
     {
       "id": "ACT3_SCENE4_40",
       "type": "dialogue",
@@ -4761,6 +4768,7 @@
       "id": "ACT3_SCENE4_49",
       "type": "dialogue",
       "character": "SYS",
+      "stopAudioKey": "assets/audio/sfx_computer_fan.mp3",
       "text": "它不在乎你的答案。它只是存在着。",
       "next": "ACT3_SCENE4_FINAL"
     },
@@ -5126,6 +5134,8 @@
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/答辩大厅外走廊.png",
       "comment": "走廊",
+      "bgmAudioPath": "assets/audio/bgm_答辩大厅外走廊.mp3",
+      "bgmVolume": 0.2,
       "next": "HAPPY_END_YANG_APPEARS"
     },
     {
@@ -5133,6 +5143,7 @@
       "type": "showCharacter",
       "charId": "YANG",
       "position": "pos-right",
+      "expression": "serious",
       "next": "HAPPY_END_LIN_APPEARS"
     },
     {
@@ -5140,6 +5151,7 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-left",
+      "expression": "neutral",
       "next": "HAPPY_END_09"
     },
     {
@@ -5153,7 +5165,14 @@
       "id": "HAPPY_END_10",
       "type": "dialogue",
       "character": "YANG",
-      "text": "（对你说，声音很低沉）……我还是不明白你。但…谢谢你最后说了那句话。",
+      "text": "（对你说，声音很低沉）……我还是不明白你。",
+      "next": "HAPPY_END_10_1"
+    },
+    {
+      "id": "HAPPY_END_10_1",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "但…谢谢你最后说了那句话。",
       "next": "HAPPY_END_YANG_HIDES"
     },
     {
@@ -5166,7 +5185,7 @@
       "id": "HAPPY_END_11",
       "type": "dialogue",
       "character": "SYS",
-      "text": "他说完就走了。绘也远远地对你点了一下头。最后只剩下琳。",
+      "text": "他说完就走了,绘也远远地对你点了一下头,最后只剩下琳。",
       "next": "HAPPY_END_12"
     },
     {
@@ -5181,6 +5200,13 @@
       "type": "dialogue",
       "character": "MO",
       "text": "我观察到我的行为导致了负面的输出结果。我对此感到遗憾。",
+      "next": "HAPPY_END_LIN_HAPPY"
+    },
+    {
+      "id": "HAPPY_END_LIN_HAPPY",
+      "type": "changeExpression",
+      "charId": "LIN",
+      "expression": "happy",
       "next": "HAPPY_END_14"
     },
     {
@@ -5201,14 +5227,49 @@
       "id": "HAPPY_END_16",
       "type": "dialogue",
       "character": "LIN",
-      "text": "默，也许你可以尝试从写“注释”开始。不是给机器看的注释，是给人看的。解释你的意图，你的想法…把“人”，也当成一个你需要去学习、去兼容的系统。虽然这个系统……bug很多。",
+      "text": "默，也许你可以尝试从写“注释”开始。",
       "next": "HAPPY_END_17"
     },
     {
       "id": "HAPPY_END_17",
       "type": "dialogue",
+      "character": "LIN",
+      "text": "不是给机器看的注释，是给人看的。解释你的意图，你的想法…",
+      "next": "HAPPY_END_18"
+    },
+    {
+      "id": "HAPPY_END_18",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "把“人”，也当成一个你需要去学习、去兼容的系统。",
+      "next": "HAPPY_END_19"
+    },
+    {
+      "id": "HAPPY_END_19",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "虽然这个系统……bug很多。",
+      "next": "HAPPY_END_20"
+    },
+    {
+      "id": "HAPPY_END_20",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "你看着她。兼容一个bug很多的系统。",
+      "next": "HAPPY_END_21"
+    },
+    {
+      "id": "HAPPY_END_21",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "这听起来……是一个前所未有的、极具挑战性的技术难题。",
+      "next": "HAPPY_END_22"
+    },
+    {
+      "id": "HAPPY_END_22",
+      "type": "dialogue",
       "character": "SYS",
-      "text": "你看着她。兼容一个bug很多的系统。这听起来……是一个前所未有的、极具挑战性的技术难题。第一次，你对代码之外的世界，产生了一丝微不足道的好奇。",
+      "text": "第一次，你对代码之外的世界，产生了一丝微不足道的好奇。",
       "next": "THE_END_SCREEN"
     },
     {
@@ -5223,13 +5284,20 @@
       "type": "showCharacter",
       "charId": "MO",
       "position": "pos-right",
-      "next": "BAD_END_01"
+      "next": "BAD_END_01_1"
     },
     {
-      "id": "BAD_END_01",
+      "id": "BAD_END_01_1",
       "type": "dialogue",
       "character": "SYS",
       "text": "你选择了沉默。这是你的语言。没有冗余，没有歧义。它代表着你的全部立场。",
+      "next": "BAD_END_01_2"
+    },
+    {
+      "id": "BAD_END_01_2",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "没有冗余，没有歧义。它代表着你的全部立场。",
       "next": "BAD_END_02"
     },
     {
@@ -5269,7 +5337,9 @@
     {
       "id": "BAD_END_SETUP",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/black.png",
+      "imagePath": "assets/images/scenes/答辩大厅外走廊.png",
+      "bgmAudioPath": "assets/audio/bgm_答辩大厅外走廊.mp3",
+      "bgmVolume": 0.2,
       "comment": "走廊复用",
       "next": "BAD_END_06"
     },
@@ -5278,26 +5348,42 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "你转身，独自一人走出了答辩大厅。没有人和你说话。",
-      "next": "BAD_END_07"
+      "next": "BAD_END_07_1"
     },
     {
-      "id": "BAD_END_07",
+      "id": "BAD_END_07_1",
       "type": "dialogue",
       "character": "SYS",
-      "text": "从此以后，在系里，你成为了一个传说。一个技术顶尖，但绝不能与之合作的“幽灵”。",
-      "next": "BAD_END_08"
+      "text": "从此以后，在系里，你成为了一个传说。",
+      "next": "BAD_END_07_2"
     },
     {
-      "id": "BAD_END_08",
+      "id": "BAD_END_07_2",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你被所有的团队排斥，被所有的社交活动忽略。你被流放了。",
+      "text": "一个技术顶尖，但绝不能与之合作的“幽灵”。",
+      "next": "BAD_END_08_1"
+    },
+    {
+      "id": "BAD_END_08_1",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你被所有的团队排斥，被所有的社交活动忽略。",
+      "next": "BAD_END_08_2"
+    },
+    {
+      "id": "BAD_END_08_2",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你被流放了。",
       "next": "BAD_END_CHANGE"
     },
     {
       "id": "BAD_END_CHANGE",
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/1.4默的宿舍.png",
+      "bgmAudioPath": "assets/audio/bgm_宿舍.mp3",
+      "bgmVolume": 0.2,
       "comment": "回宿舍",
       "next": "BAD_END_09"
     },
@@ -5326,21 +5412,35 @@
       "id": "BAD_END_12",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你拥有了绝对的自由，可以创造任何你想要的东西，没有任何人会来干扰你，用他们混乱的逻辑和脆弱的情感。",
+      "text": "你拥有了绝对的自由，可以创造任何你想要的东西。",
       "next": "BAD_END_13"
     },
     {
       "id": "BAD_END_13",
       "type": "dialogue",
       "character": "SYS",
-      "text": "但你也永远地失去了与另一个世界连接的端口。",
+      "text": "没有任何人会来干扰你，用他们混乱的逻辑和脆弱的情感。",
       "next": "BAD_END_14"
     },
     {
       "id": "BAD_END_14",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你拥有了你的逻辑王国，但代价是永恒的流放。",
+      "text": "但你也永远地失去了与另一个世界连接的端口。",
+      "next": "BAD_END_15"
+    },
+    {
+      "id": "BAD_END_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "你拥有了你的逻辑王国。",
+      "next": "BAD_END_16"
+    },
+    {
+      "id": "BAD_END_16",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "但代价是永恒的流放。",
       "next": "THE_END_SCREEN"
     },
     {
@@ -5389,6 +5489,7 @@
       "type": "showCharacter",
       "charId": "YANG",
       "position": "pos-right",
+      "expression": "unexpected",
       "next": "CONFUSED_END_A_LIN_APPEARS"
     },
     {
@@ -5396,59 +5497,81 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-center",
+      "expression": "unexpected",
       "next": "CONFUSED_END_A_04"
     },
     {
       "id": "CONFUSED_END_A_04",
       "type": "dialogue",
       "character": "SYS",
-      "text": "绘停止了抽泣，抬起头，眼神里第一次流露出的不是悲伤，而是一种茫然。",
-      "next": "CONFUSED_END_A_05"
-    },
-    {
-      "id": "CONFUSED_END_A_04",
-      "type": "dialogue",
-      "character": "YANG",
-      "text": "(他转向陈教授，语气不再是愤怒，而是一种彻底的无力感)教授……您看。他……他根本不明白。",
+      "text": "绘停止了抽泣，抬起头，眼神里第一次流露出的不是悲伤。",
       "next": "CONFUSED_END_A_05"
     },
     {
       "id": "CONFUSED_END_A_05",
       "type": "dialogue",
-      "character": "YANG",
-      "text": "他真的不明白我们在说什么。我们在这里讨论团队、情感、尊重……而他，还在讨论‘动机’，讨论‘恶意’的有无。",
+      "character": "SYS",
+      "text": "而是一种茫然。",
       "next": "CONFUSED_END_A_06"
     },
     {
       "id": "CONFUSED_END_A_06",
       "type": "dialogue",
-      "character": "LIN",
-      "text": "我明白了……他不是恶意的。他只是……运行在一个完全不同的操作系统上。",
+      "character": "YANG",
+      "text": "(他转向陈教授，语气不再是愤怒，而是一种彻底的无力感)",
       "next": "CONFUSED_END_A_07"
     },
     {
       "id": "CONFUSED_END_A_07",
       "type": "dialogue",
-      "character": "LIN",
-      "text": "我们的‘情感API’，他的系统里根本没有对应的库文件。",
+      "character": "YANG",
+      "text": "教授……您看。他……他根本不明白。",
       "next": "CONFUSED_END_A_08"
     },
     {
       "id": "CONFUSED_END_A_08",
       "type": "dialogue",
-      "character": "LIN",
-      "text": "所以，我们发送的任何请求，返回的都是‘404 Not Found’。",
+      "character": "YANG",
+      "text": "他真的不明白我们在说什么。我们在这里讨论团队、情感、尊重……",
       "next": "CONFUSED_END_A_09"
     },
     {
       "id": "CONFUSED_END_A_09",
       "type": "dialogue",
-      "character": "CHEN",
-      "text": "(他摘下眼镜，用手指按压着眉心，沉默了很久)",
+      "character": "YANG",
+      "text": "而他，还在讨论‘动机’，讨论‘恶意’的有无。",
       "next": "CONFUSED_END_A_10"
     },
     {
       "id": "CONFUSED_END_A_10",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我明白了……他不是恶意的。他只是……运行在一个完全不同的操作系统上。",
+      "next": "CONFUSED_END_A_11"
+    },
+    {
+      "id": "CONFUSED_END_A_11",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "我们的‘情感API’，他的系统里根本没有对应的库文件。",
+      "next": "CONFUSED_END_A_12"
+    },
+    {
+      "id": "CONFUSED_END_A_12",
+      "type": "dialogue",
+      "character": "LIN",
+      "text": "所以，我们发送的任何请求，返回的都是‘404 Not Found’。",
+      "next": "CONFUSED_END_A_13"
+    },
+    {
+      "id": "CONFUSED_END_A_13",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "(他摘下眼镜，用手指按压着眉心，沉默了很久)",
+      "next": "CONFUSED_END_A_14"
+    },
+    {
+      "id": "CONFUSED_END_A_14",
       "type": "dialogue",
       "character": "CHEN",
       "text": "……都坐下吧。",
@@ -5464,45 +5587,45 @@
       "id": "CONFUSED_END_A_LIN_HIDES",
       "type": "hideCharacter",
       "charId": "LIN",
-      "next": "CONFUSED_END_A_11"
-    },
-    {
-      "id": "CONFUSED_END_A_11",
-      "type": "dialogue",
-      "character": "SYS",
-      "text": "(团队成员们迟疑地坐回了讲台旁的椅子上)",
-      "next": "CONFUSED_END_A_12"
-    },
-    {
-      "id": "CONFUSED_END_A_12",
-      "type": "dialogue",
-      "character": "CHEN",
-      "text": "(他再次戴上眼镜，看向你，语气不再是审判，而更像是一位老师在面对一个无解的难题)",
-      "next": "CONFUSED_END_A_13"
-    },
-    {
-      "id": "CONFUSED_END_A_13",
-      "type": "dialogue",
-      "character": "CHEN",
-      "text": "默。从技术的角度，你的任务完成得无懈可击。",
-      "next": "ACT3_CONFUSED_END_A_14"
-    },
-    {
-      "id": "CONFUSED_END_A_13",
-      "type": "dialogue",
-      "character": "CHEN",
-      "text": "但一个项目，尤其是一个创造性的项目，从来都不只是任务的集合。",
-      "next": "CONFUSED_END_A_14"
-    },
-    {
-      "id": "CONFUSED_END_A_14",
-      "type": "dialogue",
-      "character": "CHEN",
-      "text": "它是一个由人、由情感、由无数次妥协和争吵共同构筑的生命体。",
       "next": "CONFUSED_END_A_15"
     },
     {
       "id": "CONFUSED_END_A_15",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "(团队成员们迟疑地坐回了讲台旁的椅子上)",
+      "next": "CONFUSED_END_A_16"
+    },
+    {
+      "id": "CONFUSED_END_A_16",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "(他再次戴上眼镜，看向你，语气不再是审判，而更像是一位老师在面对一个无解的难题)",
+      "next": "CONFUSED_END_A_17"
+    },
+    {
+      "id": "CONFUSED_END_A_17",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "默。从技术的角度，你的任务完成得无懈可击。",
+      "next": "ACT3_CONFUSED_END_A_18"
+    },
+    {
+      "id": "CONFUSED_END_A_18",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "但一个项目，尤其是一个创造性的项目，从来都不只是任务的集合。",
+      "next": "CONFUSED_END_A_19"
+    },
+    {
+      "id": "CONFUSED_END_A_19",
+      "type": "dialogue",
+      "character": "CHEN",
+      "text": "它是一个由人、由情感、由无数次妥协和争吵共同构筑的生命体。",
+      "next": "CONFUSED_END_A_20"
+    },
+    {
+      "id": "CONFUSED_END_A_20",
       "type": "dialogue",
       "character": "CHEN",
       "text": "你用手术刀般精准的逻辑，‘治好’了它身上的病，却也杀死了它的灵魂。",
@@ -5513,31 +5636,38 @@
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/black.png",
       "comment": "过场",
-      "next": "CONFUSED_END_A_16"
+      "next": "CONFUSED_END_A_21"
     },
     {
-      "id": "CONFUSED_END_A_16",
+      "id": "CONFUSED_END_A_21",
       "type": "dialogue",
       "character": "SYS",
       "text": "项目失败。",
-      "next": "CONFUSED_END_A_17"
+      "next": "CONFUSED_END_A_22"
     },
     {
-      "id": "CONFUSED_END_A_17",
+      "id": "CONFUSED_END_A_22",
       "type": "dialogue",
       "character": "SYS",
       "text": "陈教授在最终的评语中写道：该团队经历了一次深刻但痛苦的失败。",
-      "next": "CONFUSED_END_A_18"
+      "next": "CONFUSED_END_A_23"
     },
     {
-      "id": "CONFUSED_END_A_18",
+      "id": "CONFUSED_END_A_23",
       "type": "dialogue",
       "character": "SYS",
-      "text": "这暴露了一个核心问题：在高度协作的创造性工作中，纯粹的技术能力与人性的共情能力，孰重孰轻？",
-      "next": "CONFUSED_END_A_19"
+      "text": "这暴露了一个核心问题：",
+      "next": "CONFUSED_END_A_24"
     },
     {
-      "id": "CONFUSED_END_A_19",
+      "id": "CONFUSED_END_A_24",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "在高度协作的创造性工作中，纯粹的技术能力与人性的共情能力，孰重孰轻？",
+      "next": "CONFUSED_END_A_25"
+    },
+    {
+      "id": "CONFUSED_END_A_25",
       "type": "dialogue",
       "character": "SYS",
       "text": "这个问题，没有标准答案。",
@@ -5546,33 +5676,35 @@
     {
       "id": "CONFUSED_END_A_CHANGE_BACKGROUND",
       "type": "changeBackground",
-      "imagePath": "assets/images/scenes/HALL.png",
+      "imagePath": "assets/images/scenes/答辩大厅外走廊.png",
+      "bgmAudioPath": "assets/audio/bgm_答辩大厅外走廊.mp3",
+      "bgmVolume": 0.2,
       "comment": "答辩厅外",
-      "next": "CONFUSED_END_A_20"
+      "next": "CONFUSED_END_A_26"
     },
     {
-      "id": "CONFUSED_END_A_20",
+      "id": "CONFUSED_END_A_26",
       "type": "dialogue",
       "character": "SYS",
       "text": "你和团队成员们一起默默地走出答辩大厅。没有人说话。",
-      "next": "CONFUSED_END_A_21"
+      "next": "CONFUSED_END_A_27"
     },
     {
-      "id": "CONFUSED_END_A_21",
+      "id": "CONFUSED_END_A_27",
       "type": "dialogue",
       "character": "SYS",
       "text": "阳没有看你，他径直走远了，背影看起来比以往任何时候都疲惫。",
-      "next": "CONFUSED_END_A_22"
+      "next": "CONFUSED_END_A_28"
     },
     {
-      "id": "CONFUSED_END_A_22",
+      "id": "CONFUSED_END_A_28",
       "type": "dialogue",
       "character": "SYS",
       "text": " 绘走到你面前，犹豫了一下，轻声说：“……对不起。” 然后也快步离开了。",
-      "next": "CONFUSED_END_A_23"
+      "next": "CONFUSED_END_A_29"
     },
     {
-      "id": "CONFUSED_END_A_23",
+      "id": "CONFUSED_END_A_29",
       "type": "dialogue",
       "character": "SYS",
       "text": " 你不太理解她为什么要道歉。 最后只剩下琳，她停在你面前。",
@@ -5583,17 +5715,17 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-left",
-      "next": "CONFUSED_END_A_24"
+      "next": "CONFUSED_END_A_30"
     },
     {
-      "id": "CONFUSED_END_A_24",
+      "id": "CONFUSED_END_A_30",
       "type": "dialogue",
       "character": "LIN",
       "text": "你知道吗，默。最让人难过的，不是你做错了什么。",
-      "next": "CONFUSED_END_A_25"
+      "next": "CONFUSED_END_A_31"
     },
     {
-      "id": "CONFUSED_END_A_25",
+      "id": "CONFUSED_END_A_31",
       "type": "dialogue",
       "character": "LIN",
       "text": "而是你可能永远都无法理解，自己错在哪里。",
@@ -5603,45 +5735,38 @@
       "id": "CONFUSED_END_A_LAST_LIN_HIDES",
       "type": "hideCharacter",
       "charId": "LIN",
-      "next": "CONFUSED_END_A_26"
+      "next": "CONFUSED_END_A_32"
     },
     {
-      "id": "CONFUSED_END_A_26",
+      "id": "CONFUSED_END_A_32",
       "type": "dialogue",
       "character": "SYS",
       "text": "她说完，也转身离开了。",
-      "next": "CONFUSED_END_A_27"
+      "next": "CONFUSED_END_A_33"
     },
     {
-      "id": "CONFUSED_END_A_27",
-      "type": "dialogue",
-      "character": "SYS",
-      "text": "她说完，也转身离开了。",
-      "next": "CONFUSED_END_A_28"
-    },
-    {
-      "id": "CONFUSED_END_A_28",
+      "id": "CONFUSED_END_A_33",
       "type": "dialogue",
       "character": "SYS",
       "text": "你的世界，曾是一个由0和1构成的、完美而自洽的系统。",
-      "next": "CONFUSED_END_A_29"
+      "next": "CONFUSED_END_A_34"
     },
     {
-      "id": "CONFUSED_END_A_29",
+      "id": "CONFUSED_END_A_34",
       "type": "dialogue",
       "character": "SYS",
       "text": "但琳的话，像一行无法被编译、也无法被删除的错误代码，永远地留在了你的核心模块里。",
-      "next": "CONFUSED_END_A_30"
+      "next": "CONFUSED_END_A_35"
     },
     {
-      "id": "CONFUSED_END_A_30",
+      "id": "CONFUSED_END_A_35",
       "type": "dialogue",
       "character": "SYS",
       "text": " 你依然是“局外人”。 ",
-      "next": "CONFUSED_END_A_31"
+      "next": "CONFUSED_END_A_36"
     },
     {
-      "id": "CONFUSED_END_A_30",
+      "id": "CONFUSED_END_A_36",
       "type": "dialogue",
       "character": "SYS",
       "text": " 但你的内心第一次产生了一丝裂痕，开始怀疑自己那套坚不可摧的逻辑系统。",
@@ -5693,6 +5818,7 @@
       "type": "showCharacter",
       "charId": "YANG",
       "position": "pos-right",
+      "expression": "unexpected",
       "next": "CONFUSED_END_B_LIN_APPEARS"
     },
     {
@@ -5700,6 +5826,7 @@
       "type": "showCharacter",
       "charId": "LIN",
       "position": "pos-center",
+      "expression": "unexpected",
       "next": "CONFUSED_END_B_04"
     },
     {
@@ -5710,18 +5837,32 @@
       "next": "CONFUSED_END_B_05"
     },
     {
-      "id": "CONFUSED_END_B_04",
-      "type": "dialogue",
-      "character": "YANG",
-      "text": "(他转向陈教授，语气不再是愤怒，而是一种彻底的无力感)教授……您看。他……他根本不明白。",
-      "next": "CONFUSED_END_B_05"
-    },
-    {
       "id": "CONFUSED_END_B_05",
       "type": "dialogue",
       "character": "YANG",
-      "text": "他真的不明白我们在说什么。我们在这里讨论团队、情感、尊重……而他，他还在讨论‘任务’。",
-      "next": "CONFUSED_END_A_06"
+      "text": "(他转向陈教授，语气不再是愤怒，而是一种彻底的无力感)",
+      "next": "CONFUSED_END_B_06"
+    },
+    {
+      "id": "CONFUSED_END_B_06",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "教授……您看。他……他根本不明白。",
+      "next": "CONFUSED_END_B_07"
+    },
+    {
+      "id": "CONFUSED_END_B_07",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "他真的不明白我们在说什么。我们在这里讨论团队、情感、尊重……",
+      "next": "CONFUSED_END_A_08"
+    },
+    {
+      "id": "CONFUSED_END_B_08",
+      "type": "dialogue",
+      "character": "YANG",
+      "text": "而他，他还在讨论‘任务’。",
+      "next": "CONFUSED_END_A_10"
     },
     {
       "id": "ACT3_SCENE5_SETUP",
