@@ -2935,11 +2935,6 @@
       "id": "ACT2_SCENE2_11",
       "type": "dialogue",
       "character": "SYS",
-      "stopAudioKey": [
-        "assets/audio/sfx_computer_fan.mp3",
-        "assets/audio/sfx_drawing_sound.mp3",
-        "assets/audio/sfx_hum.mp3"
-      ],
       "stopBgm": true,
       "text": "你需要秩序。你需要专注。你需要一个……节拍器。",
       "next": "ACT2_SCENE2_CODEBEAT"
@@ -2960,6 +2955,10 @@
       "id": "ACT2_SCENE2_12",
       "type": "dialogue",
       "character": "SYS",
+      "stopAudioKeys": [
+        "assets/audio/sfx_drawing_sound.mp3",
+        "assets/audio/sfx_hum.mp3"
+      ],
       "sfxAudioPath": "assets/audio/sfx_computer_fan.mp3",
       "sfxVolume": 0.3,
       "text": "时间定格在03:14。",
@@ -3260,9 +3259,10 @@
     {
       "id": "ACT3_SCENE1_01",
       "type": "dialogue",
-      "character": "SYS",
       "sfxAudioPath": "assets/audio/sfx_hum.mp3",
       "sfxVolume": 0.5,
+      "sfxLoops": true,
+      "character": "SYS",
       "text": "光线强度逐渐减弱，轮廓开始出现。",
       "next": "ACT3_SCENE1_02"
     },
@@ -4327,11 +4327,11 @@
       "next": "ACT3_SCENE4_24"
     },
     {
-      "id": "ACT3_SCENE4_24 ",
+      "id": "ACT3_SCENE4_24",
       "type": "branch",
       "cases": [
         {
-          "when": "choice1_compliant",
+          "when": "choice1_logical",
           "next": "ACT3_SCENE4_25_A_01"
         },
         {
@@ -4339,7 +4339,7 @@
           "next": "ACT3_SCENE4_25_B_01"
         },
         {
-          "when": "choice1_logical",
+          "when": "choice1_compliant",
           "next": "ACT3_SCENE4_25_C_01"
         }
       ]
@@ -4444,7 +4444,7 @@
       "type": "dialogue",
       "character": "YANG",
       "text": "在他眼里我们的团队情感都是影响他性能的‘Bug’！",
-      "next": "ACT3_SCENE4_28"
+      "next": "ACT3_SCENE4_YANG_HIDES"
     },
     {
       "id": "ACT3_SCENE4_27_B_01",
@@ -4465,7 +4465,7 @@
       "type": "dialogue",
       "character": "YANG",
       "text": "好像和我们多待一秒都是对他时间的浪费！",
-      "next": "ACT3_SCENE4_28"
+      "next": "ACT3_SCENE4_YANG_HIDES"
     },
     {
       "id": "ACT3_SCENE4_27_C_01",
@@ -4531,7 +4531,7 @@
       "next": "ACT3_SCENE4_32"
     },
     {
-      "id": "ACT3_SCENE4_31",
+      "id": "ACT3_SCENE4_32",
       "type": "dialogue",
       "character": "HUI",
       "text": "就像一个没有感情的机器。这让人害怕。",
@@ -4549,10 +4549,10 @@
       "charId": "LIN",
       "position": "pos-left",
       "expression": "disappointed",
-      "next": "ACT3_SCENE4_32"
+      "next": "ACT3_SCENE4_33"
     },
     {
-      "id": "ACT3_SCENE4_32",
+      "id": "ACT3_SCENE4_33",
       "type": "branch",
       "cases": [
         {
@@ -4595,7 +4595,7 @@
       "type": "dialogue",
       "character": "LIN",
       "text": "在他的世界里，可能只有事实。",
-      "next": "ACT3_SCENE4_YANG_APPEARS_AGAIN"
+      "next": "ACT3_SCENE4_LIN_HIDES"
     },
     {
       "id": "ACT3_SCENE4_33_B_01",
@@ -4619,11 +4619,11 @@
       "next": "ACT3_SCENE4_33_B_04"
     },
     {
-      "id": "ACT3_SCENE4_33_A_04",
+      "id": "ACT3_SCENE4_33_B_04",
       "type": "dialogue",
       "character": "LIN",
       "text": "在那一刻我才明白，我们所有人的情感和体验，在他的世界里，都是可以被优化掉的‘无关变量’。",
-      "next": "ACT3_SCENE4_YANG_APPEARS_AGAIN"
+      "next": "ACT3_SCENE4_LIN_HIDES"
     },
     {
       "id": "ACT3_SCENE4_33_C_01",
@@ -4712,13 +4712,13 @@
       "id": "ACT3_SCENE4_40",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你的罪行不再是那次git push --force，而是你的“存在”本身。",
+      "text": "你的罪行不再是那次git push --force。",
       "next": "ACT3_SCENE4_41"
     },
     {
       "id": "ACT3_SCENE4_41",
       "type": "dialogue",
-      "character": "CHEN",
+      "character": "SYS",
       "text": "而是你的“存在”本身。",
       "next": "ACT3_SCENE4_42"
     },
@@ -4791,14 +4791,11 @@
       "type": "branch",
       "cases": [
         {
-          "when": "compliant>2",
+          "when": "compliant>=2",
           "next": "ACT3_SCENE4_CHOICE_FINAL_A"
-        },
-        {
-          "when": "else",
-          "next": "ACT3_SCENE4_CHOICE_FINAL_B"
         }
-      ]
+      ],
+      "default": "ACT3_SCENE4_CHOICE_FINAL_B"
     },
     {
       "id": "ACT3_SCENE4_CHOICE_FINAL_A",
@@ -4854,6 +4851,7 @@
       "id": "TRUE_END_01_A",
       "type": "dialogue",
       "character": "MO",
+      "stopAudioKey": "assets/audio/sfx_computer_fan.mp3",
       "text": "我的行为遵循代码最优化的原则。团队的情感波动不在我的任务范畴之内。",
       "next": "TRUE_END_02"
     },
@@ -5019,28 +5017,28 @@
       "next": "TRUE_END_16"
     },
     {
-      "id": "TRUE_END_15",
-      "type": "dialogue",
-      "character": "SYS",
-      "text": "在这温柔而冷酷的宇宙中，你准备开始构建一个只属于自己的、没有任何杂质的、完美的世界。",
-      "next": "TRUE_END_16"
-    },
-    {
       "id": "TRUE_END_16",
       "type": "dialogue",
       "character": "SYS",
-      "text": "不过孤独在所难免。",
+      "text": "在这温柔而冷酷的宇宙中，你准备开始构建一个只属于自己的、没有任何杂质的、完美的世界。",
       "next": "TRUE_END_17"
     },
     {
       "id": "TRUE_END_17",
       "type": "dialogue",
       "character": "SYS",
-      "text": "不过孤独有时确难以忍受。",
+      "text": "不过孤独在所难免。",
       "next": "TRUE_END_18"
     },
     {
       "id": "TRUE_END_18",
+      "type": "dialogue",
+      "character": "SYS",
+      "text": "不过孤独有时确难以忍受。",
+      "next": "TRUE_END_19"
+    },
+    {
+      "id": "TRUE_END_19",
       "type": "dialogue",
       "character": "SYS",
       "text": "...",
@@ -5064,6 +5062,7 @@
       "id": "HAPPY_END_01",
       "type": "dialogue",
       "character": "MO",
+      "stopAudioKey": "assets/audio/sfx_computer_fan.mp3",
       "text": "如果说，我的行为伤害了你们，那我后悔。",
       "next": "HAPPY_END_02_1"
     },
@@ -5218,7 +5217,7 @@
     },
     {
       "id": "HAPPY_END_LIN_HAPPY",
-      "type": "changeExpression",
+      "type": "setCharacter",
       "charId": "LIN",
       "expression": "happy",
       "next": "HAPPY_END_14"
@@ -5235,7 +5234,7 @@
       "type": "dialogue",
       "character": "SYS",
       "text": "她走到你面前。",
-      "next": "ACT3_HAPPY_END_16"
+      "next": "HAPPY_END_16"
     },
     {
       "id": "HAPPY_END_16",
@@ -5304,7 +5303,8 @@
       "id": "BAD_END_01_1",
       "type": "dialogue",
       "character": "SYS",
-      "text": "你选择了沉默。这是你的语言。没有冗余，没有歧义。它代表着你的全部立场。",
+      "stopAudioKey": "assets/audio/sfx_computer_fan.mp3",
+      "text": "你选择了沉默。这是你的语言。",
       "next": "BAD_END_01_2"
     },
     {
@@ -5396,8 +5396,6 @@
       "id": "BAD_END_CHANGE",
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/1.4默的宿舍.png",
-      "bgmAudioPath": "assets/audio/bgm_宿舍.mp3",
-      "bgmVolume": 0.2,
       "comment": "回宿舍",
       "next": "BAD_END_09"
     },
@@ -5476,7 +5474,7 @@
       "type": "dialogue",
       "character": "MO",
       "text": "我可能……无法理解你们的感受，但我并非出于恶意。",
-      "next": "CONFUSED_END_A_02"
+      "next": "CONFUSED_END_A_MO_HIDES"
     },
     {
       "id": "CONFUSED_END_A_MO_HIDES",
@@ -5622,7 +5620,7 @@
       "type": "dialogue",
       "character": "CHEN",
       "text": "默。从技术的角度，你的任务完成得无懈可击。",
-      "next": "ACT3_CONFUSED_END_A_18"
+      "next": "CONFUSED_END_A_18"
     },
     {
       "id": "CONFUSED_END_A_18",
@@ -5650,6 +5648,7 @@
       "type": "changeBackground",
       "imagePath": "assets/images/scenes/black.png",
       "comment": "过场",
+      "delay": 2000,
       "next": "CONFUSED_END_A_21"
     },
     {
@@ -5694,6 +5693,7 @@
       "bgmAudioPath": "assets/audio/bgm_答辩大厅外走廊.mp3",
       "bgmVolume": 0.2,
       "comment": "答辩厅外",
+      "delay": 1500,
       "next": "CONFUSED_END_A_26"
     },
     {
@@ -5805,7 +5805,7 @@
       "type": "dialogue",
       "character": "MO",
       "text": "我以为只要完成任务，就是一个好的团队成员。",
-      "next": "CONFUSED_END_B_02"
+      "next": "CONFUSED_END_B_MO_HIDES"
     },
     {
       "id": "CONFUSED_END_B_MO_HIDES",
@@ -6060,16 +6060,9 @@
     },
     {
       "id": "THE_END_SCREEN",
-      "type": "dialogue",
-      "character": "SYS",
-      "text": "THE END",
-      "next": "RETURN_TO_HOME"
-    },
-    {
-      "id": "RETURN_TO_HOME",
-      "type": "goTo",
-      "url": "start.html",
-      "next": null
+      "type": "changeBackground",
+      "imagePath": "assets/images/scenes/black.png",
+      "next": "null"
     }
   ]
 }

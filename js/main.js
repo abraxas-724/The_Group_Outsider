@@ -413,12 +413,21 @@ class GameApp {
                     this.achievements?.onNodeShown?.(nodeId);
                     // 执行原始的显示逻辑
                     const ret = __origShowNode(nodeId);
-                    // 节点钩子：ACT3_SCENE4_42 出现后，渲染边缘模糊/晃动遮罩；其它节点则清理
+                    // 节点钩子：ACT3_SCENE4_44 出现后，渲染边缘模糊/晃动遮罩；其它节点则清理
                     try {
-                        if (nodeId === 'ACT3_SCENE4_42') {
+                        if (nodeId === 'ACT3_SCENE4_44') {
                             this._showEdgeAnomalyOverlay({ gotoNode: 'ACT3_SCENE5_SETUP', noise: true });
                         } else {
                             this._removeEdgeAnomalyOverlay();
+                        }
+                        // 结束画面：THE_END_SCREEN（切黑）与 THE_END_SCREEN_01（文字）均显示“返回首页”按钮
+                        const END_IDS = nodeId === 'THE_END_SCREEN' || nodeId === 'THE_END_SCREEN_01';
+                        if (END_IDS) {
+                            this._showTheEndOverlay();
+                        } else {
+                            // 仅当进入的 nodeId 确实存在于脚本中（真实节点）时，才移除结束覆盖层
+                            const exists = !!(this.dialogueEngine && Array.isArray(this.dialogueEngine.script) && this.dialogueEngine.script.some(n => n.id === nodeId));
+                            if (exists) this._removeTheEndOverlay?.();
                         }
                     } catch { }
                     return ret;
@@ -454,6 +463,13 @@ class GameApp {
             this._initGlobalSfx();
 
             console.log("✅ 游戏核心初始化完成！");
+
+            // 进入 game.html 时提示：点击任意处开始游戏（用于引导并解锁音频）
+            try {
+                if (!this.audio || !this.audio.unlocked) {
+                    this._requireUserGesture({ text: '点击任意处开始游戏' });
+                }
+            } catch { }
 
         } catch (error) {
             console.error('❌ 游戏初始化失败:', error);
@@ -1376,8 +1392,8 @@ class GameApp {
         if (opts.noise) {
             ov.classList.add('with-noise');
         }
-        // 四个边缘可点击区域
-        const mkEdge = (cls) => {
+        // 辅助：创建可点击边缘片段（可带自定义样式）
+        const mkEdge = (cls, style) => {
             const d = document.createElement('div');
             d.className = 'edge ' + cls;
             d.setAttribute('role', 'button');
@@ -1391,12 +1407,42 @@ class GameApp {
                     this.dialogueEngine?._showNode(gotoNode);
                 }
             });
+            if (style && typeof style === 'object') {
+                Object.assign(d.style, style);
+            }
             return d;
         };
+        // 动态避开对话框：让可点击区域不覆盖对话框矩形
+        const dlg = document.getElementById('dialogue-box');
+        const dlgVisible = dlg && !dlg.classList.contains('hidden');
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        let dr = null;
+        if (dlgVisible) {
+            try { dr = dlg.getBoundingClientRect(); } catch { dr = null; }
+        }
+        // 顶部边缘：不与对话框冲突
         ov.appendChild(mkEdge('top'));
-        ov.appendChild(mkEdge('bottom'));
-        ov.appendChild(mkEdge('left'));
-        ov.appendChild(mkEdge('right'));
+        // 左/右边缘：若有对话框，则仅延伸到对话框上缘为止
+        if (dr) {
+            const bottomPx = Math.max(0, vh - dr.top);
+            ov.appendChild(mkEdge('left', { bottom: bottomPx + 'px' }));
+            ov.appendChild(mkEdge('right', { bottom: bottomPx + 'px' }));
+            // 底部边缘：在对话框左右两端留出可点击，避开对话框自身
+            const leftGap = Math.max(0, dr.left);
+            const rightGap = Math.max(0, vw - dr.right);
+            if (leftGap > 12) { // 仅当有可用宽度时才创建片段
+                ov.appendChild(mkEdge('bottom bottom-left', { left: '0px', right: (vw - leftGap) + 'px', height: '15vh', bottom: '0px' }));
+            }
+            if (rightGap > 12) {
+                ov.appendChild(mkEdge('bottom bottom-right', { left: dr.right + 'px', right: '0px', height: '15vh', bottom: '0px' }));
+            }
+        } else {
+            // 无对话框或不可见：按默认四边
+            ov.appendChild(mkEdge('bottom'));
+            ov.appendChild(mkEdge('left'));
+            ov.appendChild(mkEdge('right'));
+        }
         // 可选：添加细微噪点层（纯 CSS 背景 + 叠加混合）
         if (opts.noise) {
             const noise = document.createElement('div');
@@ -1405,6 +1451,50 @@ class GameApp {
         }
         document.body.appendChild(ov);
         this._edgeOv = ov;
+    }
+
+    // ======= 结束覆盖层：返回首页按钮 =======
+    _showTheEndOverlay() {
+        if (this._endOv) return;
+        const ov = document.createElement('div');
+        ov.id = 'the-end-overlay';
+        ov.style.cssText = 'position:fixed;inset:0;z-index:6500;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.7));backdrop-filter:blur(2px);color:#fff;';
+        const box = document.createElement('div');
+        // 放大弹窗尺寸与内边距，增强可读性并自适应
+        box.style.cssText = 'display:flex;flex-direction:column;gap:clamp(48px,8vh,120px);align-items:center;'
+            + 'width:clamp(560px,80vw,1080px);padding:clamp(56px,8vh,100px) clamp(64px,10vw,120px);'
+            + 'background:rgba(17,24,39,.85);border:1px solid rgba(255,255,255,.18);'
+            + 'border-radius:48px;box-shadow:0 40px 160px rgba(0,0,0,.6)';
+        const title = document.createElement('div');
+        title.textContent = 'THE END';
+        // 标题更大且响应式
+        title.style.cssText = 'font-weight:800;font-size:clamp(64px,12vw,180px);line-height:1.1;'
+            + 'font-family:\'Segoe UI\',Roboto,Arial;letter-spacing:.22em;opacity:.95;text-align:center;';
+        const btn = document.createElement('button');
+        btn.textContent = '返回首页';
+        btn.className = 'sl-btn';
+        // 按钮放大并提升对比
+        btn.style.cssText = 'padding:18px 36px;border-radius:14px;background:#334155;color:#e2e8f0;'
+            + 'border:2px solid #64748b;cursor:pointer;font-weight:700;letter-spacing:.28em;font-size:clamp(16px,2.2vw,22px);'
+            + 'box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .2s ease, box-shadow .2s ease, background .2s ease;';
+        btn.addEventListener('mouseenter', () => { btn.style.transform = 'translateY(-2px)'; btn.style.boxShadow = '0 16px 36px rgba(0,0,0,.45)'; });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = 'translateY(0)'; btn.style.boxShadow = '0 10px 30px rgba(0,0,0,.35)'; });
+        btn.addEventListener('click', () => {
+            try { sessionStorage.removeItem('groupOutsiderLoadFromSlot'); } catch { }
+            window.location.href = 'start.html';
+        });
+        box.appendChild(title);
+        box.appendChild(btn);
+        ov.appendChild(box);
+        document.body.appendChild(ov);
+        this._endOv = ov;
+    }
+
+    _removeTheEndOverlay() {
+        if (this._endOv && this._endOv.parentNode) {
+            try { this._endOv.parentNode.removeChild(this._endOv); } catch { }
+        }
+        this._endOv = null;
     }
 
     _removeEdgeAnomalyOverlay() {
