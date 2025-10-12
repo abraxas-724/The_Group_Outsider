@@ -8,7 +8,7 @@
 
 // 缓存版本：每次需要强制客户端更新（包括音效文件、脚本）时递增
 // 建议语义：tgo-v<number>
-const CACHE_VERSION = 'tgo-v19';
+const CACHE_VERSION = 'tgo-v20';
 const CORE_CACHE = `${CACHE_VERSION}-core`;
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
