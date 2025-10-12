@@ -83,7 +83,7 @@ const levels = [
                 options: [
                     { value: 'right', text: 'right' },
                     { value: 'second', text: 'second' },
-                    { value: 'num1', text: 'num1', correct: true }
+                    { value: 'num2', text: 'num2', correct: true }
                 ]
             }
         ],

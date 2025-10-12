@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4vh 5vw;
+    padding: max(4vh, env(safe-area-inset-top)) max(5vw, env(safe-area-inset-right)) max(4vh, env(safe-area-inset-bottom)) max(5vw, env(safe-area-inset-left));
     background: rgba(15, 17, 21, .70);
     backdrop-filter: blur(14px) saturate(140%);
     z-index: 260;
@@ -28,7 +28,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4vh 5vw;
+    padding: max(4vh, env(safe-area-inset-top)) max(5vw, env(safe-area-inset-right)) max(4vh, env(safe-area-inset-bottom)) max(5vw, env(safe-area-inset-left));
     background: rgba(15, 17, 21, .70);
     backdrop-filter: blur(14px) saturate(140%);
     z-index: 250;
@@ -44,7 +44,7 @@
 
 .sl-panel {
     width: clamp(320px, 70vw, 920px);
-    max-height: 82vh;
+    max-height: 82dvh;
     display: flex;
     flex-direction: column;
     gap: 14px;

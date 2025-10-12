@@ -16,7 +16,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 4vh 5vw;
+	padding: max(4vh, env(safe-area-inset-top)) max(5vw, env(safe-area-inset-right)) max(4vh, env(safe-area-inset-bottom)) max(5vw, env(safe-area-inset-left));
 	background: rgba(17, 24, 39, 0.0);
 	backdrop-filter: blur(14px) saturate(140%);
 	z-index: 250;
@@ -44,7 +44,7 @@
 
 .sl-panel {
 	width: clamp(320px, 70vw, 920px);
-	max-height: 82vh;
+	max-height: 82dvh;
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
@@ -273,7 +273,7 @@
 	/* 覆盖开始页/游戏内设置面板的内联宽度 */
 	#settings-overlay .sl-panel {
 		width: 94vw !important;
-		max-height: 86vh !important;
+		max-height: 86dvh !important;
 		padding: 14px 14px 16px !important;
 		border-radius: 14px !important;
 	}
@@ -282,7 +282,7 @@
 	#save-load-overlay .sl-panel,
 	#inline-save-load .sl-panel {
 		width: 94vw !important;
-		max-height: 86vh !important;
+		max-height: 86dvh !important;
 		padding: 14px 14px 16px !important;
 		border-radius: 14px;
 	}
@@ -344,7 +344,7 @@
 /* ===== Mini Game Selection Overlay ===== */
 #minigame-overlay .sl-panel {
 	width: clamp(340px, 72vw, 1024px);
-	max-height: 86vh;
+	max-height: 86dvh;
 }
 
 #minigame-overlay .sl-header h2 {
@@ -428,7 +428,7 @@
 @media (max-width: 720px) {
 	#minigame-overlay .sl-panel {
 		width: 94vw !important;
-		max-height: 88vh !important;
+		max-height: 88dvh !important;
 		padding: 14px 14px 16px !important;
 	}
 

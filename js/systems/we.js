@@ -20,7 +20,7 @@ const getZindex = (array, index) =>
   );
 
 // 预先给每个卡片写入索引变量，供 CSS (var(--index)) 使用
-items.forEach((it,i)=>it.style.setProperty('--index', i));
+items.forEach((it, i) => it.style.setProperty('--index', i));
 
 // 显示当前的 card：根据 active 计算层级与位移变量
 const displayItems = (item, index, active) => {
@@ -41,18 +41,18 @@ animate();
 
 // 点击card跳到个人主页网页
 const urls = [
-    "about us\\Syhhomepage\\index.html",
-    "about us\\zyz\\geren.html",
-    "about us\\yst\\杨舒童个人主页.html",
-    "about us\\hh\\hh.html",
-    "about us\\lzh\\index.html",
-    "about us\\wyw\\wyw.html"
-  ];
+  "about us\\Syhhomepage\\index.html",
+  "about us\\zyz\\geren.html",
+  "about us\\yst\\杨舒童个人主页.html",
+  "about us\\hh\\hh.html",
+  "about us\\lzh\\index.html",
+  "about us\\wyw\\wyw.html"
+];
 items.forEach((item, i) => {
-    item.addEventListener("click", () => {
-      window.open(urls[i], "_blank"); 
-    });
+  item.addEventListener("click", () => {
+    window.open(urls[i], "_blank");
   });
+});
 
 
 
@@ -85,10 +85,10 @@ const handleMouseUp = () => {
   isDown = false;
 };
 
-document.addEventListener("mousewheel", handleWheel);
-document.addEventListener("mousedown", handleMouseDown);
-document.addEventListener("mousemove", handleMouseMove);
-document.addEventListener("mouseup", handleMouseUp);
-document.addEventListener("touchstart", handleMouseDown);
-document.addEventListener("touchmove", handleMouseMove);
-document.addEventListener("touchend", handleMouseUp);
+document.addEventListener("mousewheel", handleWheel, { passive: true });
+document.addEventListener("mousedown", handleMouseDown, { passive: true });
+document.addEventListener("mousemove", handleMouseMove, { passive: true });
+document.addEventListener("mouseup", handleMouseUp, { passive: true });
+document.addEventListener("touchstart", handleMouseDown, { passive: true });
+document.addEventListener("touchmove", handleMouseMove, { passive: true });
+document.addEventListener("touchend", handleMouseUp, { passive: true });
