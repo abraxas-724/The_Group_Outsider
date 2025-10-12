@@ -1,0 +1,11 @@
+/* Placeholder for minigame selection page styles.
+   The primary styles are defined in css/save-load-panel.css under
+   "Mini Game Selection Overlay". This file exists to satisfy the
+   start.html link reference and allow page load without 404s. */
+
+/* Optional small tweaks */
+#minigame-overlay .mini-intro {
+    font-size: .85rem;
+    color: #cbd5e1;
+    margin: 6px 0 10px;
+}

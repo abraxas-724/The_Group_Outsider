@@ -121,7 +121,13 @@ body.page-start .menu-btn-neo {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  box-sizing: border-box;
+  /* 让 min-height 包含内边距，避免无内容时也产生溢出 */
+  min-height: 100dvh;
+  /* 使用 dvh 以适配移动端地址栏 */
+  /* 外层不滚动，由内层面板承担滚动；避免在内容完全适配时出现页面级滚动条 */
+  overflow-y: hidden;
+  overflow-x: hidden;
   padding: clamp(20px, 4vh, 80px) clamp(18px, 4vw, 120px);
 }
 
@@ -172,8 +178,35 @@ body.page-start .menu-btn-neo {
   display: flex;
   flex-direction: column;
   gap: 40px;
-  overflow: hidden;
+  /* 当内容超过视口时，面板内滚动，避免要素被裁切；仅纵向滚动 */
+  max-height: min(86dvh, 860px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-gutter: auto;
+  /* 需要时才预留滚动条空间 */
+  /* 兜底：防止超长单词/URL 导致横向溢出 */
+  word-break: break-word;
+  overflow-wrap: anywhere;
   color: var(--clr-text-hi);
+}
+
+/* 兜底：媒体元素不突破容器宽度，避免横向滚动 */
+.glass-panel img,
+.glass-panel video,
+.glass-panel canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 兜底：支持时使用更严格的横向裁剪，进一步避免出现水平滚动条 */
+@supports (overflow: clip) {
+
+  .ui-shell,
+  .glass-panel {
+    overflow-x: clip;
+  }
 }
 
 .glass-panel::before,
@@ -191,10 +224,8 @@ body.page-start .menu-btn-neo {
 }
 
 .glass-panel::after {
-  width: 220%;
-  height: 220%;
-  left: -60%;
-  top: -60%;
+  inset: 0;
+  /* 限制在面板范围内，避免因装饰元素导致滚动条 */
   background: conic-gradient(from 0deg, rgba(59, 130, 246, .0), rgba(59, 130, 246, .18), rgba(201, 97, 222, .0));
   animation: spin 10s linear infinite;
   opacity: .35;
@@ -425,9 +456,10 @@ body.page-start .menu-btn-neo {
 /* 自适应 */
 @media (max-width:640px) {
   .glass-panel {
-    padding: 34px 28px 44px;
+    padding: 28px 22px 36px;
     border-radius: 22px;
     gap: 34px;
+    max-height: 88dvh;
   }
 
   .site-title {
